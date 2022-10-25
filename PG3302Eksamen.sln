@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PG3302Eksamen", "PG3302Eksamen\PG3302Eksamen.csproj", "{6CC144FE-5117-41F3-ACC4-B15BD30823F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PG3302Eksamen_Tests", "PG3302Eksamen_Tests\PG3302Eksamen_Tests.csproj", "{A55DA503-5364-4F14-9B8D-88E80433A096}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{6CC144FE-5117-41F3-ACC4-B15BD30823F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CC144FE-5117-41F3-ACC4-B15BD30823F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CC144FE-5117-41F3-ACC4-B15BD30823F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A55DA503-5364-4F14-9B8D-88E80433A096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A55DA503-5364-4F14-9B8D-88E80433A096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A55DA503-5364-4F14-9B8D-88E80433A096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A55DA503-5364-4F14-9B8D-88E80433A096}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
