@@ -6,6 +6,22 @@ participant BusinessLogic
 participant DataAccess
 database Database
 
+group CreateUser
+User -> UI : Add new username
+User -> UI : Add new password
+User -> UI : Click create
+UI -> BusinessLogic : Add new user information
+BusinessLogic -> DataAccess : Get new user information
+DataAccess -> Database : Retrieve and add new user 
+
+alt Username does not exist
+BusinessLogic <-- Database : New user created
+else Username does exist
+BusinessLogic <-- Database  : User already exist
+end
+UI <-- BusinessLogic : Username result message
+end
+
 group Log-In
 User -> UI : Log in
 UI -> BusinessLogic : Authorize
@@ -19,6 +35,7 @@ User <-- UI : Login Successfull
 else Wrong password
 UI <-- BusinessLogic : Authorization denied
 User <-- UI : Error message
+end
 end
 
 group CreateAccount
