@@ -1,0 +1,32 @@
+@startuml
+
+actor User 
+participant UI
+participant BusinessLogic
+participant DataAccess
+database Database
+
+group Log-In
+User -> UI : Log in
+UI -> BusinessLogic : Authorize
+BusinessLogic -> DataAccess: Get user information
+DataAccess -> Database : Retrieve user information
+alt Correct password
+DataAccess <-- Database : User information
+BusinessLogic <-- DataAccess : User information
+UI <-- BusinessLogic : Success
+User <-- UI : Login Successfull
+else Wrong password
+UI <-- BusinessLogic : Authorization denied
+User <-- UI : Error message
+end
+
+group CreateAccount
+User -> UI : AccountMenu
+end
+
+group BillingSystem
+User -> UI : BillingMenu
+end
+
+@enduml
