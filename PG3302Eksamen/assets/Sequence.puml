@@ -1,0 +1,61 @@
+@startuml
+
+actor User 
+participant UI
+participant BusinessLogic
+participant DataAccess
+database Database
+
+group CreateUser
+User -> UI : Insert SocialSecNum
+User -> UI : Insert password
+User -> UI : Create user
+UI -> BusinessLogic : Get user information
+BusinessLogic -> DataAccess : Validate user information
+
+
+alt SocialSecNum does not exist
+DataAccess -> Database : Verify and add new user 
+BusinessLogic <-- Database : SocialSecNum approved
+UI <-- BusinessLogic : Create user result message
+User <-- UI : New user success
+else SocialSecNum does exist
+DataAccess -> Database : Deny new user
+BusinessLogic <-- Database  : SocialSecNum already exist, not approved
+UI <-- BusinessLogic : Create user result message
+User <-- UI : New user failed
+end
+end
+
+group Log-In
+User -> UI : Log in
+UI -> BusinessLogic : Commit user information
+BusinessLogic -> DataAccess : Authorize
+DataAccess -> Database : Validate and approve
+alt Correct password
+BusinessLogic <-- Database : Return approval
+
+UI <-- BusinessLogic : Access approved message
+User <-- UI : User log-in success
+else Wrong password
+BusinessLogic <-- Database : Return denial
+UI <-- BusinessLogic : Access denied message
+User <-- UI : User log-in failed
+end
+end
+
+group CreateAccount
+User -> UI : View Account Menu 
+UI -> DataAccess : 
+User -> UI : Add account credentials
+end
+
+group BillingSystem
+User -> UI : BillingMenu
+end
+
+group TransactionSystem
+User -> UI : BillingMenu
+end
+
+@enduml
