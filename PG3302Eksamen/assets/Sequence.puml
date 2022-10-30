@@ -7,34 +7,39 @@ participant DataAccess
 database Database
 
 group CreateUser
-User -> UI : Add new username
-User -> UI : Add new password
-User -> UI : Click create
-UI -> BusinessLogic : Add new user information
-BusinessLogic -> DataAccess : Get new user information
-DataAccess -> Database : Retrieve and add new user 
+User -> UI : Insert SocialSecNum
+User -> UI : Insert password
+User -> UI : Create user
+UI -> BusinessLogic : Get user information
+BusinessLogic -> DataAccess : Validate user information
 
-alt Username does not exist
-BusinessLogic <-- Database : New user created
-else Username does exist
-BusinessLogic <-- Database  : User already exist
+
+alt SocialSecNum does not exist
+DataAccess -> Database : Verify and add new user 
+BusinessLogic <-- Database : SocialSecNum approved
+UI <-- BusinessLogic : Create user result message
+User <-- UI : New user success
+else SocialSecNum does exist
+DataAccess -> Database : Deny new user
+BusinessLogic <-- Database  : SocialSecNum already exist, not approved
+UI <-- BusinessLogic : Create user result message
+User <-- UI : New user failed
 end
-UI <-- BusinessLogic : Username result message
 end
 
 group Log-In
 User -> UI : Log in
-UI -> BusinessLogic : Authorize
-BusinessLogic -> DataAccess: Get user information
-DataAccess -> Database : Retrieve user information
+UI -> BusinessLogic : Commit user information
+BusinessLogic -> DataAccess : Authorize
+DataAccess -> Database : Validate and approve
 alt Correct password
-DataAccess <-- Database : User information
-BusinessLogic <-- DataAccess : User information
-UI <-- BusinessLogic : Success
-User <-- UI : Login Successfull
+BusinessLogic<-- Database : Return approval
+
+UI <-- BusinessLogic : Access approved message
+User <-- UI : User logged in
 else Wrong password
-UI <-- BusinessLogic : Authorization denied
-User <-- UI : Error message
+UI <-- BusinessLogic : Access denied message
+User <-- UI : User not logged in
 end
 end
 
@@ -43,6 +48,10 @@ User -> UI : AccountMenu
 end
 
 group BillingSystem
+User -> UI : BillingMenu
+end
+
+group TransactionSystem
 User -> UI : BillingMenu
 end
 
