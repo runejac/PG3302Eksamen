@@ -33,18 +33,21 @@ UI -> BusinessLogic : Commit user information
 BusinessLogic -> DataAccess : Authorize
 DataAccess -> Database : Validate and approve
 alt Correct password
-BusinessLogic<-- Database : Return approval
+BusinessLogic <-- Database : Return approval
 
 UI <-- BusinessLogic : Access approved message
-User <-- UI : User logged in
+User <-- UI : User log-in success
 else Wrong password
+BusinessLogic <-- Database : Return denial
 UI <-- BusinessLogic : Access denied message
-User <-- UI : User not logged in
+User <-- UI : User log-in failed
 end
 end
 
 group CreateAccount
-User -> UI : AccountMenu
+User -> UI : View Account Menu 
+UI -> DataAccess : 
+User -> UI : Add account credentials
 end
 
 group BillingSystem
