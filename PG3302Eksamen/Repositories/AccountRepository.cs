@@ -43,6 +43,12 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         _context.SaveChanges();
     }
 
+    public void UpdateBalance(int id, decimal newBalance) {
+        var accountToUpdate = GetById(id);
+        accountToUpdate.Balance = newBalance;
+        _context.SaveChanges();
+    }
+
     public void Save() {
         _context.SaveChanges();
     }

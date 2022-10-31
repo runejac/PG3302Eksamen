@@ -31,21 +31,28 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
             _context.SaveChanges();
     }
 
+    //TODO: Test this function
     public IQueryable<Transaction> GetRecentTransactions(int days) {
         return _context.Transactions.Where(e => e.Date > DateTime.Today - TimeSpan.FromDays(days));
     }
 
+    //TODO: Implement this function
     public void PayBill(Bill bill) {
         throw new NotImplementedException();
     }
 
-    public void Transfer(Account accountFrom, Account accountTo, decimal amount) {
-        var from = _context.Accounts.Find(accountFrom);
-        var to = _context.Accounts.Find(accountTo);
-        if (from == null) return;
+    public void Transfer(int accountFromId, int accountToId, decimal amount) {
+        var accRepo = new AccountRepository();
+        var from = accRepo.GetById(accountFromId);
+        var to = accRepo.GetById(accountToId);
+        if (from.Balance <= amount - 1) {
+            Console.WriteLine("Not enough money to transfer");
+            return;
+        }
         from.Balance -= amount;
-        if (to != null) to.Balance += amount;
-        _context.SaveChanges();
+        to.Balance += amount;
+        accRepo.UpdateBalance(from.Id, from.Balance);
+        accRepo.UpdateBalance(to.Id, to.Balance);
     }
 
 
