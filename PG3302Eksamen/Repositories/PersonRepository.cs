@@ -35,8 +35,7 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         personToUpdate.Address = newAddress;
         _context.SaveChanges();
     }
-    
-    //TODO: Implement this function
+
     public void AddNewAccount() {
         throw new NotImplementedException();
     }

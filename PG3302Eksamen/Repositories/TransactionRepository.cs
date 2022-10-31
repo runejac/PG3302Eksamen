@@ -32,6 +32,7 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     //TODO: Test this function
+
     public IQueryable<Transaction> GetRecentTransactions(int days) {
         return _context.Transactions.Where(e => e.Date > DateTime.Today - TimeSpan.FromDays(days));
     }

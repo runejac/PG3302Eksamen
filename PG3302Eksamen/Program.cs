@@ -34,6 +34,7 @@ public static class Program {
 		Console.WriteLine(accountRepository.GetById(1).Balance);
 		Console.WriteLine(accountRepository.GetById(2).Balance);
 
+
 		//accountRepository.ChangeAccountName(3, "Hestekonto");
 		//personRepository.ChangePassword(1, "ein zwei drei");
 		//personRepository.UpdateAddress(1, "Hesteveien 2");
