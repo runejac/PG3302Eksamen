@@ -22,18 +22,13 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     public void Remove(Transaction entity) {
-        throw new NotImplementedException();
+        _context.Remove(entity);
+        _context.SaveChanges();
     }
 
     public void Insert(Transaction entity) {
-        try {
             _context.Add(entity);
             _context.SaveChanges();
-        }
-        catch (Exception e) {
-            Console.WriteLine(e);
-            throw;
-        }
     }
 
     public List<Transaction> GetRecentTransactions() {
