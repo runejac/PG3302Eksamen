@@ -12,7 +12,7 @@ internal class CurrentAccountFactory : AccountFactory {
 
     protected override CurrentAccount CreateAccount(int withdrawLimit, int interest,
         decimal balance,
-        string name, Person owner,
+        string name, int ownerId,
         string accountNumber,
         DateTime dateOfCreation) {
         return new CurrentAccount {
@@ -21,7 +21,7 @@ internal class CurrentAccountFactory : AccountFactory {
             Balance = balance,
             Interest = interest,
             Name = name,
-            Owner = owner,
+            OwnerId = ownerId,
             DateOfCreation = dateOfCreation
         };
     }

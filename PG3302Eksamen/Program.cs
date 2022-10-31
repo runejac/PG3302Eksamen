@@ -13,28 +13,29 @@ public static class Program {
 
 		var savingAccount = new SavingsAccountFactory().InitializeAccount(12, 5, 10,
 			"Fattig",
-			new Person("Fra ekte repo, runes home", "Rune", "Oliveira", "uno dos",
-				"94474621",
-				"0505040234", new DateTime().Date),
+			personRepository.GetById(2).Id,
 			"111111111", DateTime.Now);
+		
 		var currentAccount = new CurrentAccountFactory().InitializeAccount(0, 1, 20,
-			"Brukskonto",
-			new Person("Fra ekte repo, runes home", "Daniel", "Lysak", "uno dos tres",
-				"92262913",
-				"06049524733", new DateTime().Date),
-			"222222222", DateTime.Now);
+			"Brukskonto 2",
+			personRepository.GetById(1).Id,
+			"2", DateTime.Now);
 
-		var bill = new Bill().CreateBill(currentAccount, savingAccount, "With love", 123,
-			BillStatusEnum.PAID,
-			DateTime.Now);
-
+		
 		//billRepository.Insert(bill);
+		//accountRepository.Insert(savingAccount);
+		//accountRepository.Insert(currentAccount);
+		//personRepository.Insert(new Person("fiskeveien 2", "joachim", "christ",
+		//	"123", "90237461", "1234", DateTime.Today));
+		//personRepository.Insert(new Person("fiskeveien 3", "rune", "christ",
+		//	"12345", "90231", "124", DateTime.Today));
 
-		accountRepository.Insert(savingAccount);
-		accountRepository.Insert(currentAccount);
+		foreach (var acc in accountRepository.GetSortedByOwner(2)) {
+			Console.WriteLine(acc.DateOfCreation);
+		}
 
-
-		foreach (var account in accountRepository.GetSortedByBalance())
-			Console.WriteLine(account.Balance);
+		//accountRepository.ChangeAccountName(3, "Hestekonto");
+		//personRepository.ChangePassword(1, "ein zwei drei");
+		//personRepository.UpdateAddress(1, "Hesteveien 2");
 	}
 }

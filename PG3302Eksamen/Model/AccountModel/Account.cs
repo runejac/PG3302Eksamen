@@ -16,7 +16,7 @@ public class Account : IAccount {
 
     public decimal Balance { get; set; }
 
-    public Person Owner { get; set; }
+    public int OwnerId { get; set; }
 
     public DateTime DateOfCreation { get; set; }
 

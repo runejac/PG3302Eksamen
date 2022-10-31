@@ -16,7 +16,6 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
     }
 
     public void Insert(Account entity) {
-        Console.WriteLine(entity.GetType());
         _context.Add(entity);
         _context.SaveChanges();
     }
@@ -30,12 +29,18 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         return GetAll().OrderByDescending(acc => acc.Balance);
     }
 
-    public List<Account> GetSortedByName(string name) {
-        throw new NotImplementedException();
+    public IEnumerable<Account> GetSortedByName(string name) {
+        return GetAll().Where(acc => acc.Name.Equals(name));
+    }
+    
+    public IEnumerable<Account> GetSortedByOwner(int id) {
+        return _context.Accounts.Where(e => e.OwnerId == id);
     }
 
-    public void UpdateAccount(Account account) {
-        throw new NotImplementedException();
+    public void ChangeAccountName(int id, string newName) {
+        var accountToUpdate = GetById(id);
+        accountToUpdate.Name = newName;
+        _context.SaveChanges();
     }
 
     public void Save() {

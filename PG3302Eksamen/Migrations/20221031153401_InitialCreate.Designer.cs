@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221030195437_DatabaseRealRepoTest")]
-    partial class DatabaseRealRepoTest
+    [Migration("20221031153401_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,8 +47,6 @@ namespace PG3302Eksamen.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Accounts");
 
@@ -122,6 +120,9 @@ namespace PG3302Eksamen.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SocialSecurityNumber")
+                        .IsUnique();
+
                     b.ToTable("Persons");
                 });
 
@@ -183,17 +184,6 @@ namespace PG3302Eksamen.Migrations
                         .HasColumnName("WithdrawLimit");
 
                     b.HasDiscriminator().HasValue("SavingsAccount");
-                });
-
-            modelBuilder.Entity("A_Team.Core.Model.AccountModel.Account", b =>
-                {
-                    b.HasOne("A_Team.Core.Model.Person", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("A_Team.Core.Model.Transaction", b =>
