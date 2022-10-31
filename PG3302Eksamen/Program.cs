@@ -30,9 +30,10 @@ public static class Program {
 		//personRepository.Insert(new Person("fiskeveien 3", "rune", "christ",
 		//	"12345", "90231", "124", DateTime.Today));
 
-		foreach (var acc in accountRepository.GetSortedByOwner(2)) {
-			Console.WriteLine(acc.DateOfCreation);
-		}
+		transactionRepository.Transfer(1, 2, 10);
+		Console.WriteLine(accountRepository.GetById(1).Balance);
+		Console.WriteLine(accountRepository.GetById(2).Balance);
+
 
 		//accountRepository.ChangeAccountName(3, "Hestekonto");
 		//personRepository.ChangePassword(1, "ein zwei drei");

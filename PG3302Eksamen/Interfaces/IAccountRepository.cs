@@ -7,5 +7,6 @@ public interface IAccountRepository : IRepository<Account> {
     IEnumerable<Account> GetSortedByName(string name);
     IEnumerable<Account> GetSortedByOwner(int id);
     void ChangeAccountName(int id, string newName);
+    public void UpdateBalance(int id, decimal newBalance);
     void Save();
 }

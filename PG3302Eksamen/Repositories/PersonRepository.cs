@@ -14,7 +14,6 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
 
     public Person GetById(int id) {
         return _context.Persons.Find(id) ?? throw new InvalidOperationException();
-
     }
 
     public IEnumerable<Person> GetAll() {
@@ -37,8 +36,6 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         _context.SaveChanges();
     }
 
-    //TODO: En account må ha unik OwnerId, hvilket ikke fungerer i virkeligheten.
-    //TODO: Usikker på hvordan vi endrer dette. Daniel?
     public void AddNewAccount() {
         throw new NotImplementedException();
     }
@@ -48,8 +45,7 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         personToUpdate.Password = newPassword;
         _context.SaveChanges();
     }
-
-
+    
     private void Dispose(bool disposing) {
         if (!_disposed)
             if (disposing)
