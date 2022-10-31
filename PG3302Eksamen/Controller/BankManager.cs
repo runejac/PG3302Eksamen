@@ -49,24 +49,23 @@ public class BankManager : IBankManager {
 			Console.WriteLine("You've chosen a savings account");
 			Console.WriteLine("What do you want to name the savings account?");
 			var accName = Console.ReadLine();
-			var newAcc = new SavingsAccountFactory().InitializeAccount(0, 1, 0,
-				accName, personRep.GetById(personIdentifier).Id, accountNumberGenerated,
-				DateTime.Now);
+			var newAcc = new SavingsAccountFactory().InitializeAccount(
+				accName, personRep.GetById(personIdentifier).Id, accountNumberGenerated);
 			personRep.AddNewAccount(newAcc);
 		}
 		else if (savingsOrCurrentAcc == "2") {
 			Console.WriteLine("You've chosen a current account");
 			Console.WriteLine("What do you want to name the current account?");
 			var accName = Console.ReadLine();
-			var newAcc = new CurrentAccountFactory().InitializeAccount(0, 1, 0, accName,
-				personRep.GetById(personIdentifier).Id, accountNumberGenerated,
-				DateTime.Now);
+			var newAcc = new CurrentAccountFactory().InitializeAccount(accName,
+				personRep.GetById(personIdentifier).Id, accountNumberGenerated
+			);
 			personRep.AddNewAccount(newAcc);
 		}
 	}
 
 
-	public void DepositMoney(Person person, Account fromAccount, Account toAccount,
+	public void TransferMoney(Person person, Account fromAccount, Account toAccount,
 		decimal amount) {
 	}
 }

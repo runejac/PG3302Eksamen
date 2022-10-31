@@ -4,25 +4,19 @@
 namespace A_Team.Core.Model.AccountModel;
 
 internal class SavingsAccountFactory : AccountFactory {
-    // Note that the signature of the method still uses the abstract product
-    // type, even though the concrete product is actually returned from the
-    // method. This way the Creator can stay independent of concrete product
-    // classes.
+	// Note that the signature of the method still uses the abstract product
+	// type, even though the concrete product is actually returned from the
+	// method. This way the Creator can stay independent of concrete product
+	// classes.
 
 
-    protected override SavingAccount CreateAccount(int withdrawLimit, int interest,
-        decimal balance,
-        string name, int ownerId,
-        string accountNumber,
-        DateTime dateOfCreation) {
-        return new SavingAccount {
-            WithdrawLimit = withdrawLimit,
-            AccountNumber = accountNumber,
-            Balance = balance,
-            Interest = interest,
-            Name = name,
-            OwnerId = ownerId,
-            DateOfCreation = dateOfCreation
-        };
-    }
+	protected override SavingAccount CreateAccount(
+		string name, int ownerId,
+		string accountNumber) {
+		return new SavingAccount {
+			AccountNumber = accountNumber,
+			Name = name,
+			OwnerId = ownerId
+		};
+	}
 }

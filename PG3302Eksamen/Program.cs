@@ -40,10 +40,9 @@ public static class Program {
 			Console.WriteLine(acc.DateOfCreation);
 		}*/
 
-		transactionRepository.Transfer(1, 2, 10);
+		/*transactionRepository.Transfer(1, 2, 10);
 		Console.WriteLine(accountRepository.GetById(1).Balance);
-		Console.WriteLine(accountRepository.GetById(2).Balance);
-
+		Console.WriteLine(accountRepository.GetById(2).Balance);*/
 
 
 		//accountRepository.ChangeAccountName(3, "Hestekonto");

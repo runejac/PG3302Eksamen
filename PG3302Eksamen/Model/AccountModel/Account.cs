@@ -18,7 +18,7 @@ public class Account : IAccount {
 
 	public int OwnerId { get; set; }
 
-	public DateTime DateOfCreation { get; set; }
+	public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
 
 	/*public string AccountNumber { get; set; }
