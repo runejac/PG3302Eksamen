@@ -31,16 +31,21 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
             _context.SaveChanges();
     }
 
-    public List<Transaction> GetRecentTransactions() {
-        throw new NotImplementedException();
+    public IQueryable<Transaction> GetRecentTransactions(int days) {
+        return _context.Transactions.Where(e => e.Date > DateTime.Today - TimeSpan.FromDays(days));
     }
 
     public void PayBill(Bill bill) {
         throw new NotImplementedException();
     }
 
-    public void Transfer(Account accountFrom, Account accountTo) {
-        throw new NotImplementedException();
+    public void Transfer(Account accountFrom, Account accountTo, decimal amount) {
+        var from = _context.Accounts.Find(accountFrom);
+        var to = _context.Accounts.Find(accountTo);
+        if (from == null) return;
+        from.Balance -= amount;
+        if (to != null) to.Balance += amount;
+        _context.SaveChanges();
     }
 
 

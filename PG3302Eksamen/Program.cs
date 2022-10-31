@@ -27,11 +27,11 @@ public static class Program {
 		var bill = new Bill().CreateBill(currentAccount, savingAccount, "With love", 123,
 			BillStatusEnum.PAID,
 			DateTime.Now);
-
+		
 		//billRepository.Insert(bill);
 		//accountRepository.Insert(savingAccount);
 		//accountRepository.Insert(currentAccount);
-		
+
 		//accountRepository.ChangeAccountName(3, "Hestekonto");
 		//personRepository.ChangePassword(1, "ein zwei drei");
 		//personRepository.UpdateAddress(1, "Hesteveien 2");

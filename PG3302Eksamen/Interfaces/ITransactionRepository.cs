@@ -4,7 +4,7 @@ using A_Team.Core.Model.AccountModel;
 namespace A_Team.Core.Interfaces;
 
 public interface ITransactionRepository : IRepository<Transaction> {
-    List<Transaction> GetRecentTransactions();
+    IQueryable<Transaction> GetRecentTransactions(int days);
     void PayBill(Bill bill);
-    void Transfer(Account accountFrom, Account accountTo);
+    void Transfer(Account accountFrom, Account accountTo, decimal amount);
 }
