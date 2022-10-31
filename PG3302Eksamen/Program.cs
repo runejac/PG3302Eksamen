@@ -29,9 +29,11 @@ public static class Program {
 			DateTime.Now);
 
 		//billRepository.Insert(bill);
-
 		//accountRepository.Insert(savingAccount);
 		//accountRepository.Insert(currentAccount);
-		accountRepository.ChangeAccountName(3, "Hestekonto");
+		
+		//accountRepository.ChangeAccountName(3, "Hestekonto");
+		//personRepository.ChangePassword(1, "ein zwei drei");
+		//personRepository.UpdateAddress(1, "Hesteveien 2");
 	}
 }

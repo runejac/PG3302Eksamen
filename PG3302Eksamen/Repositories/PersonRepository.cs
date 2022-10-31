@@ -31,16 +31,22 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         _context.SaveChanges();
     }
 
-    public void UpdateAddress(string address) {
-        throw new NotImplementedException();
+    public void UpdateAddress(int id, string newAddress) {
+        var personToUpdate = GetById(id);
+        personToUpdate.Address = newAddress;
+        _context.SaveChanges();
     }
 
+    //TODO: En account må ha unik OwnerId, hvilket ikke fungerer i virkeligheten.
+    //TODO: Usikker på hvordan vi endrer dette. Daniel?
     public void AddNewAccount() {
         throw new NotImplementedException();
     }
 
-    public void ChangePassword(string password) {
-        throw new NotImplementedException();
+    public void ChangePassword(int id, string newPassword) {
+        var personToUpdate = GetById(id);
+        personToUpdate.Password = newPassword;
+        _context.SaveChanges();
     }
 
 
