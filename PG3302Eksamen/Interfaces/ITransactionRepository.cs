@@ -6,5 +6,5 @@ namespace A_Team.Core.Interfaces;
 public interface ITransactionRepository : IRepository<Transaction> {
     IQueryable<Transaction> GetRecentTransactions(int days);
     void PayBill(Bill bill);
-    void Transfer(Account accountFrom, Account accountTo, decimal amount);
+    void Transfer(int accountFromId, int accountToId, decimal amount);
 }
