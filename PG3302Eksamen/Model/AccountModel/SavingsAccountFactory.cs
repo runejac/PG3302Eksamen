@@ -12,7 +12,7 @@ internal class SavingsAccountFactory : AccountFactory {
 
     protected override SavingAccount CreateAccount(int withdrawLimit, int interest,
         decimal balance,
-        string name, Person owner,
+        string name, int ownerId,
         string accountNumber,
         DateTime dateOfCreation) {
         return new SavingAccount {
@@ -21,7 +21,7 @@ internal class SavingsAccountFactory : AccountFactory {
             Balance = balance,
             Interest = interest,
             Name = name,
-            Owner = owner,
+            OwnerId = ownerId,
             DateOfCreation = dateOfCreation
         };
     }

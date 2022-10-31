@@ -34,7 +34,7 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
     }
     
     public IEnumerable<Account> GetSortedByOwner(int id) {
-        return _context.Accounts.Where(e => e.Owner.Id == id);
+        return _context.Accounts.Where(e => e.OwnerId == id);
     }
 
     public void ChangeAccountName(int id, string newName) {

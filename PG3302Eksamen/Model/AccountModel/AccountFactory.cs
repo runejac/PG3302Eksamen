@@ -7,7 +7,7 @@ internal abstract class AccountFactory {
     // Note that the Creator may also provide some default implementation of
     // the factory method.
     protected abstract Account CreateAccount(int withdrawLimit, int interest,
-        decimal balance, string name, Person owner,
+        decimal balance, string name, int ownerId,
         string accountNumber, DateTime dateOfCreation);
 
     // Also note that, despite its name, the Creator's primary
@@ -17,9 +17,9 @@ internal abstract class AccountFactory {
     // by overriding the factory method and returning a different type of
     // product from it.
     public Account InitializeAccount(int withdrawLimit, int interest, decimal balance,
-        string name, Person owner,
+        string name, int ownerId,
         string accountNumber, DateTime dateOfCreation) {
-        var account = CreateAccount(withdrawLimit, interest, balance, name, owner,
+        var account = CreateAccount(withdrawLimit, interest, balance, name, ownerId,
             accountNumber, dateOfCreation);
 
 

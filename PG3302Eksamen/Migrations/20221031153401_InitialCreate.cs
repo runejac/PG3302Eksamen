@@ -10,6 +10,26 @@ namespace PG3302Eksamen.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AccountNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Balance = table.Column<decimal>(type: "TEXT", nullable: false),
+                    OwnerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DateOfCreation = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false),
+                    Interest = table.Column<int>(type: "INTEGER", nullable: true),
+                    WithdrawLimit = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bills",
                 columns: table => new
                 {
@@ -47,32 +67,6 @@ namespace PG3302Eksamen.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    AccountNumber = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Balance = table.Column<decimal>(type: "TEXT", nullable: false),
-                    OwnerId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DateOfCreation = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Interest = table.Column<int>(type: "INTEGER", nullable: true),
-                    WithdrawLimit = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Accounts_Persons_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Transactions",
                 columns: table => new
                 {
@@ -95,11 +89,6 @@ namespace PG3302Eksamen.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_OwnerId",
-                table: "Accounts",
-                column: "OwnerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Persons_SocialSecurityNumber",
                 table: "Persons",
                 column: "SocialSecurityNumber",
@@ -117,13 +106,13 @@ namespace PG3302Eksamen.Migrations
                 name: "Bills");
 
             migrationBuilder.DropTable(
+                name: "Persons");
+
+            migrationBuilder.DropTable(
                 name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
-
-            migrationBuilder.DropTable(
-                name: "Persons");
         }
     }
 }
