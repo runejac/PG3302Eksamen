@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class DatabaseRealRepoTest : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,6 +98,12 @@ namespace PG3302Eksamen.Migrations
                 name: "IX_Accounts_OwnerId",
                 table: "Accounts",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Persons_SocialSecurityNumber",
+                table: "Persons",
+                column: "SocialSecurityNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_FromAccountId",

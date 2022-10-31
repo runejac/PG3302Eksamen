@@ -11,15 +11,13 @@ public class BankContext : DbContext {
         var path = Environment.GetFolderPath(folder);
         DbPath = Path.Join(path, "bank.db");
     }
-
-
+    
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<Bill> Bills { get; set; } = null!;
     public DbSet<Person> Persons { get; set; } = null!;
     public DbSet<Transaction> Transactions { get; set; } = null!;
 
     private string DbPath { get; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<Account>()
@@ -40,6 +38,10 @@ public class BankContext : DbContext {
         modelBuilder.Entity<CurrentAccount>()
             .Property(e => e.WithdrawLimit)
             .HasColumnName("WithdrawLimit");
+
+        modelBuilder.Entity<Person>()
+            .HasIndex(e => new { e.SocialSecurityNumber })
+            .IsUnique();
     }
 
     // The following configures EF to create a Sqlite database file in the

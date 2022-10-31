@@ -120,6 +120,9 @@ namespace PG3302Eksamen.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SocialSecurityNumber")
+                        .IsUnique();
+
                     b.ToTable("Persons");
                 });
 

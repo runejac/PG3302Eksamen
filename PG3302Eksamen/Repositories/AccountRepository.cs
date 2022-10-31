@@ -30,8 +30,12 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         return GetAll().OrderByDescending(acc => acc.Balance);
     }
 
-    public List<Account> GetSortedByName(string name) {
-        throw new NotImplementedException();
+    public IEnumerable<Account> GetSortedByName(string name) {
+        return GetAll().Where(acc => acc.Name.Equals(name));
+    }
+    
+    public IEnumerable<Account> GetSortedByOwner(int id) {
+        return _context.Accounts.Where(e => e.Owner.Id == id);
     }
 
     public void UpdateAccount(Account account) {

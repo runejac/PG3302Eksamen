@@ -18,11 +18,11 @@ public static class Program {
 				"0505040234", new DateTime().Date),
 			"111111111", DateTime.Now);
 		var currentAccount = new CurrentAccountFactory().InitializeAccount(0, 1, 20,
-			"Brukskonto",
-			new Person("Fra ekte repo, runes home", "Daniel", "Lysak", "uno dos tres",
+			"Brukskonto 2",
+			new Person("Fra ekte repo, Joachims home", "Rune", "Oliveira", "uno dos tres",
 				"92262913",
-				"06049524733", new DateTime().Date),
-			"222222222", DateTime.Now);
+				"500", new DateTime().Date),
+			"2", DateTime.Now);
 
 		var bill = new Bill().CreateBill(currentAccount, savingAccount, "With love", 123,
 			BillStatusEnum.PAID,
@@ -30,11 +30,9 @@ public static class Program {
 
 		//billRepository.Insert(bill);
 
-		accountRepository.Insert(savingAccount);
-		accountRepository.Insert(currentAccount);
-
-
-		foreach (var account in accountRepository.GetSortedByBalance())
-			Console.WriteLine(account.Balance);
+		//accountRepository.Insert(savingAccount);
+		//accountRepository.Insert(currentAccount);
+		foreach (var account in accountRepository.GetSortedByOwner(5))
+			Console.WriteLine(account.Name);
 	}
 }

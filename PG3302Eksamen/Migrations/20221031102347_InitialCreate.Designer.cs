@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221030195437_DatabaseRealRepoTest")]
-    partial class DatabaseRealRepoTest
+    [Migration("20221031102347_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,6 +121,9 @@ namespace PG3302Eksamen.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SocialSecurityNumber")
+                        .IsUnique();
 
                     b.ToTable("Persons");
                 });
