@@ -32,7 +32,6 @@ public static class Program {
 
 		//accountRepository.Insert(savingAccount);
 		//accountRepository.Insert(currentAccount);
-		foreach (var account in accountRepository.GetSortedByOwner(5))
-			Console.WriteLine(account.Name);
+		accountRepository.ChangeAccountName(3, "Hestekonto");
 	}
 }

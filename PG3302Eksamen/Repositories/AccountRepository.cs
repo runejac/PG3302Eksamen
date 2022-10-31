@@ -16,7 +16,6 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
     }
 
     public void Insert(Account entity) {
-        Console.WriteLine(entity.GetType());
         _context.Add(entity);
         _context.SaveChanges();
     }
@@ -38,8 +37,10 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         return _context.Accounts.Where(e => e.Owner.Id == id);
     }
 
-    public void UpdateAccount(Account account) {
-        throw new NotImplementedException();
+    public void ChangeAccountName(int id, string newName) {
+        var accountToUpdate = GetById(id);
+        accountToUpdate.Name = newName;
+        _context.SaveChanges();
     }
 
     public void Save() {
