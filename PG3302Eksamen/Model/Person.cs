@@ -1,4 +1,4 @@
-﻿namespace A_Team.Core.Model;
+﻿namespace PG3302Eksamen.Model;
 
 public class Person {
     public Person(string address, string firstName, string lastName, string password, string phoneNumber,

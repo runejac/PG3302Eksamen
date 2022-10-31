@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using A_Team.Core.Interfaces;
+using PG3302Eksamen.Interfaces;
 
-namespace A_Team.Core.Model.AccountModel;
+namespace PG3302Eksamen.Model.AccountModel;
 
 public class Account : IAccount {
     public int Id { get; set; }

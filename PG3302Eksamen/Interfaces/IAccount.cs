@@ -1,4 +1,4 @@
-namespace A_Team.Core.Interfaces;
+namespace PG3302Eksamen.Interfaces;
 
 public interface IAccount {
     bool CloseAccount();

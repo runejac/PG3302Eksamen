@@ -1,6 +1,6 @@
-using A_Team.Core.Model;
+using PG3302Eksamen.Model;
 
-namespace A_Team.Core.Interfaces;
+namespace PG3302Eksamen.Interfaces;
 
 public interface IBillRepository : IRepository<Bill> {
     IOrderedEnumerable<Bill> GetSortedByDueDateDescending();

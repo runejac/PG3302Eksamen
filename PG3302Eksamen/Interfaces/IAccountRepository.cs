@@ -1,6 +1,6 @@
-using A_Team.Core.Model.AccountModel;
+using PG3302Eksamen.Model.AccountModel;
 
-namespace A_Team.Core.Interfaces;
+namespace PG3302Eksamen.Interfaces;
 
 public interface IAccountRepository : IRepository<Account> {
     IOrderedEnumerable<Account> GetSortedByBalance();

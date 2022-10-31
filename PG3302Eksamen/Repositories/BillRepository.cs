@@ -1,7 +1,7 @@
-using A_Team.Core.Interfaces;
-using A_Team.Core.Model;
+using PG3302Eksamen.Interfaces;
+using PG3302Eksamen.Model;
 
-namespace A_Team.Core.Repositories;
+namespace PG3302Eksamen.Repositories;
 
 public sealed class BillRepository : IBillRepository, IDisposable {
     private readonly BankContext _context = new();

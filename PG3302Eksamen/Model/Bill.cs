@@ -1,6 +1,6 @@
-using A_Team.Core.Model.AccountModel;
+using PG3302Eksamen.Model.AccountModel;
 
-namespace A_Team.Core.Model;
+namespace PG3302Eksamen.Model;
 
 public class Bill {
     public int Id { get; set; }

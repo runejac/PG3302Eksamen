@@ -1,7 +1,7 @@
-using A_Team.Core.Interfaces;
-using A_Team.Core.Model;
+using PG3302Eksamen.Interfaces;
+using PG3302Eksamen.Model;
 
-namespace A_Team.Core.Repositories;
+namespace PG3302Eksamen.Repositories;
 
 public sealed class PersonRepository : IPersonRepository, IDisposable {
     private readonly BankContext _context = new();
@@ -14,7 +14,6 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
 
     public Person GetById(int id) {
         return _context.Persons.Find(id) ?? throw new InvalidOperationException();
-
     }
 
     public IEnumerable<Person> GetAll() {

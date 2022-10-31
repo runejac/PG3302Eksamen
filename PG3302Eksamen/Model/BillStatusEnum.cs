@@ -1,4 +1,4 @@
-namespace A_Team.Core.Model;
+namespace PG3302Eksamen.Model;
 
 public enum BillStatusEnum {
     PAID,

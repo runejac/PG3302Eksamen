@@ -1,4 +1,4 @@
-namespace A_Team.Core.Model.AccountModel;
+namespace PG3302Eksamen.Model.AccountModel;
 
 // The Creator class declares the factory method that is supposed to return
 // an object of a Product class. The Creator's subclasses usually provide

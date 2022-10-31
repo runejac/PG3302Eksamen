@@ -1,8 +1,8 @@
-using A_Team.Core.Interfaces;
-using A_Team.Core.Model;
-using A_Team.Core.Model.AccountModel;
+using PG3302Eksamen.Interfaces;
+using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
 
-namespace A_Team.Core.Repositories;
+namespace PG3302Eksamen.Repositories;
 
 public sealed class TransactionRepository : ITransactionRepository, IDisposable {
     private readonly BankContext _context = new();

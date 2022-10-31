@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace A_Team.Core.Model.AccountModel;
+namespace PG3302Eksamen.Model.AccountModel;
 
 public class CurrentAccount : Account {
     [Column("Interest")] public override int Interest { get; set; }

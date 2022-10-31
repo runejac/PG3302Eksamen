@@ -1,3 +1,5 @@
+using PG3302Eksamen.Interfaces;
+
 namespace A_Team.Core.Interfaces;
 
 public interface IUnitOfWork : IDisposable {

@@ -1,7 +1,7 @@
 // Concrete Creators override the factory method in order to change the
 // resulting product's type.
 
-namespace A_Team.Core.Model.AccountModel;
+namespace PG3302Eksamen.Model.AccountModel;
 
 internal class SavingsAccountFactory : AccountFactory {
     // Note that the signature of the method still uses the abstract product
