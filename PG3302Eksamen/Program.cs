@@ -1,12 +1,15 @@
-﻿using A_Team.Core.Model;
-using A_Team.Core.Model.AccountModel;
+using A_Team.Core.Controller;
 using A_Team.Core.Repositories;
 
 namespace PG3302Eksamen;
 
 public static class Program {
 	public static void Main(string[] args) {
-		var accountRepository = new AccountRepository();
+		var personRepository = new PersonRepository();
+		BankManager.getInstance().CreateBankAccount(personRepository.GetById(1).Id);
+
+
+		/*var accountRepository = new AccountRepository();
 		var billRepository = new BillRepository();
 		var personRepository = new PersonRepository();
 		var transactionRepository = new TransactionRepository();
@@ -20,6 +23,8 @@ public static class Program {
 			"Brukskonto 2",
 			personRepository.GetById(1).Id,
 			"2", DateTime.Now);
+			
+			
 
 		
 		//billRepository.Insert(bill);
@@ -30,9 +35,15 @@ public static class Program {
 		//personRepository.Insert(new Person("fiskeveien 3", "rune", "christ",
 		//	"12345", "90231", "124", DateTime.Today));
 
+
+		foreach (var acc in accountRepository.GetSortedByOwner(2)) {
+			Console.WriteLine(acc.DateOfCreation);
+		}*/
+
 		transactionRepository.Transfer(1, 2, 10);
 		Console.WriteLine(accountRepository.GetById(1).Balance);
 		Console.WriteLine(accountRepository.GetById(2).Balance);
+
 
 
 		//accountRepository.ChangeAccountName(3, "Hestekonto");

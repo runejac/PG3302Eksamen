@@ -1,5 +1,6 @@
 using A_Team.Core.Interfaces;
 using A_Team.Core.Model;
+using A_Team.Core.Model.AccountModel;
 
 namespace A_Team.Core.Repositories;
 
@@ -35,9 +36,11 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         personToUpdate.Address = newAddress;
         _context.SaveChanges();
     }
-
-    public void AddNewAccount() {
-        throw new NotImplementedException();
+    
+ 
+    public void AddNewAccount(Account entity) {
+      _context.Accounts.Add(entity);
+      _context.SaveChanges();
     }
 
     public void ChangePassword(int id, string newPassword) {

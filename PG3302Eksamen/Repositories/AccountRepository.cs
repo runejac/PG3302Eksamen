@@ -1,9 +1,10 @@
-﻿using A_Team.Core.Interfaces;
+using A_Team.Core.Interfaces;
 using A_Team.Core.Model.AccountModel;
 
 namespace A_Team.Core.Repositories;
 
 public sealed class AccountRepository : IAccountRepository, IDisposable {
+
     private readonly BankContext _context = new();
     private bool _disposed;
 
@@ -24,6 +25,14 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         _context.Remove(entity);
         _context.SaveChanges();
     }
+    
+    public List<string> GetAllAccountNumbers() {
+		var list = new List<string>();
+		var response = GetAll();
+
+		foreach (var accounts in response) list.Add(accounts.AccountNumber);
+		return list;
+	}
 
     public IOrderedEnumerable<Account> GetSortedByBalance() {
         return GetAll().OrderByDescending(acc => acc.Balance);
