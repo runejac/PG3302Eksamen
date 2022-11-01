@@ -11,10 +11,11 @@ public static class Program {
 
 
 		// person objektet må kommet fra en state etter logged in
-		// BankManager.CreateBankAccount(personRepository.GetById(1).Id);
+		BankManager.CreateBankAccount(personRepository.GetById(1).Id);
 
 
 
+		/*
 		var billRepository = new BillRepository();
 		var transactionRepository = new TransactionRepository();
 		var accountRepository = new AccountRepository();
@@ -26,16 +27,18 @@ public static class Program {
 		
 		var currentAccount = new CurrentAccountFactory().InitializeAccount("konto2",
 			personRepository.GetById(2).Id,
-			"111111111");
+			"111111111");*/
 		
 		//accountRepository.Insert(savingAccount);
 		//accountRepository.Insert(currentAccount);
 		//accountRepository.UpdateBalance(accountRepository.GetById(1).Id, 1000);
 		//accountRepository.UpdateBalance(accountRepository.GetById(2).Id, 1000);
 
+		
+		
 
 		//personRepository.Insert(new Person("fiskeveien 2", "joachim", "christ",
-		//	"123", "90237461", "1234", DateTime.Today));
+		//"123", "90237461", "1234", DateTime.Today));
 		//personRepository.Insert(new Person("fiskeveien 3", "rune", "christ",
 		//	"12345", "90231", "124", DateTime.Today));
 

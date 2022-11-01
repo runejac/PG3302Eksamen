@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221101104055_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221101124810_testFromRuneMac")]
+    partial class testFromRuneMac
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
