@@ -25,12 +25,10 @@ public sealed class BillRepository : IBillRepository, IDisposable {
         _context.SaveChanges();
     }
 
-    //TODO: Test this function
     public IOrderedEnumerable<Bill> GetSortedByDueDateDescending() {
         return GetAll().OrderByDescending(bill => bill.DueDate);
     }
 
-    //TODO: Test this function
     public IEnumerable<Bill> GetSortedByStatus(BillStatusEnum status) {
         return GetAll().Where(bill => bill.Status.Equals(status));
     }
