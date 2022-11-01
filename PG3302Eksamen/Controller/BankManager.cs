@@ -1,7 +1,6 @@
 ﻿using A_Team.Core.Model;
 using A_Team.Core.Model.AccountModel;
 using A_Team.Core.Repositories;
-using PG3302Eksamen;
 using PG3302Eksamen.View;
 
 namespace A_Team.Core.Controller;
@@ -32,7 +31,6 @@ public class BankManager : IBankManager {
 		var personRep = new PersonRepository();
 		var accRep = new AccountRepository();
 
-		GenerateBankAccountNumber(accRep);
 		AccountTypeChooser(personIdentifier, personRep,
 			GenerateBankAccountNumber(accRep));
 	}
@@ -58,10 +56,10 @@ public class BankManager : IBankManager {
 		var savingsOrCurrentAcc = SavingsOrCurrentAcc();
 		string newAccountName;
 		if (savingsOrCurrentAcc == "1") {
-			Ui.ChosenAccountType(account: new SavingAccount());
+			Ui.ChosenAccountType(new SavingAccount());
 			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
-				Ui.Message("Invalid input, please try again", ConsoleColor.Red);
+				Ui.InvalidInputMessage();
 				AccountTypeChooser(personIdentifier, personRep,
 					accountNumberGenerated);
 			}
@@ -73,7 +71,7 @@ public class BankManager : IBankManager {
 			}
 		}
 		else if (savingsOrCurrentAcc == "2") {
-			Ui.ChosenAccountType(account: new CurrentAccount());
+			Ui.ChosenAccountType(new CurrentAccount());
 			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
 				// TODO Rune: skal legge til flere av disse fra UI- klassen
