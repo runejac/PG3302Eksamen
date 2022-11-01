@@ -6,7 +6,9 @@ namespace PG3302Eksamen;
 public static class Program {
 	public static void Main(string[] args) {
 		var personRepository = new PersonRepository();
-		BankManager.getInstance().CreateBankAccount(personRepository.GetById(1).Id);
+
+		// person objektet må kommet fra en state etter logged in
+		BankManager.CreateBankAccount(personRepository.GetById(1).Id);
 
 
 		/*var accountRepository = new AccountRepository();
