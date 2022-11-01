@@ -11,6 +11,20 @@ public static class Ui {
         Console.WriteLine(message);
     }
 
+    public static void AskUserWhatTypeOfAccountToBeMade() {
+        Message("Do you want it to be a savings account or a current account?\n" +
+                "1. savings account\n" +
+                "2. current account", ConsoleColor.Blue);
+    }
+
+    public static void ChosenAccountType(Account account) {
+        Message(
+            $"You've chosen to create an {account.GetAccountType()} account \n" +
+            $"What do you want to name your {account.GetAccountType()}?",
+            ConsoleColor.Blue);
+    }
+
+
     // TODO RUNE holder på her, sånn tenker jeg Ui-klassen skal se ut
     public static void SucceedAddedToDbMessage(Account account) {
         Message($"{account.Name} was added to your bank account\n" +

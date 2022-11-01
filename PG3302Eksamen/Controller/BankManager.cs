@@ -1,6 +1,7 @@
 ﻿using A_Team.Core.Model;
 using A_Team.Core.Model.AccountModel;
 using A_Team.Core.Repositories;
+using PG3302Eksamen;
 using PG3302Eksamen.View;
 
 namespace A_Team.Core.Controller;
@@ -17,16 +18,12 @@ public class BankManager : IBankManager {
 
 
 	private static string SavingsOrCurrentAcc() {
-		Ui.Message(
-			"Do you want it to be a savings account or a current account?\n" +
-			"1. savings account\n" +
-			"2. current account",
-			ConsoleColor.Blue);
+		Ui.AskUserWhatTypeOfAccountToBeMade();
 
 		var choice = Console.ReadLine();
 
 		if (choice is "1" or "2") return choice;
-		Ui.Message("Invalid input, please try again", ConsoleColor.Red);
+		Ui.InvalidInputMessage();
 		return SavingsOrCurrentAcc();
 	}
 
@@ -61,10 +58,7 @@ public class BankManager : IBankManager {
 		var savingsOrCurrentAcc = SavingsOrCurrentAcc();
 		string newAccountName;
 		if (savingsOrCurrentAcc == "1") {
-			Ui.Message(
-				"You've chosen to create an savings account \n" +
-				"What do you want to name the savings account?",
-				ConsoleColor.Blue);
+			Ui.ChosenAccountType(account: new SavingAccount());
 			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
 				Ui.Message("Invalid input, please try again", ConsoleColor.Red);
@@ -79,10 +73,7 @@ public class BankManager : IBankManager {
 			}
 		}
 		else if (savingsOrCurrentAcc == "2") {
-			Ui.Message(
-				"You've chosen to create an current account \n" +
-				"What do you want to name the current account?",
-				ConsoleColor.Blue);
+			Ui.ChosenAccountType(account: new CurrentAccount());
 			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
 				// TODO Rune: skal legge til flere av disse fra UI- klassen
