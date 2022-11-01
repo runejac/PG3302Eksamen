@@ -27,11 +27,8 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
     }
     
     public List<string> GetAllAccountNumbers() {
-		var list = new List<string>();
-		var response = GetAll();
-
-		foreach (var accounts in response) list.Add(accounts.AccountNumber);
-		return list;
+        var response = GetAll();
+        return response.Select(accounts => accounts.AccountNumber).ToList();
 	}
 
     public IOrderedEnumerable<Account> GetSortedByBalance() {

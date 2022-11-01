@@ -74,18 +74,12 @@ namespace PG3302Eksamen.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Receipt = table.Column<int>(type: "INTEGER", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    FromAccountId = table.Column<int>(type: "INTEGER", nullable: false),
+                    FromAccount = table.Column<string>(type: "TEXT", nullable: false),
                     ToAccount = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transactions_Accounts_FromAccountId",
-                        column: x => x.FromAccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -93,15 +87,13 @@ namespace PG3302Eksamen.Migrations
                 table: "Persons",
                 column: "SocialSecurityNumber",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_FromAccountId",
-                table: "Transactions",
-                column: "FromAccountId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accounts");
+
             migrationBuilder.DropTable(
                 name: "Bills");
 
@@ -110,9 +102,6 @@ namespace PG3302Eksamen.Migrations
 
             migrationBuilder.DropTable(
                 name: "Transactions");
-
-            migrationBuilder.DropTable(
-                name: "Accounts");
         }
     }
 }

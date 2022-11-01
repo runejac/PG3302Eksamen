@@ -1,6 +1,5 @@
 using A_Team.Core.Interfaces;
 using A_Team.Core.Model;
-using A_Team.Core.Model.AccountModel;
 
 namespace A_Team.Core.Repositories;
 
@@ -32,14 +31,18 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     //TODO: Test this function
-
-    public IQueryable<Transaction> GetRecentTransactions(int days) {
-        return _context.Transactions.Where(e => e.Date > DateTime.Today - TimeSpan.FromDays(days));
+    public List<Transaction> GetRecentTransactions(int days) {
+        return new List<Transaction>(_context.Transactions.Where(
+            e => e.Date > DateTime.Today - TimeSpan.FromDays(days)
+            ));
     }
 
-    //TODO: Implement this function
-    public void PayBill(Bill bill) {
-        throw new NotImplementedException();
+    //TODO: Test this function
+    public void PayBill(int billId, string fromAccountNr) {
+        var billRepo = new BillRepository();
+        var idOfBill = billRepo.GetById(billId);
+        billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.PAID);
+        Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
     }
 
     public void Transfer(int accountFromId, int accountToId, decimal amount) {
@@ -54,9 +57,9 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
         to.Balance += amount;
         accRepo.UpdateBalance(from.Id, from.Balance);
         accRepo.UpdateBalance(to.Id, to.Balance);
+        Insert(new Transaction().CreateTransaction(accountFromId, DateTime.Now, from.AccountNumber, to.AccountNumber));
     }
-
-
+    
     private void Dispose(bool disposing) {
         if (!_disposed)
             if (disposing)

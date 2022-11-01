@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221031153401_InitialCreate")]
+    [Migration("20221101104055_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,8 +135,9 @@ namespace PG3302Eksamen.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("FromAccountId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("FromAccount")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Receipt")
                         .HasColumnType("INTEGER");
@@ -146,8 +147,6 @@ namespace PG3302Eksamen.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FromAccountId");
 
                     b.ToTable("Transactions");
                 });
@@ -184,17 +183,6 @@ namespace PG3302Eksamen.Migrations
                         .HasColumnName("WithdrawLimit");
 
                     b.HasDiscriminator().HasValue("SavingsAccount");
-                });
-
-            modelBuilder.Entity("A_Team.Core.Model.Transaction", b =>
-                {
-                    b.HasOne("A_Team.Core.Model.AccountModel.Account", "FromAccount")
-                        .WithMany()
-                        .HasForeignKey("FromAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("FromAccount");
                 });
 #pragma warning restore 612, 618
         }
