@@ -1,32 +1,109 @@
-﻿using A_Team.Core.Model;
+﻿using A_Team.Core.Controller;
 using A_Team.Core.Model.AccountModel;
 using A_Team.Core.Repositories;
+using PG3302Eksamen.Model;
+using PG3302Eksamen.Repositories;
 using PG3302Eksamen.View;
 
-namespace A_Team.Core.Controller;
+namespace PG3302Eksamen.Controller;
 
 public class BankManager : IBankManager {
 	private static BankManager _instance;
+	//private static PersonRepository _personRepository;
 
-	private BankManager() {
-	}
+
+	/*public BankManager(IUserReader userReader) {
+		UserReader = userReader;
+	}*/
+
+	//private IUserReader UserReader { get; }
+
+	/*private static PersonRepository PersonRepository {
+		get => _personRepository;
+		set => _personRepository =
+			value ?? throw new ArgumentNullException(nameof(value));
+	}*/
 
 	public void Run() {
-		//getInstance();
+		//Ui.WelcomeMessage();
+
+
+		RegisterNewPerson();
 	}
+
+	private static void RegisterNewPerson() {
+		var personRepository = new PersonRepository();
+
+		var socialSecNrChecker = true;
+		var passwordChecker = true;
+
+
+		Ui.MessageSameLine("Address: ", ConsoleColor.Blue);
+		var address = Console.ReadLine();
+		Ui.MessageSameLine("First name: ", ConsoleColor.Blue);
+		var firstName = Console.ReadLine();
+		Ui.MessageSameLine("Last name: ", ConsoleColor.Blue);
+		var lastName = Console.ReadLine();
+		Ui.MessageSameLine("Phone number: ", ConsoleColor.Blue);
+		var phoneNumber = Console.ReadLine();
+		Ui.MessageSameLine("Email: ", ConsoleColor.Blue);
+		var email = Console.ReadLine();
+
+		var password = "";
+
+		while (passwordChecker) {
+			Ui.MessageSameLine("Password: ", ConsoleColor.Blue);
+			password = Console.ReadLine();
+			Ui.MessageSameLine("Password again: ", ConsoleColor.Blue);
+			var confirmPassword = Console.ReadLine();
+			if (password != confirmPassword) {
+				Ui.InvalidInputMessage("Passwords did not match, try again.");
+			}
+			else {
+				passwordChecker = false;
+			}
+		}
+
+
+		while (socialSecNrChecker) {
+			Ui.MessageSameLine("Social security number: ", ConsoleColor.Blue);
+			var socialSecurityNumber = Console.ReadLine();
+			var match = personRepository.GetAll().ToList().Any(s =>
+				s.SocialSecurityNumber.Contains(socialSecurityNumber));
+
+			var newPerson = new Person(address, firstName, lastName, password,
+				phoneNumber, socialSecurityNumber, email);
+
+			if (personRepository.GetAll().ToList().Count < 1) {
+				personRepository.Insert(newPerson);
+			}
+
+			if (!match) {
+				socialSecNrChecker = false;
+				personRepository.Insert(newPerson);
+				Ui.SuccessfullyRegistered(newPerson.FirstName);
+			}
+			else {
+				Ui.InvalidInputMessage("Social Sec already exists");
+			}
+		}
+	}
+
+
+	/*----------------------------------------------------**/
 
 
 	private static string SavingsOrCurrentAcc() {
-		Ui.Message(
-			"Do you want it to be a savings account or a current account?\n" +
-			"1. savings account\n" +
-			"2. current account",
-			ConsoleColor.Blue);
+		Ui.AskUserWhatTypeOfAccountToBeMade();
 
 		var choice = Console.ReadLine();
 
-		if (choice is "1" or "2") return choice;
-		Ui.Message("Invalid input, please try again", ConsoleColor.Red);
+
+		if (choice is "1" or "2") {
+			return choice;
+		}
+
+		Ui.InvalidInputMessage(null);
 		return SavingsOrCurrentAcc();
 	}
 
@@ -35,7 +112,6 @@ public class BankManager : IBankManager {
 		var personRep = new PersonRepository();
 		var accRep = new AccountRepository();
 
-		GenerateBankAccountNumber(accRep);
 		AccountTypeChooser(personIdentifier, personRep,
 			GenerateBankAccountNumber(accRep));
 	}
@@ -46,12 +122,13 @@ public class BankManager : IBankManager {
 		var accountNumberGenerated = numbers.ToString();
 
 		// checking for existing account numbers
-		foreach (var accNr in accRep.GetAllAccountNumbers())
+		foreach (var accNr in accRep.GetAllAccountNumbers()) {
 			if (accNr.Contains(accountNumberGenerated)) {
 				// if it already exists, create a new one
 				numbers = random.NextInt64(00000000000, 99999999999);
 				accountNumberGenerated = numbers.ToString();
 			}
+		}
 
 		return accountNumberGenerated;
 	}
@@ -61,13 +138,11 @@ public class BankManager : IBankManager {
 		var savingsOrCurrentAcc = SavingsOrCurrentAcc();
 		string newAccountName;
 		if (savingsOrCurrentAcc == "1") {
-			Ui.Message(
-				"You've chosen to create an savings account \n" +
-				"What do you want to name the savings account?",
-				ConsoleColor.Blue);
-			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
+			Ui.ChosenAccountType(new SavingAccount());
+			newAccountName =
+				Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
-				Ui.Message("Invalid input, please try again", ConsoleColor.Red);
+				Ui.InvalidInputMessage(null);
 				AccountTypeChooser(personIdentifier, personRep,
 					accountNumberGenerated);
 			}
@@ -79,14 +154,11 @@ public class BankManager : IBankManager {
 			}
 		}
 		else if (savingsOrCurrentAcc == "2") {
-			Ui.Message(
-				"You've chosen to create an current account \n" +
-				"What do you want to name the current account?",
-				ConsoleColor.Blue);
-			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
+			Ui.ChosenAccountType(new CurrentAccount());
+			newAccountName =
+				Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
-				// TODO Rune: skal legge til flere av disse fra UI- klassen
-				Ui.InvalidInputMessage();
+				Ui.InvalidInputMessage(null);
 				AccountTypeChooser(personIdentifier, personRep,
 					accountNumberGenerated);
 			}

@@ -1,9 +1,10 @@
 using A_Team.Core.Interfaces;
-using A_Team.Core.Model;
 using A_Team.Core.Model.AccountModel;
+using A_Team.Core.Repositories;
+using PG3302Eksamen.Model;
 using PG3302Eksamen.View;
 
-namespace A_Team.Core.Repositories;
+namespace PG3302Eksamen.Repositories;
 
 public sealed class PersonRepository : IPersonRepository, IDisposable {
 	private readonly BankContext _context = new();
@@ -18,6 +19,8 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
 		return _context.Persons.Find(id) ?? throw new InvalidOperationException();
 	}
 
+	// TODO usikker på om disse skal være toList() eller ikke, de konverteres ofte til det når vi bruker det
+	// todo får se senere!
 	public IEnumerable<Person> GetAll() {
 		return _context.Persons.AsQueryable() ?? throw new InvalidOperationException();
 	}
