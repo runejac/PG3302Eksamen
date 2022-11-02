@@ -3,7 +3,7 @@ using PG3302Eksamen.Interfaces;
 
 namespace PG3302Eksamen.Model.AccountModel;
 
-public class Account : IAccount {
+public abstract class Account : IAccount {
     public int Id { get; set; }
 
     [NotMapped] public virtual int Interest { get; set; }

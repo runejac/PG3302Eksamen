@@ -4,7 +4,7 @@
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class @new : Migration
+    public partial class new111 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

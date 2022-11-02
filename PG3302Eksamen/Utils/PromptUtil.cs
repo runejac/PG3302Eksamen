@@ -17,7 +17,7 @@ public class PromptUtil {
         return AnsiConsole.Confirm("[green]" + text + "[/]");
     }
 
-    public static string PromptSelectPrompt(string? title,string[] questions) {
+    public static string PromptSelectPrompt(string? title, string[] questions) {
         return AnsiConsole.Prompt(
             new SelectionPrompt<string>()
                 .Title(title)

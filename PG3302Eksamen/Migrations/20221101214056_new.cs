@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class DatabaseRealRepoTest : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,10 +78,9 @@ namespace PG3302Eksamen.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Receipt = table.Column<int>(type: "INTEGER", nullable: false),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     FromAccountId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ToAccount = table.Column<string>(type: "TEXT", nullable: false)
+                    ToAccountId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,6 +89,48 @@ namespace PG3302Eksamen.Migrations
                         name: "FK_Transactions_Accounts_FromAccountId",
                         column: x => x.FromAccountId,
                         principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Accounts_ToAccountId",
+                        column: x => x.ToAccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Deposit",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Deposit", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Deposit_Transactions_Id",
+                        column: x => x.Id,
+                        principalTable: "Transactions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transfer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transfer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transfer_Transactions_Id",
+                        column: x => x.Id,
+                        principalTable: "Transactions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -103,12 +144,23 @@ namespace PG3302Eksamen.Migrations
                 name: "IX_Transactions_FromAccountId",
                 table: "Transactions",
                 column: "FromAccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_ToAccountId",
+                table: "Transactions",
+                column: "ToAccountId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Bills");
+
+            migrationBuilder.DropTable(
+                name: "Deposit");
+
+            migrationBuilder.DropTable(
+                name: "Transfer");
 
             migrationBuilder.DropTable(
                 name: "Transactions");

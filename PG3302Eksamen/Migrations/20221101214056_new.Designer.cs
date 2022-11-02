@@ -11,15 +11,15 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221030195437_DatabaseRealRepoTest")]
-    partial class DatabaseRealRepoTest
+    [Migration("20221101214056_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
-            modelBuilder.Entity("A_Team.Core.Model.AccountModel.Account", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.AccountModel.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace PG3302Eksamen.Migrations
                     b.HasDiscriminator<string>("Type").HasValue("Account");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.Bill", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Bill", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +87,7 @@ namespace PG3302Eksamen.Migrations
                     b.ToTable("Bills");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.Person", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,35 +125,33 @@ namespace PG3302Eksamen.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.Transaction", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("FromAccountId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Receipt")
+                    b.Property<int>("ToAccountId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("ToAccount")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FromAccountId");
 
+                    b.HasIndex("ToAccountId");
+
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.AccountModel.CurrentAccount", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.AccountModel.CurrentAccount", b =>
                 {
-                    b.HasBaseType("A_Team.Core.Model.AccountModel.Account");
+                    b.HasBaseType("PG3302Eksamen.Model.AccountModel.Account");
 
                     b.Property<int>("Interest")
                         .ValueGeneratedOnUpdateSometimes()
@@ -168,9 +166,9 @@ namespace PG3302Eksamen.Migrations
                     b.HasDiscriminator().HasValue("CurrentAccount");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.AccountModel.SavingAccount", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.AccountModel.SavingAccount", b =>
                 {
-                    b.HasBaseType("A_Team.Core.Model.AccountModel.Account");
+                    b.HasBaseType("PG3302Eksamen.Model.AccountModel.Account");
 
                     b.Property<int>("Interest")
                         .ValueGeneratedOnUpdateSometimes()
@@ -185,9 +183,23 @@ namespace PG3302Eksamen.Migrations
                     b.HasDiscriminator().HasValue("SavingsAccount");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.AccountModel.Account", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Deposit", b =>
                 {
-                    b.HasOne("A_Team.Core.Model.Person", "Owner")
+                    b.HasBaseType("PG3302Eksamen.Model.Transaction");
+
+                    b.ToTable("Deposit", (string)null);
+                });
+
+            modelBuilder.Entity("PG3302Eksamen.Model.Transfer", b =>
+                {
+                    b.HasBaseType("PG3302Eksamen.Model.Transaction");
+
+                    b.ToTable("Transfer", (string)null);
+                });
+
+            modelBuilder.Entity("PG3302Eksamen.Model.AccountModel.Account", b =>
+                {
+                    b.HasOne("PG3302Eksamen.Model.Person", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -196,15 +208,41 @@ namespace PG3302Eksamen.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("A_Team.Core.Model.Transaction", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Transaction", b =>
                 {
-                    b.HasOne("A_Team.Core.Model.AccountModel.Account", "FromAccount")
+                    b.HasOne("PG3302Eksamen.Model.AccountModel.Account", "FromAccount")
                         .WithMany()
                         .HasForeignKey("FromAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PG3302Eksamen.Model.AccountModel.Account", "ToAccount")
+                        .WithMany()
+                        .HasForeignKey("ToAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("FromAccount");
+
+                    b.Navigation("ToAccount");
+                });
+
+            modelBuilder.Entity("PG3302Eksamen.Model.Deposit", b =>
+                {
+                    b.HasOne("PG3302Eksamen.Model.Transaction", null)
+                        .WithOne()
+                        .HasForeignKey("PG3302Eksamen.Model.Deposit", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PG3302Eksamen.Model.Transfer", b =>
+                {
+                    b.HasOne("PG3302Eksamen.Model.Transaction", null)
+                        .WithOne()
+                        .HasForeignKey("PG3302Eksamen.Model.Transfer", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -12,11 +12,12 @@ public class BankContext : DbContext {
         DbPath = Path.Join(path, "bank.db");
     }
 
+    public DbSet<Transaction> Transactions { get; set; } = null!;
 
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<Bill> Bills { get; set; } = null!;
     public DbSet<Person> Persons { get; set; } = null!;
-    public DbSet<Transaction> Transactions { get; set; } = null!;
+
 
     private string DbPath { get; }
 
@@ -26,6 +27,13 @@ public class BankContext : DbContext {
             .HasDiscriminator<string>("Type")
             .HasValue<SavingAccount>("SavingsAccount")
             .HasValue<CurrentAccount>("CurrentAccount");
+
+        modelBuilder.Entity<Transaction>()
+            .HasDiscriminator<string>("Type")
+            .HasValue<Deposit>("Deposit")
+            .HasValue<Transfer>("Transfer")
+            .HasValue<Withdraw>("Withdraw");
+
 
         modelBuilder.Entity<SavingAccount>()
             .Property(e => e.Interest)
