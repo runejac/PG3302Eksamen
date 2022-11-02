@@ -48,12 +48,8 @@ public class BankManager : IBankManager {
 
 		var socialSecNumber = SocialSecurityInput();
 
-
-		Ui.MessageSameLine("Password: ", ConsoleColor.Blue);
-		var password = Console.ReadLine();
-		Ui.MessageSameLine("Password again: ", ConsoleColor.Blue);
-		var confirmPassword = Console.ReadLine();
-
+		PasswordInput(out var password, out var confirmPassword);
+		
 		if (password == confirmPassword) {
 			var newPerson = new Person(address, firstName, lastName, password,
 				phoneNumber,
@@ -62,21 +58,19 @@ public class BankManager : IBankManager {
 		}
 		else {
 			Ui.InvalidInputMessage("Passwords does not match, try again.");
+			PasswordInput(out password, out confirmPassword);
 		}
+	}
 
-
-		//Console.WriteLine(personRepository.GetAll().ToList());
-
-		/*if (confirmPassword == password) {
-			if (personRepository.GetAll().ToList() == socialSecurityNumber)) {
-			}
-
-			// if check if person exists in db with same social security number check
-			newPerson = new Person();
+	private static void PasswordInput(out string p, out string cp) {
+		Ui.MessageSameLine("Password: ", ConsoleColor.Blue);
+		var password = Console.ReadLine();
+		Ui.MessageSameLine("Password again: ", ConsoleColor.Blue);
+		var confirmPassword = Console.ReadLine();
+		{
+			p = password;
+			cp = confirmPassword;
 		}
-		else {
-			Console.WriteLine("Passwords do not match");
-		}*/
 	}
 
 	private static string? SocialSecurityInput() {
@@ -86,18 +80,24 @@ public class BankManager : IBankManager {
 	}
 
 	private static void SocialSecurityChecker(string socialSecNumber, Person newPerson) {
-		PersonRepository personRepository;
-		personRepository = new PersonRepository();
-		foreach (var personsInDb in personRepository.GetAll().ToList())
-			if (personsInDb.SocialSecurityNumber.Equals(socialSecNumber)) {
-				Ui.InvalidInputMessage(
-					"Woops! Social security number already exists!");
-				SocialSecurityInput();
+		var personRepository = new PersonRepository();
+		if (personRepository.GetAll().ToList().Count < 1) {
+			personRepository.Insert(newPerson);
+			Ui.SuccessfullyRegistered(newPerson.FirstName);
+		} else {
+			foreach (var personsInDb in personRepository.GetAll().ToList()) {
+				while (personsInDb.SocialSecurityNumber == socialSecNumber) {
+					Ui.InvalidInputMessage(
+						"Woops! Social security number already exists!");
+					SocialSecurityInput();
+				}
+				if (personsInDb.SocialSecurityNumber != socialSecNumber) {
+					Console.WriteLine("what");
+					personRepository.Insert(newPerson);
+					Ui.SuccessfullyRegistered(newPerson.FirstName);
+				}
 			}
-			else {
-				personRepository.Insert(newPerson);
-				Ui.SuccessfullyRegistered(newPerson.FirstName);
-			}
+		}
 	}
 
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class testDb : Migration
+    public partial class initCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
