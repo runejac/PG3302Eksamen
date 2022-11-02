@@ -87,6 +87,9 @@ namespace PG3302Eksamen.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id")
+                        .IsUnique();
+
                     b.HasIndex("SocialSecurityNumber")
                         .IsUnique();
 

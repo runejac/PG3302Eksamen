@@ -73,17 +73,14 @@ public class BankManager : IBankManager {
 			var newPerson = new Person(address, firstName, lastName, password,
 				phoneNumber, socialSecurityNumber, email);
 
-			if (personRepository.GetAll().ToList().Count < 1) {
-				personRepository.Insert(newPerson);
-			}
-
-			if (!match) {
+			if (!match || personRepository.GetAll().ToList().Count < 1) {
 				socialSecNrChecker = false;
 				personRepository.Insert(newPerson);
 				Ui.SuccessfullyRegistered(newPerson.FirstName);
 			}
 			else {
-				Ui.InvalidInputMessage("Social Sec already exists");
+				Ui.InvalidInputMessage(
+					"The social security number you used already exists. If that's you, please log in instead.");
 			}
 		}
 	}
