@@ -1,7 +1,7 @@
-using A_Team.Core.Model.AccountModel;
 using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
 
-namespace A_Team.Core.Interfaces;
+namespace PG3302Eksamen.Interfaces;
 
 public interface IPersonRepository : IRepository<Person> {
 	void UpdateAddress(int id, string newAddress);

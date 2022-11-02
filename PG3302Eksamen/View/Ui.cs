@@ -1,4 +1,4 @@
-﻿using A_Team.Core.Model.AccountModel;
+﻿using PG3302Eksamen.Model.AccountModel;
 
 namespace PG3302Eksamen.View;
 

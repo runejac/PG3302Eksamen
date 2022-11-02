@@ -1,6 +1,4 @@
-using PG3302Eksamen.Interfaces;
-
-namespace A_Team.Core.Interfaces;
+namespace PG3302Eksamen.Interfaces;
 
 public interface IUnitOfWork : IDisposable {
     IAccountRepository Account { get; }

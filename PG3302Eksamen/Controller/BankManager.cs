@@ -1,7 +1,6 @@
 ﻿using A_Team.Core.Controller;
-using A_Team.Core.Model.AccountModel;
-using A_Team.Core.Repositories;
 using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Repositories;
 using PG3302Eksamen.View;
 

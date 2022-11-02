@@ -1,7 +1,7 @@
-using A_Team.Core.Interfaces;
-using A_Team.Core.Model;
+using PG3302Eksamen.Interfaces;
+using PG3302Eksamen.Model;
 
-namespace A_Team.Core.Repositories;
+namespace PG3302Eksamen.Repositories;
 
 public sealed class TransactionRepository : ITransactionRepository, IDisposable {
     private readonly BankContext _context = new();
@@ -30,18 +30,22 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
             _context.SaveChanges();
     }
 
-    public List<Transaction> GetRecentTransactions(int days) {
-        var now = DateTime.Now;
-        return new List<Transaction>(_context.Transactions.Where(
-            e => e.Date > now - TimeSpan.FromDays(days)
-            ));
-    }
+   // public List<Transaction> GetRecentTransactions(int days) {
+     //   var now = DateTime.Now;
+      //  return new List<Transaction>(_context.Transactions.Where(
+        //    e => e.Date > now - TimeSpan.FromDays(days)
+          //  ));
+   // }
 
-    public void PayBill(int billId, string fromAccountNr) {
+   public List<Transaction> GetRecentTransactions(int days) {
+       throw new NotImplementedException();
+   }
+
+   public void PayBill(int billId, string fromAccountNr) {
         var billRepo = new BillRepository();
         var idOfBill = billRepo.GetById(billId);
         billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.PAID);
-        Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
+       // Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
     }
 
     public void Transfer(int accountFromId, int accountToId, decimal amount) {
@@ -56,7 +60,7 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
         to.Balance += amount;
         accRepo.UpdateBalance(from.Id, from.Balance);
         accRepo.UpdateBalance(to.Id, to.Balance);
-        Insert(new Transaction().CreateTransaction(accountFromId, DateTime.Now, from.AccountNumber, to.AccountNumber));
+       // Insert(new Transaction().CreateTransaction(accountFromId, DateTime.Now, from.AccountNumber, to.AccountNumber));
     }
     
     private void Dispose(bool disposing) {

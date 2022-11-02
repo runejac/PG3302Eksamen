@@ -1,7 +1,6 @@
-using A_Team.Core.Interfaces;
-using A_Team.Core.Model.AccountModel;
-using A_Team.Core.Repositories;
+using PG3302Eksamen.Interfaces;
 using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.View;
 
 namespace PG3302Eksamen.Repositories;
@@ -40,7 +39,7 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
 		personToUpdate.Address = newAddress;
 		_context.SaveChanges();
 	}
-
+	
 
 	public void AddNewAccount(Account entity) {
 		_context.Accounts.Add(entity);

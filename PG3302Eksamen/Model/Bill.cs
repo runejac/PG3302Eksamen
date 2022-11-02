@@ -2,7 +2,7 @@ using PG3302Eksamen.Model.AccountModel;
 
 namespace PG3302Eksamen.Model;
 
-public class Bill {
+public class Bill : Transaction {
     public int Id { get; set; }
     public DateTime DueDate { get; set; }
     public string AccountNumber { get; set; }
