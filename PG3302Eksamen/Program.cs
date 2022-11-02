@@ -8,8 +8,14 @@ internal static class Program {
 		/*IUserReader userReader = new UserReader();
 		new BankManager(userReader).Run();*/
 
+		AccountController accountController = new();
+		PersonController personController = new();
+		
+		personController.RegisterNewPerson();
+		
 
-		new BankManager().Run();
+		
+		
 		// var personRepository = new PersonRepository();
 		// person objektet må kommet fra en state etter logged in
 		//BankManager.CreateBankAccount(personRepository.GetById(1).Id);

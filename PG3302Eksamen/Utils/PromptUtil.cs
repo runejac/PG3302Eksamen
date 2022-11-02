@@ -3,17 +3,8 @@ using Spectre.Console;
 namespace PG3302Eksamen.Utils;
 
 public class PromptUtil {
-    private static string msg;
-
-    public static void setMessage(string message) {
-        msg = message;
-    }
-
-    public static string getMessage() {
-        return msg;
-    }
-
-    public static bool PromptQuestion(string text) {
+    
+    public static bool PromptConfirmation(string text) {
         return AnsiConsole.Confirm("[green]" + text + "[/]");
     }
 
@@ -23,5 +14,25 @@ public class PromptUtil {
                 .Title(title)
                 .PageSize(10)
                 .AddChoices(questions));
+    }
+    
+    public static string PromptPassword(string prompt)
+    {
+        return AnsiConsole.Prompt(
+            new TextPrompt<string>(prompt)
+                .PromptStyle("grey50")
+                .Secret());
+    }
+    
+    
+    // TODO: Validate correctly, now it only checks for no input
+
+    public static string PromptQuestion(string question, string error) {
+        return AnsiConsole.Prompt(
+            new TextPrompt<string>(question)
+                .Validate(input
+                    => !string.IsNullOrWhiteSpace(input)
+                        ? ValidationResult.Success()
+                        : ValidationResult.Error("[red]" + error + "[/]")));
     }
 }

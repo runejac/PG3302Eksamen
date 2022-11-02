@@ -3,16 +3,19 @@
 public class Person {
 	public DateTime RegisterAt = DateTime.Now;
 
-	public Person(string address, string firstName, string lastName, string password,
+	
+	public Person CreatePerson(string address, string firstName, string lastName, string password,
 		string phoneNumber,
 		string socialSecurityNumber, string email) {
-		Address = address;
-		FirstName = firstName;
-		LastName = lastName;
-		Password = password;
-		Email = email;
-		PhoneNumber = phoneNumber;
-		SocialSecurityNumber = socialSecurityNumber;
+		return new Person {
+			Address = address,
+			FirstName = firstName,
+			LastName = lastName,
+			Password = password,
+			Email = email,
+			PhoneNumber = phoneNumber,
+			SocialSecurityNumber = socialSecurityNumber
+		};
 	}
 
 	public int Id { get; set; }
