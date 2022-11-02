@@ -24,11 +24,11 @@ public class BankManager : IBankManager {
 	}*/
 
 	public void Run() {
-		//Ui.WelcomeMessage();
-		RegisterNewPerson();
+		throw new NotImplementedException();
+		//RegisterNewPerson();
 	}
 
-	private static void RegisterNewPerson() {
+	public static void RegisterNewPerson() {
 		var personRepository = new PersonRepository();
 
 		var socialSecNrChecker = true;
@@ -69,7 +69,8 @@ public class BankManager : IBankManager {
 				s.SocialSecurityNumber.Contains(socialSecurityNumber));*/
 			var match = personRepository.GetAll()
 				.ToList()
-				.FirstOrDefault(person => person.SocialSecurityNumber.Equals(socialSecurityNumber));
+				.FirstOrDefault(person =>
+					person.SocialSecurityNumber.Equals(socialSecurityNumber));
 
 			var newPerson = new Person(address, firstName, lastName, password,
 				phoneNumber, socialSecurityNumber, email);
@@ -77,7 +78,8 @@ public class BankManager : IBankManager {
 			if (match is null || personRepository.GetAll().ToList().Count < 1) {
 				socialSecNrChecker = false;
 				personRepository.Insert(newPerson);
-				Ui.SuccessfullyRegistered(newPerson.FirstName);
+				// TODO må TROLIG hente state fra logged inn metode, og ID derfra.
+				Ui.SuccessfullyRegistered(newPerson.FirstName, newPerson.Id);
 			}
 			else {
 				Ui.InvalidInputMessage(

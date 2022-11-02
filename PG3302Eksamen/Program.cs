@@ -1,4 +1,4 @@
-using PG3302Eksamen.Controller;
+using PG3302Eksamen.View;
 
 namespace PG3302Eksamen;
 
@@ -7,8 +7,9 @@ internal static class Program {
 		/*IUserReader userReader = new UserReader();
 		new BankManager(userReader).Run();*/
 
+		Ui.WelcomeMessage();
 
-		new BankManager().Run();
+		//new BankManager().Run();
 		// var personRepository = new PersonRepository();
 		// person objektet må kommet fra en state etter logged in
 		//BankManager.CreateBankAccount(personRepository.GetById(1).Id);
