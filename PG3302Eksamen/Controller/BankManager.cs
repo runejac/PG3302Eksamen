@@ -25,8 +25,6 @@ public class BankManager : IBankManager {
 
 	public void Run() {
 		//Ui.WelcomeMessage();
-
-
 		RegisterNewPerson();
 	}
 
@@ -67,20 +65,23 @@ public class BankManager : IBankManager {
 		while (socialSecNrChecker) {
 			Ui.MessageSameLine("Social security number: ", ConsoleColor.Blue);
 			var socialSecurityNumber = Console.ReadLine();
-			var match = personRepository.GetAll().ToList().Any(s =>
-				s.SocialSecurityNumber.Contains(socialSecurityNumber));
+			/*var match = personRepository.GetAll().ToList().TrueForAll(s =>
+				s.SocialSecurityNumber.Contains(socialSecurityNumber));*/
+			var match = personRepository.GetAll()
+				.ToList()
+				.FirstOrDefault(person => person.SocialSecurityNumber.Equals(socialSecurityNumber));
 
 			var newPerson = new Person(address, firstName, lastName, password,
 				phoneNumber, socialSecurityNumber, email);
 
-			if (!match || personRepository.GetAll().ToList().Count < 1) {
+			if (match is null || personRepository.GetAll().ToList().Count < 1) {
 				socialSecNrChecker = false;
 				personRepository.Insert(newPerson);
 				Ui.SuccessfullyRegistered(newPerson.FirstName);
 			}
 			else {
 				Ui.InvalidInputMessage(
-					"The social security number you used already exists. If that's you, please log in instead.");
+					"The social security number you used already exists, try again.");
 			}
 		}
 	}
@@ -93,8 +94,6 @@ public class BankManager : IBankManager {
 		Ui.AskUserWhatTypeOfAccountToBeMade();
 
 		var choice = Console.ReadLine();
-
-
 		if (choice is "1" or "2") {
 			return choice;
 		}
