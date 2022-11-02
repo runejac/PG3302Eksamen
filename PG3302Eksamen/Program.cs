@@ -25,8 +25,14 @@ internal static class Program {
 			"111111111");
 		
 		var currentAccount = new CurrentAccountFactory().InitializeAccount("konto2",
-			personRepository.GetById(2).Id,
-			"111111111");*/
+			personRepository.GetById(2).Id,"111111111");*/
+
+
+
+		foreach (var transaction in transactionRepository.GetRecentTransactions(1)) {
+			Console.WriteLine(transaction.Id);
+		}
+		
 
 		//accountRepository.Insert(savingAccount);
 		//accountRepository.Insert(currentAccount);

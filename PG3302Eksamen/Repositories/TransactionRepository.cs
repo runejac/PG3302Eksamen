@@ -30,14 +30,13 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
             _context.SaveChanges();
     }
 
-    //TODO: Test this function
     public List<Transaction> GetRecentTransactions(int days) {
+        var now = DateTime.Now;
         return new List<Transaction>(_context.Transactions.Where(
-            e => e.Date > DateTime.Today - TimeSpan.FromDays(days)
+            e => e.Date > now - TimeSpan.FromDays(days)
             ));
     }
 
-    //TODO: Test this function
     public void PayBill(int billId, string fromAccountNr) {
         var billRepo = new BillRepository();
         var idOfBill = billRepo.GetById(billId);
