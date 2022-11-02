@@ -1,9 +1,10 @@
+using A_Team.Core.Model.AccountModel;
 using PG3302Eksamen.Model;
 
-namespace PG3302Eksamen.Interfaces;
+namespace A_Team.Core.Interfaces;
 
 public interface IPersonRepository : IRepository<Person> {
-    void UpdateAddress(string address);
-    void AddNewAccount();
-    void ChangePassword(string password);
+	void UpdateAddress(int id, string newAddress);
+	void AddNewAccount(Account entity);
+	void ChangePassword(int id, string newPassword);
 }

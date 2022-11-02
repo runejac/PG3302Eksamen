@@ -1,8 +1,7 @@
-using PG3302Eksamen.Interfaces;
-using PG3302Eksamen.Model;
-using PG3302Eksamen.Model.AccountModel;
+using A_Team.Core.Interfaces;
+using A_Team.Core.Model;
 
-namespace PG3302Eksamen.Repositories;
+namespace A_Team.Core.Repositories;
 
 public sealed class TransactionRepository : ITransactionRepository, IDisposable {
     private readonly BankContext _context = new();
@@ -22,33 +21,44 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     public void Remove(Transaction entity) {
-        throw new NotImplementedException();
+        _context.Remove(entity);
+        _context.SaveChanges();
     }
 
     public void Insert(Transaction entity) {
-        try {
             _context.Add(entity);
             _context.SaveChanges();
+    }
+
+    public List<Transaction> GetRecentTransactions(int days) {
+        var now = DateTime.Now;
+        return new List<Transaction>(_context.Transactions.Where(
+            e => e.Date > now - TimeSpan.FromDays(days)
+            ));
+    }
+
+    public void PayBill(int billId, string fromAccountNr) {
+        var billRepo = new BillRepository();
+        var idOfBill = billRepo.GetById(billId);
+        billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.PAID);
+        Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
+    }
+
+    public void Transfer(int accountFromId, int accountToId, decimal amount) {
+        var accRepo = new AccountRepository();
+        var from = accRepo.GetById(accountFromId);
+        var to = accRepo.GetById(accountToId);
+        if (from.Balance <= amount - 1) {
+            Console.WriteLine("Not enough money to transfer");
+            return;
         }
-        catch (Exception e) {
-            Console.WriteLine(e);
-            throw;
-        }
+        from.Balance -= amount;
+        to.Balance += amount;
+        accRepo.UpdateBalance(from.Id, from.Balance);
+        accRepo.UpdateBalance(to.Id, to.Balance);
+        Insert(new Transaction().CreateTransaction(accountFromId, DateTime.Now, from.AccountNumber, to.AccountNumber));
     }
-
-    public List<Transaction> GetRecentTransactions() {
-        throw new NotImplementedException();
-    }
-
-    public void PayBill(Bill bill) {
-        throw new NotImplementedException();
-    }
-
-    public void Transfer(Account accountFrom, Account accountTo) {
-        throw new NotImplementedException();
-    }
-
-
+    
     private void Dispose(bool disposing) {
         if (!_disposed)
             if (disposing)

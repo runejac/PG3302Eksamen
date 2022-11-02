@@ -1,9 +1,10 @@
-﻿using PG3302Eksamen.Interfaces;
-using PG3302Eksamen.Model.AccountModel;
+using A_Team.Core.Interfaces;
+using A_Team.Core.Model.AccountModel;
 
-namespace PG3302Eksamen.Repositories;
+namespace A_Team.Core.Repositories;
 
 public sealed class AccountRepository : IAccountRepository, IDisposable {
+
     private readonly BankContext _context = new();
     private bool _disposed;
 
@@ -16,7 +17,6 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
     }
 
     public void Insert(Account entity) {
-        Console.WriteLine(entity.GetType());
         _context.Add(entity);
         _context.SaveChanges();
     }
@@ -25,17 +25,34 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         _context.Remove(entity);
         _context.SaveChanges();
     }
+    
+    public List<string> GetAllAccountNumbers() {
+        var response = GetAll();
+        return response.Select(accounts => accounts.AccountNumber).ToList();
+	}
 
     public IOrderedEnumerable<Account> GetSortedByBalance() {
         return GetAll().OrderByDescending(acc => acc.Balance);
     }
 
-    public List<Account> GetSortedByName(string name) {
-        throw new NotImplementedException();
+    public IEnumerable<Account> GetSortedByName(string name) {
+        return GetAll().Where(acc => acc.Name.Equals(name));
+    }
+    
+    public IEnumerable<Account> GetSortedByOwner(int id) {
+        return _context.Accounts.Where(e => e.OwnerId == id);
     }
 
-    public void UpdateAccount(Account account) {
-        throw new NotImplementedException();
+    public void ChangeAccountName(int id, string newName) {
+        var accountToUpdate = GetById(id);
+        accountToUpdate.Name = newName;
+        _context.SaveChanges();
+    }
+
+    public void UpdateBalance(int id, decimal newBalance) {
+        var accountToUpdate = GetById(id);
+        accountToUpdate.Balance = newBalance;
+        _context.SaveChanges();
     }
 
     public void Save() {

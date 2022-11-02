@@ -6,7 +6,8 @@ participant BusinessLogic
 participant DataAccess
 database Database
 
-group CreateUser
+group BankManager
+group RegisterPerson
 User -> UI : Insert SocialSecNum
 User -> UI : Insert password
 User -> UI : Create user
@@ -34,7 +35,6 @@ BusinessLogic -> DataAccess : Authorize
 DataAccess -> Database : Validate and approve
 alt Correct password
 BusinessLogic <-- Database : Return approval
-
 UI <-- BusinessLogic : Access approved message
 User <-- UI : User log-in success
 else Wrong password
@@ -43,19 +43,42 @@ UI <-- BusinessLogic : Access denied message
 User <-- UI : User log-in failed
 end
 end
+end
+
+group BankCommunicator
+
+User -> UI : BC menu
+
+group Receive account information
+UI -> Database : Get account information
+Database --> UI: Return account information
+end
+
+group Receive transactions
+UI -> Database : Get transactions 
+Database --> UI: Return transactions 
+end
+
+group Receive balance on all accounts
+UI -> Database : Get balance decimal
+Database --> UI: Return balance decimal
+end
+
+group Payment
+User -> UI : Add payment credentials
+UI -> BusinessLogic : Set bill object
+BusinessLogic -> DataAccess : Generate bill object
+DataAccess -> Database : Add bill object to database
+end
 
 group CreateAccount
-User -> UI : View Account Menu 
-UI -> DataAccess : 
 User -> UI : Add account credentials
+UI -> BusinessLogic : Set account object
+BusinessLogic -> DataAccess : Generate Account object
+DataAccess -> Database : Add account object to database
 end
 
-group BillingSystem
-User -> UI : BillingMenu
-end
 
-group TransactionSystem
-User -> UI : BillingMenu
 end
 
 @enduml

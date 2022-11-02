@@ -14,11 +14,11 @@ public abstract class Account : IAccount {
 
     public string Name { get; set; }
 
-    public decimal Balance { get; set; }
+    public decimal Balance { get; set; } = 0;
 
-    public Person Owner { get; set; }
+    public int OwnerId { get; set; }
 
-    public DateTime DateOfCreation { get; set; }
+    public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
 
     /*public string AccountNumber { get; set; }
@@ -41,7 +41,7 @@ public abstract class Account : IAccount {
         throw new NotImplementedException();
     }
 
-    public virtual string GetAccountType() {
-        return "base";
+    public string GetAccountType() {
+        return this is SavingAccount ? "savings account" : "current account";
     }
 }

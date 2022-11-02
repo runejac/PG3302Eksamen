@@ -1,52 +1,50 @@
-﻿using PG3302Eksamen.Controller;
-using PG3302Eksamen.Model;
-using PG3302Eksamen.Model.AccountModel;
-using PG3302Eksamen.Repositories;
+using PG3302Eksamen.Controller;
 
 namespace PG3302Eksamen;
 
-public static class Program {
-    public static void Main(string[] args) {
-        var accountRepository = new AccountRepository();
-        var billRepository = new BillRepository();
-        var personRepository = new PersonRepository();
-        var transactionRepository = new TransactionRepository();
-        DepositController depositController = new();
-        AccountController accountController = new();
+internal static class Program {
+	private static void Main(string[] args) {
+		/*IUserReader userReader = new UserReader();
+		new BankManager(userReader).Run();*/
 
 
-        var c = new SavingsAccountFactory().InitializeAccount(0, 1, 100,
-            "Brukskonto",
-            new Person("DOOP", "Daniel", "Lysak", "uno dos tres",
-                "92262913",
-                "06049524733", new DateTime().Date),
-            "222222222", DateTime.Now);
-
-        var c2 = new SavingsAccountFactory().InitializeAccount(0, 1, 100,
-            "Spare",
-            new Person("WOOP", "Daniel", "Lysak", "uno dos tres",
-                "92262913",
-                "06049524733", new DateTime().Date),
-            "11111111", DateTime.Now);
+		new BankManager().Run();
+		// var personRepository = new PersonRepository();
+		// person objektet må kommet fra en state etter logged in
+		//BankManager.CreateBankAccount(personRepository.GetById(1).Id);
 
 
-        accountController.CreateAccount(0, 1, 100,
-            "Spare",
-            new Person("WOOP", "Daniel", "Lysak", "uno dos tres",
-                "92262913",
-                "06049524733", new DateTime().Date),
-            "11111111", DateTime.Now);
+		/*
+		var billRepository = new BillRepository();
+		var transactionRepository = new TransactionRepository();
+		var accountRepository = new AccountRepository();
+		
 
-        depositController.CreateDeposit(c, c2, 100);
-        depositController.Pay();
-
-
-        // Command has been added to the queue, but not executed.
-
-        // This executes the commands.
+		var savingAccount = new SavingsAccountFactory().InitializeAccount("konto1",
+			personRepository.GetById(1).Id,
+			"111111111");
+		
+		var currentAccount = new CurrentAccountFactory().InitializeAccount("konto2",
+			personRepository.GetById(2).Id,"111111111");*/
 
 
-        Console.WriteLine(c.Balance);
-        Console.WriteLine(c2.Balance);
-    }
+
+		foreach (var transaction in transactionRepository.GetRecentTransactions(1)) {
+			Console.WriteLine(transaction.Id);
+		}
+		
+
+		//accountRepository.Insert(savingAccount);
+		//accountRepository.Insert(currentAccount);
+		//accountRepository.UpdateBalance(accountRepository.GetById(1).Id, 1000);
+		//accountRepository.UpdateBalance(accountRepository.GetById(2).Id, 1000);
+
+
+		//personRepository.Insert(new Person("fiskeveien 2", "joachim", "christ",
+		//"123", "90237461", "1234", DateTime.Today));
+		//personRepository.Insert(new Person("fiskeveien 3", "rune", "christ",
+		//	"12345", "90231", "124", DateTime.Today));
+
+		//transactionRepository.Transfer(2, 1, 1);
+	}
 }

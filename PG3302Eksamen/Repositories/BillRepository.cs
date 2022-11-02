@@ -6,8 +6,7 @@ namespace PG3302Eksamen.Repositories;
 public sealed class BillRepository : IBillRepository, IDisposable {
     private readonly BankContext _context = new();
     private bool _disposed;
-
-
+    
     public Bill GetById(int id) {
         return _context.Bills.Find(id) ?? throw new InvalidOperationException();
     }
@@ -30,10 +29,15 @@ public sealed class BillRepository : IBillRepository, IDisposable {
         return GetAll().OrderByDescending(bill => bill.DueDate);
     }
 
-    public List<Bill> GetSortedByStatus() {
-        throw new NotImplementedException();
+    public IEnumerable<Bill> GetSortedByStatus(BillStatusEnum status) {
+        return GetAll().Where(bill => bill.Status.Equals(status));
     }
 
+    public void UpdateBillStatus(int id, BillStatusEnum newStatus) {
+        var billToUpdate = GetById(id);
+        billToUpdate.Status = newStatus;
+        _context.SaveChanges();
+    }
 
     public void Dispose() {
         Dispose(true);
