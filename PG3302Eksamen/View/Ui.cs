@@ -11,6 +11,11 @@ public static class Ui {
 		Console.WriteLine(message);
 	}
 
+	public static void MessageSameLine(string message, ConsoleColor color) {
+		Console.ForegroundColor = color;
+		Console.Write(message);
+	}
+
 	public static void AskUserWhatTypeOfAccountToBeMade() {
 		Message("Do you want it to be a savings account or a current account?\n" +
 		        "1. savings account\n" +
@@ -34,7 +39,20 @@ public static class Ui {
 			ConsoleColor.DarkGreen);
 	}
 
-	public static void InvalidInputMessage() {
-		Message("Invalid input, try again", ConsoleColor.DarkRed);
+	public static void InvalidInputMessage(string? customMessage) {
+		Message(customMessage ?? "Invalid input, try again.", ConsoleColor.DarkRed);
+	}
+
+	public static void WelcomeMessage() {
+		Message("Welcome to Bank Kristiania!\n" +
+		        "Choose to either register or login:\n" +
+		        "1. Register\n" +
+		        "2. Login", ConsoleColor.Blue);
+	}
+
+	public static void SuccessfullyRegistered(string name) {
+		Message(
+			$"Congratulations {name}, welcome to the Bank of Kristiania where your needs meets our competence!",
+			ConsoleColor.Green);
 	}
 }

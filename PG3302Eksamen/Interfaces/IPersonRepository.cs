@@ -1,5 +1,5 @@
-using A_Team.Core.Model;
 using A_Team.Core.Model.AccountModel;
+using PG3302Eksamen.Model;
 
 namespace A_Team.Core.Interfaces;
 

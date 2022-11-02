@@ -1,52 +1,53 @@
 using A_Team.Core.Model;
 using A_Team.Core.Model.AccountModel;
 using Microsoft.EntityFrameworkCore;
+using PG3302Eksamen.Model;
 
 namespace A_Team.Core.Repositories;
 
 public class BankContext : DbContext {
-    public BankContext() {
-        const Environment.SpecialFolder folder =
-            Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = Path.Join(path, "bank.db");
+	public BankContext() {
+		const Environment.SpecialFolder folder =
+			Environment.SpecialFolder.LocalApplicationData;
+		var path = Environment.GetFolderPath(folder);
+		DbPath = Path.Join(path, "bank.db");
 
-        Console.WriteLine(DbPath);
-    }
-    
-    public DbSet<Account> Accounts { get; set; } = null!;
-    public DbSet<Bill> Bills { get; set; } = null!;
-    public DbSet<Person> Persons { get; set; } = null!;
-    public DbSet<Transaction> Transactions { get; set; } = null!;
+		Console.WriteLine(DbPath);
+	}
 
-    private string DbPath { get; }
+	public DbSet<Account> Accounts { get; set; } = null!;
+	public DbSet<Bill> Bills { get; set; } = null!;
+	public DbSet<Person> Persons { get; set; } = null!;
+	public DbSet<Transaction> Transactions { get; set; } = null!;
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) {
-        modelBuilder.Entity<Account>()
-            .HasDiscriminator<string>("Type")
-            .HasValue<SavingAccount>("SavingsAccount")
-            .HasValue<CurrentAccount>("CurrentAccount");
+	private string DbPath { get; }
 
-        modelBuilder.Entity<SavingAccount>()
-            .Property(e => e.Interest)
-            .HasColumnName("Interest");
-        modelBuilder.Entity<CurrentAccount>()
-            .Property(e => e.Interest)
-            .HasColumnName("Interest");
+	protected override void OnModelCreating(ModelBuilder modelBuilder) {
+		modelBuilder.Entity<Account>()
+			.HasDiscriminator<string>("Type")
+			.HasValue<SavingAccount>("SavingsAccount")
+			.HasValue<CurrentAccount>("CurrentAccount");
 
-        modelBuilder.Entity<SavingAccount>()
-            .Property(e => e.WithdrawLimit)
-            .HasColumnName("WithdrawLimit");
-        modelBuilder.Entity<CurrentAccount>()
-            .Property(e => e.WithdrawLimit)
-            .HasColumnName("WithdrawLimit");
+		modelBuilder.Entity<SavingAccount>()
+			.Property(e => e.Interest)
+			.HasColumnName("Interest");
+		modelBuilder.Entity<CurrentAccount>()
+			.Property(e => e.Interest)
+			.HasColumnName("Interest");
 
-        modelBuilder.Entity<Person>()
-            .HasIndex(e => new { e.SocialSecurityNumber })
-            .IsUnique();
-    }
+		modelBuilder.Entity<SavingAccount>()
+			.Property(e => e.WithdrawLimit)
+			.HasColumnName("WithdrawLimit");
+		modelBuilder.Entity<CurrentAccount>()
+			.Property(e => e.WithdrawLimit)
+			.HasColumnName("WithdrawLimit");
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options) {
-        options.UseSqlite($"Data Source={DbPath}");
-    }
+		modelBuilder.Entity<Person>()
+			.HasIndex(e => new { e.SocialSecurityNumber })
+			.IsUnique();
+	}
+
+	protected override void OnConfiguring(DbContextOptionsBuilder options) {
+		options.UseSqlite($"Data Source={DbPath}");
+	}
 }

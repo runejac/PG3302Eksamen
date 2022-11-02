@@ -1,18 +1,103 @@
-﻿using A_Team.Core.Model;
+﻿using A_Team.Core.Controller;
 using A_Team.Core.Model.AccountModel;
 using A_Team.Core.Repositories;
+using PG3302Eksamen.Model;
+using PG3302Eksamen.Repositories;
 using PG3302Eksamen.View;
 
-namespace A_Team.Core.Controller;
+namespace PG3302Eksamen.Controller;
 
 public class BankManager : IBankManager {
 	private static BankManager _instance;
+	//private static PersonRepository _personRepository;
 
-	private BankManager() {
-	}
+
+	/*public BankManager(IUserReader userReader) {
+		UserReader = userReader;
+	}*/
+
+	//private IUserReader UserReader { get; }
+
+	/*private static PersonRepository PersonRepository {
+		get => _personRepository;
+		set => _personRepository =
+			value ?? throw new ArgumentNullException(nameof(value));
+	}*/
 
 	public void Run() {
-		//getInstance();
+		//Ui.WelcomeMessage();
+
+
+		RegisterNewPerson();
+	}
+
+	private static void RegisterNewPerson() {
+		var personRepository = new PersonRepository();
+
+		Ui.MessageSameLine("Address: ", ConsoleColor.Blue);
+		var address = Console.ReadLine();
+		Ui.MessageSameLine("First name: ", ConsoleColor.Blue);
+		var firstName = Console.ReadLine();
+		Ui.MessageSameLine("Last name: ", ConsoleColor.Blue);
+		var lastName = Console.ReadLine();
+		Ui.MessageSameLine("Phone number: ", ConsoleColor.Blue);
+		var phoneNumber = Console.ReadLine();
+		Ui.MessageSameLine("Email: ", ConsoleColor.Blue);
+		var email = Console.ReadLine();
+
+
+		var socialSecNumber = SocialSecurityInput();
+
+
+		Ui.MessageSameLine("Password: ", ConsoleColor.Blue);
+		var password = Console.ReadLine();
+		Ui.MessageSameLine("Password again: ", ConsoleColor.Blue);
+		var confirmPassword = Console.ReadLine();
+
+		if (password == confirmPassword) {
+			var newPerson = new Person(address, firstName, lastName, password,
+				phoneNumber,
+				socialSecNumber, email);
+			SocialSecurityChecker(socialSecNumber, newPerson);
+		}
+		else {
+			Ui.InvalidInputMessage("Passwords does not match, try again.");
+		}
+
+
+		//Console.WriteLine(personRepository.GetAll().ToList());
+
+		/*if (confirmPassword == password) {
+			if (personRepository.GetAll().ToList() == socialSecurityNumber)) {
+			}
+
+			// if check if person exists in db with same social security number check
+			newPerson = new Person();
+		}
+		else {
+			Console.WriteLine("Passwords do not match");
+		}*/
+	}
+
+	private static string? SocialSecurityInput() {
+		Ui.MessageSameLine("Social security number: ", ConsoleColor.Blue);
+		var socialSecNumber = Console.ReadLine();
+		return socialSecNumber;
+	}
+
+	private static void SocialSecurityChecker(string socialSecNumber, Person newPerson) {
+		PersonRepository personRepository;
+		personRepository = new PersonRepository();
+		foreach (var personsInDb in personRepository.GetAll().ToList())
+			if (personsInDb.SocialSecurityNumber.Equals(socialSecNumber)) {
+				Ui.InvalidInputMessage(
+					"Woops! Social security number already exists!");
+				SocialSecurityInput();
+			}
+			else {
+				personRepository.Insert(newPerson);
+				Ui.SuccessfullyRegistered(newPerson.FirstName);
+			}
 	}
 
 
@@ -21,8 +106,9 @@ public class BankManager : IBankManager {
 
 		var choice = Console.ReadLine();
 
+
 		if (choice is "1" or "2") return choice;
-		Ui.InvalidInputMessage();
+		Ui.InvalidInputMessage(null);
 		return SavingsOrCurrentAcc();
 	}
 
@@ -59,7 +145,7 @@ public class BankManager : IBankManager {
 			Ui.ChosenAccountType(new SavingAccount());
 			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
-				Ui.InvalidInputMessage();
+				Ui.InvalidInputMessage(null);
 				AccountTypeChooser(personIdentifier, personRep,
 					accountNumberGenerated);
 			}
@@ -75,7 +161,7 @@ public class BankManager : IBankManager {
 			newAccountName = Console.ReadLine() ?? throw new InvalidOperationException();
 			if (string.IsNullOrEmpty(newAccountName)) {
 				// TODO Rune: skal legge til flere av disse fra UI- klassen
-				Ui.InvalidInputMessage();
+				Ui.InvalidInputMessage(null);
 				AccountTypeChooser(personIdentifier, personRep,
 					accountNumberGenerated);
 			}
