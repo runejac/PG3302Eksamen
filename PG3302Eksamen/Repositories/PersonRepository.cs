@@ -53,6 +53,10 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
 		_context.SaveChanges();
 	}
 
+	public Person GetBySocialSecNumber(string ssn) {
+		return _context.Persons.First(person => person.SocialSecurityNumber == ssn);
+	}
+
 	/*public Person? GetBySocialSecurityNumber(string ssn) {
 		var person = _context.Persons
 			.Include(person => person.Email)

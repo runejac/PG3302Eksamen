@@ -1,4 +1,5 @@
 ﻿using PG3302Eksamen.Controller;
+using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Utils;
 using Spectre.Console;
@@ -10,6 +11,8 @@ public class Ui {
 	// TODO og skal kun brukes her
 	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
 	private static UiPerson _person = new();
+
+	private static Person? _loggedInPerson;
 
 	public static UiPerson Person {
 		get => _person;
@@ -56,19 +59,24 @@ public class Ui {
 
 	public static void WelcomeMessage() {
 		var selectedChoice = PromptUtil.PromptSelectPrompt(
-			" [cyan]Welcome to Bank Kristiania![/]",
+			"[cyan]Welcome to Bank Kristiania![/]",
 			new[] { "Register", "Login" }
 		);
 		switch (selectedChoice) {
 			case "Register":
 				Person.CreatePerson();
-				Console.Clear();
-				SuccessfullyRegisteredOrLoggedIn();
+				//Console.Clear();
+				MainMenuAfterAuthorized(null);
 				break;
 			case "Login":
-				Person.LogIn();
-				Console.Clear();
-				SuccessfullyRegisteredOrLoggedIn();
+				var personLoggedIn = Person.LogIn();
+				_loggedInPerson = personLoggedIn;
+				if (personLoggedIn != null) {
+					MainMenuAfterAuthorized(personLoggedIn);
+				}
+
+				//Console.Clear();
+				//SuccessfullyRegisteredOrLoggedIn();
 				break;
 		}
 	}
@@ -83,7 +91,7 @@ public class Ui {
 
 		tableResult.AddRow(
 			"[grey]" + "Sparekonto til kidsa" + "[/]",
-			"[grey]" + "69 kr" + "[/]",
+			"[grey]" + $"{_loggedInPerson} kr" + "[/]",
 			"[grey]" + "15" + "[/]",
 			"[grey]" + "20" + "[/]"
 		);
@@ -91,18 +99,36 @@ public class Ui {
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void SuccessfullyRegisteredOrLoggedIn() {
+	public static void UserAccountDetails() {
+		var tableResult = new Table()
+			.Border(TableBorder.Square)
+			.BorderColor(Color.Green)
+			.AddColumns("[white]Name[/]", "[white]Address[/]",
+				"[white]Email[/]", "[white]Phone number[/]");
+
+		tableResult.AddRow(
+			"[grey]" + $"{_loggedInPerson.FirstName} {_loggedInPerson.LastName}" + "[/]",
+			"[grey]" + $"{_loggedInPerson.Address}" + "[/]",
+			"[grey]" + $"{_loggedInPerson.Email}" + "[/]",
+			"[grey]" + $"{_loggedInPerson.PhoneNumber}" + "[/]"
+		);
+
+		AnsiConsole.Render(tableResult);
+	}
+
+	public static void MainMenuAfterAuthorized(Person? person) {
 		//var uiPerson = new UiPerson();
 		//var getPerson = uiPerson.getPerson();
 
 		Message(
-			$"Greetings {Person.getPerson().FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
+			$"Greetings {person.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
 			ConsoleColor.Green);
 		var selectedChoice = PromptUtil.PromptSelectPrompt("USER MENU",
 			new[] {
 				"Create a money account",
 				"Pay bills or transfer money",
 				"Check balance",
+				"See user details",
 				"Log out"
 			}
 		);
@@ -110,13 +136,16 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Create a money account":
 				AccountController accountController = new();
-				accountController.CreateBankAccount(Person.getPerson().Id);
+				accountController.CreateBankAccount(_loggedInPerson.Id);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
 				break;
 			case "Check balance":
 				OverViewOfAccounts();
+				break;
+			case "See user details":
+				UserAccountDetails();
 				break;
 			case "Log out":
 				// TODO run code for logging out

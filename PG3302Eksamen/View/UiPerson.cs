@@ -1,6 +1,7 @@
 using PG3302Eksamen.Controller;
 using PG3302Eksamen.Model;
 using PG3302Eksamen.Utils;
+using static BCrypt.Net.BCrypt;
 
 namespace PG3302Eksamen.View;
 
@@ -11,19 +12,18 @@ public class UiPerson {
 		return _personController.getPerson();
 	}
 
-	public void LogIn() {
+	public Person? LogIn() {
+		var personRep = new PersonController();
+
 		var ssnEntered = PromptUtil.PromptQuestion(
 			"Enter your social security number: ",
 			"Invalid social security number entered.");
-		var passwordEntered = PromptUtil.PromptQuestion(
-			"Enter your password: ",
-			"Invalid password entered.");
+		var passwordEntered = PromptUtil.PromptPassword(
+			"Enter your password: ");
 
-		Console.WriteLine(ssnEntered);
-		Console.WriteLine(passwordEntered);
 
-		
-		_personController.Authenticate(ssnEntered, passwordEntered);
+		var authorizedPerson = personRep.Authenticate(ssnEntered, passwordEntered);
+		return authorizedPerson;
 	}
 
 	public void CreatePerson() {
@@ -42,14 +42,18 @@ public class UiPerson {
 		var email = PromptUtil.PromptEmail("Email: ", "Invalid email entered");
 
 		var password = "";
+		var hashedPassword = "";
 
 		while (passwordChecker) {
 			password = PromptUtil.PromptPassword("Password: ");
 			var confirmPassword = PromptUtil.PromptPassword("Confirm password: ");
+
+
 			if (password != confirmPassword) {
 				PromptUtil.PromptAssertion("Passwords did not match, try again.");
 			}
 			else {
+				hashedPassword = HashPassword(password);
 				passwordChecker = false;
 			}
 		}
@@ -59,7 +63,7 @@ public class UiPerson {
 			var socialSecurityNumber =
 				PromptUtil.PromptQuestion("Enter social security number: ",
 					"Invalid social entered");
-			_personController.CreatePerson(address, firstName, lastName, password,
+			_personController.CreatePerson(address, firstName, lastName, hashedPassword,
 				phoneNumber, socialSecurityNumber,
 				email);
 			if (_personController.ValidateSocialSecurityNumber()) {

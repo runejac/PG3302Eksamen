@@ -1,5 +1,6 @@
 using PG3302Eksamen.Model;
 using PG3302Eksamen.Repositories;
+using static BCrypt.Net.BCrypt;
 
 namespace PG3302Eksamen.Controller;
 
@@ -11,19 +12,15 @@ public class PersonController {
 	// TODO: Probably move creation to its own class, the same with prompt as its not persons job
 
 
-	public bool Authenticate(string ssn, string password) {
-		Console.WriteLine("Authenticating...");
-		Console.WriteLine(ssn + password);
-
-		var ssnChecker = _personRepository.GetAll().ToList()
-			.FirstOrDefault(person => person.SocialSecurityNumber.Equals(ssn));
-
-		ValidateSocialSecurityNumber();
+	public Person? Authenticate(string ssn, string password) {
+		_person = _personRepository.GetBySocialSecNumber(ssn);
 
 
-		Console.WriteLine("hello"+ ssnChecker);
+		if (ssn == _person.SocialSecurityNumber) {
+			return Verify(password, _person.Password) ? _person : null;
+		}
 
-		return ssnChecker != null && ssnChecker.Password.Equals(password);
+		return null;
 	}
 
 
