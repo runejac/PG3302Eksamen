@@ -12,6 +12,10 @@ public class BankContext : DbContext {
         DbPath = Path.Join(path, "bank.db");
     }
 
+
+    public BankContext(DbContextOptions<BankContext> dbContextOptions) : base(dbContextOptions) {
+    }
+
     public DbSet<Transaction> Transactions { get; set; } = null!;
 
     public DbSet<Account> Accounts { get; set; } = null!;
@@ -19,7 +23,7 @@ public class BankContext : DbContext {
     public DbSet<Person> Persons { get; set; } = null!;
 
 
-    private string DbPath { get; }
+    private string DbPath { get; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -60,7 +64,10 @@ public class BankContext : DbContext {
 
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
-    protected override void OnConfiguring(DbContextOptionsBuilder options) {
-        options.UseSqlite($"Data Source={DbPath}");
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if(!optionsBuilder.IsConfigured)
+            optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
 }

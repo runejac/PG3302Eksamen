@@ -4,7 +4,7 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
-    private readonly PersonRepository personRepository = new();
+    private readonly PersonRepository personRepository = new(new BankContext());
     private Person Person = new();
 
 

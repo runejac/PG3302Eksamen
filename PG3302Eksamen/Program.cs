@@ -10,8 +10,6 @@ internal static class Program {
         Ui.WelcomeMessage();
 
 
-
-
         // var personRepository = new PersonRepository();
         // person objektet må kommet fra en state etter logged in
         //BankManager.CreateBankAccount(personRepository.GetById(1).Id);
@@ -29,7 +27,6 @@ internal static class Program {
         
         var currentAccount = new CurrentAccountFactory().InitializeAccount("konto2",
             personRepository.GetById(2).Id,"111111111");*/
-
 
 
         //accountRepository.Insert(savingAccount);

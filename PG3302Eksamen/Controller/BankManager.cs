@@ -1,4 +1,4 @@
-
+using A_Team.Core.Controller;
 using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
 
@@ -32,5 +32,4 @@ public class BankManager : IBankManager {
     public void TransferMoney(Person person, Account fromAccount, Account toAccount,
         decimal amount) {
     }
-
 }

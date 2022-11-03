@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class DBMigration : Migration
+    public partial class new11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
