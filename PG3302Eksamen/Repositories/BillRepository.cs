@@ -6,7 +6,7 @@ namespace PG3302Eksamen.Repositories;
 public sealed class BillRepository : IBillRepository, IDisposable {
     private readonly BankContext _context = new();
     private bool _disposed;
-    
+
     public Bill GetById(int id) {
         return _context.Bills.Find(id) ?? throw new InvalidOperationException();
     }

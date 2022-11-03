@@ -1,5 +1,4 @@
 using PG3302Eksamen.Model;
-using PG3302Eksamen.Model.AccountModel;
 
 namespace PG3302Eksamen.Interfaces;
 
