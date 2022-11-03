@@ -11,6 +11,9 @@ public class BankContext : DbContext {
         var path = Environment.GetFolderPath(folder);
         DbPath = Path.Join(path, "bank.db");
     }
+    
+    public BankContext(DbContextOptions<BankContext> dbContextOptions) : base(dbContextOptions) {
+    }
 
     public DbSet<Transaction> Transactions { get; set; } = null!;
 
@@ -60,7 +63,11 @@ public class BankContext : DbContext {
 
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
-    protected override void OnConfiguring(DbContextOptionsBuilder options) {
-        options.UseSqlite($"Data Source={DbPath}");
+    
+    // few adjustments for tests
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if(!optionsBuilder.IsConfigured)
+            optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
 }

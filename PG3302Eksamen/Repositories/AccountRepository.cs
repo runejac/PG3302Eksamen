@@ -4,6 +4,7 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class AccountRepository : IAccountRepository, IDisposable {
+
 	private readonly BankContext _context = new();
 	private bool _disposed;
 

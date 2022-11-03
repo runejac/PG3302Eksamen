@@ -5,8 +5,11 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
-	private readonly PersonRepository _personRepository = new();
+
+  private readonly PersonRepository personRepository = new(new BankContext());
 	private Person _person = new();
+
+
 
 
 	// TODO: Probably move creation to its own class, the same with prompt as its not persons job
