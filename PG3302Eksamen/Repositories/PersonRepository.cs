@@ -8,12 +8,15 @@ namespace PG3302Eksamen.Repositories;
 public sealed class PersonRepository : IPersonRepository, IDisposable {
     private readonly BankContext _context = new();
     private bool _disposed;
+    
 
     public void Dispose() {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
+    public PersonRepository(BankContext context) {
+        _context = context;
+    }
     public Person GetById(int id) {
         return _context.Persons.Find(id) ?? throw new InvalidOperationException();
     }
