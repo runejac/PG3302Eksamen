@@ -3,7 +3,7 @@
 
 namespace PG3302Eksamen.Model.AccountModel;
 
-internal class SavingsAccountFactory : AccountFactory {
+public class SavingsAccountFactory : AccountFactory {
     // Note that the signature of the method still uses the abstract product
     // type, even though the concrete product is actually returned from the
     // method. This way the Creator can stay independent of concrete product
