@@ -7,8 +7,7 @@ internal static class Program {
         /*IUserReader userReader = new UserReader();
         new BankManager(userReader).Run();*/
 
-        UiPerson uiPerson = new();
-        uiPerson.CreatePerson();
+        Ui.WelcomeMessage();
 
 
 
