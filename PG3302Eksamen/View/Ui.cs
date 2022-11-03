@@ -29,7 +29,8 @@ public static class Ui {
 		Message(
 			$"You've chosen to create an {account.GetAccountType()}\n" +
 			$"What do you want to name your {account.GetAccountType()}?",
-			ConsoleColor.Blue);
+			ConsoleColor.Blue
+		);
 	}
 
 
@@ -53,8 +54,9 @@ public static class Ui {
 		);
 		switch (selectedChoice) {
 			case "Register":
-				UiPerson uiPerson = new UiPerson();
+				var uiPerson = new UiPerson();
 				uiPerson.CreatePerson();
+				SuccessfullyRegistered();
 				break;
 			case "Login":
 				// TODO run code for authentication
@@ -80,9 +82,12 @@ public static class Ui {
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void SuccessfullyRegistered(string name, int personId) {
+	public static void SuccessfullyRegistered() {
+		var uiPerson = new UiPerson();
+		var person = uiPerson.getPerson();
+
 		Message(
-			$"Congratulations {name}, welcome to the Bank of Kristiania where your needs meets our competence!",
+			$"Congratulations {person.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
 			ConsoleColor.Green);
 		var selectedChoice = PromptUtil.PromptSelectPrompt("USER MENU",
 			new[] {
@@ -96,7 +101,7 @@ public static class Ui {
 		switch (selectedChoice) {
 			case "Create a money account":
 				AccountController accountController = new();
-				accountController.CreateBankAccount(personId);
+				accountController.CreateBankAccount(person.Id);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
