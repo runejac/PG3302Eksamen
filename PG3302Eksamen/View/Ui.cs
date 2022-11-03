@@ -53,7 +53,8 @@ public static class Ui {
 		);
 		switch (selectedChoice) {
 			case "Register":
-				BankManager.RegisterNewPerson();
+				UiPerson uiPerson = new UiPerson();
+				uiPerson.CreatePerson();
 				break;
 			case "Login":
 				// TODO run code for authentication
@@ -94,7 +95,8 @@ public static class Ui {
 
 		switch (selectedChoice) {
 			case "Create a money account":
-				BankManager.CreateBankAccount(personId);
+				AccountController accountController = new();
+				accountController.CreateBankAccount(personId);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
