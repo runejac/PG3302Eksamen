@@ -28,7 +28,7 @@ public static class PromptUtil {
 				.Validate(input
 					=> input.Contains('@')
 						? ValidationResult.Success()
-						: ValidationResult.Error("[red]" + error + "[/]")));
+						: ValidationResult.Error($"[red]{error}[/]")));
 	}
 
 

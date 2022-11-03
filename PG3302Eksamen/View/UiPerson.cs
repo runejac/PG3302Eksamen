@@ -11,26 +11,41 @@ public class UiPerson {
 		return _personController.getPerson();
 	}
 
+	public void LogIn() {
+		var ssnEntered = PromptUtil.PromptQuestion(
+			"Enter your social security number: ",
+			"Invalid social security number entered.");
+		var passwordEntered = PromptUtil.PromptQuestion(
+			"Enter your password: ",
+			"Invalid password entered.");
+
+		Console.WriteLine(ssnEntered);
+		Console.WriteLine(passwordEntered);
+
+		
+		_personController.Authenticate(ssnEntered, passwordEntered);
+	}
+
 	public void CreatePerson() {
 		var socialSecNrChecker = true;
 		var passwordChecker = true;
 
 
 		var address =
-			PromptUtil.PromptQuestion("Enter address: ", "Invalid address entered");
+			PromptUtil.PromptQuestion("Address: ", "Invalid address entered");
 		var firstName =
-			PromptUtil.PromptQuestion("Enter first name: ", "Invalid first name entered");
+			PromptUtil.PromptQuestion("First name: ", "Invalid first name entered");
 		var lastName =
-			PromptUtil.PromptQuestion("Enter last name: ", "Invalid last name entered");
+			PromptUtil.PromptQuestion("Last name: ", "Invalid last name entered");
 		var phoneNumber =
 			PromptUtil.PromptQuestion("Phone number: ", "Invalid phone number entered");
-		var email = PromptUtil.PromptEmail("Enter email: ", "Invalid email entered");
-		
+		var email = PromptUtil.PromptEmail("Email: ", "Invalid email entered");
+
 		var password = "";
 
 		while (passwordChecker) {
 			password = PromptUtil.PromptPassword("Password: ");
-			var confirmPassword = PromptUtil.PromptPassword("Password again: ");
+			var confirmPassword = PromptUtil.PromptPassword("Confirm password: ");
 			if (password != confirmPassword) {
 				PromptUtil.PromptAssertion("Passwords did not match, try again.");
 			}
@@ -47,7 +62,7 @@ public class UiPerson {
 			_personController.CreatePerson(address, firstName, lastName, password,
 				phoneNumber, socialSecurityNumber,
 				email);
-			if (_personController.ValidateSocialSecurity()) {
+			if (_personController.ValidateSocialSecurityNumber()) {
 				PromptUtil.PromptAssertion(
 					"Entered [social security number] already exist");
 				socialSecNrChecker = true;

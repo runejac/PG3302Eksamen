@@ -5,10 +5,17 @@ using Spectre.Console;
 
 namespace PG3302Eksamen.View;
 
-public static class Ui {
+public class Ui {
 	// TODO Message skal være private etter hvert, men brukes i BankManager enn så lenge
 	// TODO og skal kun brukes her
 	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
+	private static UiPerson _person = new();
+
+	public static UiPerson Person {
+		get => _person;
+		set => _person = value ?? throw new ArgumentNullException(nameof(value));
+	}
+
 	public static void Message(string message, ConsoleColor color) {
 		Console.ForegroundColor = color;
 		Console.WriteLine(message);
@@ -54,12 +61,14 @@ public static class Ui {
 		);
 		switch (selectedChoice) {
 			case "Register":
-				var uiPerson = new UiPerson();
-				uiPerson.CreatePerson();
-				SuccessfullyRegistered();
+				Person.CreatePerson();
+				Console.Clear();
+				SuccessfullyRegisteredOrLoggedIn();
 				break;
 			case "Login":
-				// TODO run code for authentication
+				Person.LogIn();
+				Console.Clear();
+				SuccessfullyRegisteredOrLoggedIn();
 				break;
 		}
 	}
@@ -82,12 +91,12 @@ public static class Ui {
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void SuccessfullyRegistered() {
-		var uiPerson = new UiPerson();
-		var person = uiPerson.getPerson();
+	public static void SuccessfullyRegisteredOrLoggedIn() {
+		//var uiPerson = new UiPerson();
+		//var getPerson = uiPerson.getPerson();
 
 		Message(
-			$"Congratulations {person.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
+			$"Greetings {Person.getPerson().FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
 			ConsoleColor.Green);
 		var selectedChoice = PromptUtil.PromptSelectPrompt("USER MENU",
 			new[] {
@@ -101,7 +110,7 @@ public static class Ui {
 		switch (selectedChoice) {
 			case "Create a money account":
 				AccountController accountController = new();
-				accountController.CreateBankAccount(person.Id);
+				accountController.CreateBankAccount(Person.getPerson().Id);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
