@@ -1,5 +1,5 @@
 ﻿namespace PG3302Eksamen.View;
 
 public interface IUserReader {
-	public string? ReadLine();
+    public string? ReadLine();
 }

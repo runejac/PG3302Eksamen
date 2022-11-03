@@ -26,26 +26,26 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     public void Insert(Transaction entity) {
-            _context.Add(entity);
-            _context.SaveChanges();
+        _context.Add(entity);
+        _context.SaveChanges();
     }
 
-   // public List<Transaction> GetRecentTransactions(int days) {
-     //   var now = DateTime.Now;
-      //  return new List<Transaction>(_context.Transactions.Where(
-        //    e => e.Date > now - TimeSpan.FromDays(days)
-          //  ));
-   // }
+    // public List<Transaction> GetRecentTransactions(int days) {
+    //   var now = DateTime.Now;
+    //  return new List<Transaction>(_context.Transactions.Where(
+    //    e => e.Date > now - TimeSpan.FromDays(days)
+    //  ));
+    // }
 
-   public List<Transaction> GetRecentTransactions(int days) {
-       throw new NotImplementedException();
-   }
+    public List<Transaction> GetRecentTransactions(int days) {
+        throw new NotImplementedException();
+    }
 
-   public void PayBill(int billId, string fromAccountNr) {
+    public void PayBill(int billId, string fromAccountNr) {
         var billRepo = new BillRepository();
         var idOfBill = billRepo.GetById(billId);
         billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.PAID);
-       // Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
+        // Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
     }
 
     public void Transfer(int accountFromId, int accountToId, decimal amount) {
@@ -56,13 +56,14 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
             Console.WriteLine("Not enough money to transfer");
             return;
         }
+
         from.Balance -= amount;
         to.Balance += amount;
         accRepo.UpdateBalance(from.Id, from.Balance);
         accRepo.UpdateBalance(to.Id, to.Balance);
-       // Insert(new Transaction().CreateTransaction(accountFromId, DateTime.Now, from.AccountNumber, to.AccountNumber));
+        // Insert(new Transaction().CreateTransaction(accountFromId, DateTime.Now, from.AccountNumber, to.AccountNumber));
     }
-    
+
     private void Dispose(bool disposing) {
         if (!_disposed)
             if (disposing)

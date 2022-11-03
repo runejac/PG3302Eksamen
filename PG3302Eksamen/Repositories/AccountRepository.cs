@@ -4,7 +4,6 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class AccountRepository : IAccountRepository, IDisposable {
-
     private readonly BankContext _context = new();
     private bool _disposed;
 
@@ -25,11 +24,11 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         _context.Remove(entity);
         _context.SaveChanges();
     }
-    
+
     public List<string> GetAllAccountNumbers() {
         var response = GetAll();
         return response.Select(accounts => accounts.AccountNumber).ToList();
-	}
+    }
 
     public IOrderedEnumerable<Account> GetSortedByBalance() {
         return GetAll().OrderByDescending(acc => acc.Balance);
@@ -38,7 +37,7 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
     public IEnumerable<Account> GetSortedByName(string name) {
         return GetAll().Where(acc => acc.Name.Equals(name));
     }
-    
+
     public IEnumerable<Account> GetSortedByOwner(int id) {
         return _context.Accounts.Where(e => e.OwnerId == id);
     }

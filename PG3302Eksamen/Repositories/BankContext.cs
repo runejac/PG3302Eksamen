@@ -48,11 +48,11 @@ public class BankContext : DbContext {
         modelBuilder.Entity<CurrentAccount>()
             .Property(e => e.WithdrawLimit)
             .HasColumnName("WithdrawLimit");
-        
+
         modelBuilder.Entity<Person>()
             .HasIndex(e => new { e.SocialSecurityNumber })
             .IsUnique();
-        
+
         modelBuilder.Entity<Person>()
             .HasIndex(e => new { e.Id })
             .IsUnique();

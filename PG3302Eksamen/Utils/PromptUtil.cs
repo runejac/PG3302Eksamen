@@ -2,8 +2,7 @@ using Spectre.Console;
 
 namespace PG3302Eksamen.Utils;
 
-public class PromptUtil {
-    
+public static class PromptUtil {
     public static bool PromptConfirmation(string text) {
         return AnsiConsole.Confirm("[green]" + text + "[/]");
     }
@@ -15,16 +14,15 @@ public class PromptUtil {
                 .PageSize(10)
                 .AddChoices(questions));
     }
-    
-    public static string PromptPassword(string prompt)
-    {
+
+    public static string PromptPassword(string prompt) {
         return AnsiConsole.Prompt(
             new TextPrompt<string>(prompt)
                 .PromptStyle("grey50")
                 .Secret());
     }
-    
-    
+
+
     // TODO: Validate correctly, now it only checks for no input
 
     public static string PromptQuestion(string question, string error) {
@@ -34,5 +32,10 @@ public class PromptUtil {
                     => !string.IsNullOrWhiteSpace(input)
                         ? ValidationResult.Success()
                         : ValidationResult.Error("[red]" + error + "[/]")));
+    }
+
+    // TODO: Does not seem to interpolate correctly :(
+    public static void PromptAssertion(string assertion) {
+        AnsiConsole.MarkupLineInterpolated($"[red]{assertion}[/]");
     }
 }
