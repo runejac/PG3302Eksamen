@@ -6,7 +6,10 @@ namespace PG3302Eksamen.Repositories;
 public sealed class AccountRepository : IAccountRepository, IDisposable {
     private readonly BankContext _context = new();
     private bool _disposed;
-
+    public AccountRepository() {}
+    public AccountRepository(BankContext context) {
+        _context = context;
+    }
     public Account GetById(int id) {
         return _context.Accounts.Find(id) ?? throw new InvalidOperationException();
     }

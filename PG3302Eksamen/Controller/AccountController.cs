@@ -40,7 +40,7 @@ public class AccountController {
 
 
     public void CreateBankAccount(int personIdentifier) {
-        var personRep = new PersonRepository();
+        var personRep = new PersonRepository(new BankContext());
         var accRep = new AccountRepository();
 
         AccountTypeChooser(personIdentifier, personRep, GenerateBankAccountNumber(accRep));

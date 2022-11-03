@@ -3,7 +3,7 @@ namespace PG3302Eksamen.Model.AccountModel;
 // The Creator class declares the factory method that is supposed to return
 // an object of a Product class. The Creator's subclasses usually provide
 // the implementation of this method.
-internal abstract class AccountFactory {
+public abstract class AccountFactory {
     // Note that the Creator may also provide some default implementation of
     // the factory method.
     protected abstract Account CreateAccount(
