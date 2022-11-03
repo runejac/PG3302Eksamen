@@ -5,11 +5,11 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
+	private readonly PersonRepository
+		_personRepository =
+			new(); // FIXME til STIAN: jeg fjerna new(new BankContext()) her, hvis test ikke fungerer er det nok derfor
 
-  private readonly PersonRepository personRepository = new(new BankContext());
 	private Person _person = new();
-
-
 
 
 	// TODO: Probably move creation to its own class, the same with prompt as its not persons job
