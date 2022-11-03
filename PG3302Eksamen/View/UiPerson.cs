@@ -25,6 +25,7 @@ public class UiPerson {
             var confirmPassword = PromptUtil.PromptPassword("Password again: ");
             if (password != confirmPassword)
                 PromptUtil.PromptAssertion("Passwords did not match, try again.");
+
             else
                 passwordChecker = false;
         }
