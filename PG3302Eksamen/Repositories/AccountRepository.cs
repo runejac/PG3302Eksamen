@@ -4,72 +4,74 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class AccountRepository : IAccountRepository, IDisposable {
-    private readonly BankContext _context = new();
-    private bool _disposed;
-    public AccountRepository() {}
-    public AccountRepository(BankContext context) {
-        _context = context;
-    }
-    public Account GetById(int id) {
-        return _context.Accounts.Find(id) ?? throw new InvalidOperationException();
-    }
 
-    public IEnumerable<Account> GetAll() {
-        return _context.Accounts.AsQueryable() ?? throw new InvalidOperationException();
-    }
+	private readonly BankContext _context = new();
+	private bool _disposed;
 
-    public void Insert(Account entity) {
-        _context.Add(entity);
-        _context.SaveChanges();
-    }
+	public Account GetById(int id) {
+		return _context.Accounts.Find(id) ?? throw new InvalidOperationException();
+	}
 
-    public void Remove(Account entity) {
-        _context.Remove(entity);
-        _context.SaveChanges();
-    }
+	public IEnumerable<Account> GetAll() {
+		return _context.Accounts.AsQueryable() ?? throw new InvalidOperationException();
+	}
 
-    public List<string> GetAllAccountNumbers() {
-        var response = GetAll();
-        return response.Select(accounts => accounts.AccountNumber).ToList();
-    }
+	public void Insert(Account entity) {
+		_context.Add(entity);
+		_context.SaveChanges();
+	}
 
-    public IOrderedEnumerable<Account> GetSortedByBalance() {
-        return GetAll().OrderByDescending(acc => acc.Balance);
-    }
+	public void Remove(Account entity) {
+		_context.Remove(entity);
+		_context.SaveChanges();
+	}
 
-    public IEnumerable<Account> GetSortedByName(string name) {
-        return GetAll().Where(acc => acc.Name.Equals(name));
-    }
+	public List<string> GetAllAccountNumbers() {
+		var response = GetAll();
+		return response.Select(accounts => accounts.AccountNumber).ToList();
+	}
 
-    public IEnumerable<Account> GetSortedByOwner(int id) {
-        return _context.Accounts.Where(e => e.OwnerId == id);
-    }
+	public IOrderedEnumerable<Account> GetSortedByBalance() {
+		return GetAll().OrderByDescending(acc => acc.Balance);
+	}
 
-    public void ChangeAccountName(int id, string newName) {
-        var accountToUpdate = GetById(id);
-        accountToUpdate.Name = newName;
-        _context.SaveChanges();
-    }
+	public IEnumerable<Account> GetSortedByName(string name) {
+		return GetAll().Where(acc => acc.Name.Equals(name));
+	}
 
-    public void UpdateBalance(int id, decimal newBalance) {
-        var accountToUpdate = GetById(id);
-        accountToUpdate.Balance = newBalance;
-        _context.SaveChanges();
-    }
+	// TODO here we want to sort out accounts on persons ID, lets make a List() of Accounts on Person.cs
+	public IEnumerable<Account> GetSortedByOwner(int id) {
+		return _context.Accounts.Where(e => e.OwnerId == id);
+	}
 
-    public void Save() {
-        _context.SaveChanges();
-    }
+	public void ChangeAccountName(int id, string newName) {
+		var accountToUpdate = GetById(id);
+		accountToUpdate.Name = newName;
+		_context.SaveChanges();
+	}
 
-    public void Dispose() {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
+	public void UpdateBalance(int id, decimal newBalance) {
+		var accountToUpdate = GetById(id);
+		accountToUpdate.Balance = newBalance;
+		_context.SaveChanges();
+	}
 
-    private void Dispose(bool disposing) {
-        if (!_disposed)
-            if (disposing)
-                _context.Dispose();
-        _disposed = true;
-    }
+	public void Save() {
+		_context.SaveChanges();
+	}
+
+	public void Dispose() {
+		Dispose(true);
+		GC.SuppressFinalize(this);
+	}
+
+	private void Dispose(bool disposing) {
+		if (!_disposed) {
+			if (disposing) {
+				_context.Dispose();
+			}
+		}
+
+		_disposed = true;
+	}
 }
