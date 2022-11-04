@@ -23,20 +23,7 @@ public class PersonController {
 
 		return null;
 	}
-
-
-
-	public Person? Authenticate(string ssn, string password) {
-		_person = _personRepository.GetBySocialSecNumber(ssn);
-
-
-		if (ssn == _person.SocialSecurityNumber) {
-			return Verify(password, _person.Password) ? _person : null;
-		}
-
-		return null;
-	}
-
+	
 
 	public void CreatePerson(string address, string firstName, string lastName,
 		string password,
@@ -60,8 +47,5 @@ public class PersonController {
 
 		_personRepository.Insert(_person);
 		return false;
-	}
-  public Person getPerson() {
-		return _person;
 	}
 }
