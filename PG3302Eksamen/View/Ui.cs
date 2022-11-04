@@ -13,15 +13,12 @@ public class Ui {
 
 	private static UiPerson _uiPerson = new();
 
-	private static Person? _loggedInPerson;
-
 	private static UiPerson Person {
 		get => _uiPerson;
 		set => _uiPerson = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
 	private static void Message(string message, ConsoleColor color) {
-
 		Console.ForegroundColor = color;
 		Console.WriteLine(message);
 	}
@@ -66,36 +63,39 @@ public class Ui {
 			case "Register":
 				Person.CreatePerson();
 				Console.Clear();
-				MainMenuAfterAuthorized(_uiPerson.GetPerson());
+				MainMenuAfterAuthorized(Person.GetPerson());
 				break;
 			case "Login":
 				Person.LogIn();
 				Console.Clear();
-				MainMenuAfterAuthorized(_uiPerson.GetPerson());
+				MainMenuAfterAuthorized(Person.GetPerson());
 				break;
 		}
 	}
 
 	private static void OverViewOfAccounts() {
-		var printAccountDetails = _uiPerson.GetPerson();
+		var printAccountDetails = Person.GetAllAccounts();
+		
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
 			.AddColumns("[white]Account name[/]", "[white]Balance[/]",
 				"[white]Interest rate[/]", "[white]Withdrawal limit[/]");
-
-		tableResult.AddRow(
-			"[grey]" + "Sparekonto til kidsa" + "[/]",
-			"[grey]" + " kr" + "[/]",
-			"[grey]" + "15" + "[/]",
-			"[grey]" + "20" + "[/]"
-		);
+		
+		foreach (var account in printAccountDetails) {
+			tableResult.AddRow(
+				"[grey]" + $"{account.Name}" + "[/]",
+				"[grey]" +  $"{account.Balance} kr" + "[/]",
+				"[grey]" + $"{account.Interest}" + "[/]",
+				"[grey]" + $"{account.WithdrawLimit}" + "[/]"
+			);
+		}
 
 		AnsiConsole.Render(tableResult);
 	}
 
 	private static void UserAccountDetails() {
-		var printUserDetails = _uiPerson.GetPerson();
+		var printUserDetails = Person.GetPerson();
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
@@ -134,7 +134,7 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Create a money account":
 				AccountController accountController = new();
-				accountController.CreateBankAccount(_loggedInPerson.Id);
+				accountController.CreateBankAccount(person.Id);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions

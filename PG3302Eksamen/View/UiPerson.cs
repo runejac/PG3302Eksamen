@@ -1,5 +1,6 @@
 using PG3302Eksamen.Controller;
 using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Utils;
 using static BCrypt.Net.BCrypt;
 
@@ -10,6 +11,10 @@ public class UiPerson {
 
 	public Person GetPerson() {
 		return _personController.GetPerson();
+	}
+
+	public List<Account> GetAllAccounts() {
+		return _personController.GetAllAccounts();
 	}
 
 	public void LogIn() {
