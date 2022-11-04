@@ -18,6 +18,10 @@ public class Ui {
 		set => _uiPerson = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
+	private static void ClearConsole() {
+		Console.Clear();
+	}
+
 	private static void Message(string message, ConsoleColor color) {
 		Console.ForegroundColor = color;
 		Console.WriteLine(message);
@@ -62,12 +66,12 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Register":
 				Person.CreatePerson();
-				Console.Clear();
+				ClearConsole();
 				MainMenuAfterAuthorized(Person.GetPerson());
 				break;
 			case "Login":
 				Person.LogIn();
-				Console.Clear();
+				ClearConsole();
 				MainMenuAfterAuthorized(Person.GetPerson());
 				break;
 		}
@@ -75,23 +79,26 @@ public class Ui {
 
 	private static void OverViewOfAccounts() {
 		var printAccountDetails = Person.GetAllAccounts();
-		
+
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
-			.AddColumns("[white]Account name[/]", "[white]Balance[/]",
+			.AddColumns("[white]Account name[/]", "[white]Account number[/]",
+				"[white]Balance[/]",
 				"[white]Interest rate[/]", "[white]Withdrawal limit[/]");
-		
+
 		foreach (var account in printAccountDetails) {
 			tableResult.AddRow(
 				"[grey]" + $"{account.Name}" + "[/]",
-				"[grey]" +  $"{account.Balance} kr" + "[/]",
+				"[grey]" + $"{account.AccountNumber}" + "[/]",
+				"[grey]" + $"{account.Balance} kr" + "[/]",
 				"[grey]" + $"{account.Interest}" + "[/]",
 				"[grey]" + $"{account.WithdrawLimit}" + "[/]"
 			);
 		}
 
 		AnsiConsole.Render(tableResult);
+		GoBackToMainMenu();
 	}
 
 	private static void UserAccountDetails() {
@@ -111,6 +118,21 @@ public class Ui {
 		);
 
 		AnsiConsole.Render(tableResult);
+		GoBackToMainMenu();
+	}
+
+	private static void GoBackToMainMenu() {
+		var selectedChoice = PromptUtil.PromptSelectPrompt("MENU",
+			new[] {
+				"Back"
+			}
+		);
+		switch (selectedChoice) {
+			case "Back":
+				ClearConsole();
+				MainMenuAfterAuthorized(Person.GetPerson());
+				break;
+		}
 	}
 
 	private static void MainMenuAfterAuthorized(Person person) {
@@ -121,7 +143,7 @@ public class Ui {
 		Message(
 			$"Greetings {person.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
 			ConsoleColor.Green);
-		var selectedChoice = PromptUtil.PromptSelectPrompt("USER MENU",
+		var selectedChoice = PromptUtil.PromptSelectPrompt("MAIN MENU",
 			new[] {
 				"Create a money account",
 				"Pay bills or transfer money",
@@ -135,14 +157,17 @@ public class Ui {
 			case "Create a money account":
 				AccountController accountController = new();
 				accountController.CreateBankAccount(person.Id);
+				GoBackToMainMenu();
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
 				break;
 			case "Check balance":
+				ClearConsole();
 				OverViewOfAccounts();
 				break;
 			case "See user details":
+				ClearConsole();
 				UserAccountDetails();
 				break;
 			case "Log out":

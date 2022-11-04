@@ -11,8 +11,8 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221103194625_testingDbHashPW")]
-    partial class testingDbHashPW
+    [Migration("20221104134345_newDB")]
+    partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
