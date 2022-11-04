@@ -5,12 +5,26 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
+
 	private readonly PersonRepository _personRepository = new();
 	private Person _person = new();
 
 	public Person GetPerson() {
 		return _person;
 	}
+
+	public Person? Authenticate(string ssn, string password) {
+		_person = _personRepository.GetBySocialSecNumber(ssn);
+
+
+		if (ssn == _person.SocialSecurityNumber) {
+			return Verify(password, _person.Password) ? _person : null;
+		}
+
+		return null;
+	}
+
+
 
 	public Person? Authenticate(string ssn, string password) {
 		_person = _personRepository.GetBySocialSecNumber(ssn);
@@ -46,5 +60,8 @@ public class PersonController {
 
 		_personRepository.Insert(_person);
 		return false;
+	}
+  public Person getPerson() {
+		return _person;
 	}
 }

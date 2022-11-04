@@ -22,6 +22,20 @@ public class UiPerson {
 		_personController.Authenticate(ssnEntered, passwordEntered);
 	}
 
+	public Person? LogIn() {
+		var personRep = new PersonController();
+
+		var ssnEntered = PromptUtil.PromptQuestion(
+			"Enter your social security number: ",
+			"Invalid social security number entered.");
+		var passwordEntered = PromptUtil.PromptPassword(
+			"Enter your password: ");
+
+
+		var authorizedPerson = personRep.Authenticate(ssnEntered, passwordEntered);
+		return authorizedPerson;
+	}
+
 	public void CreatePerson() {
 		var socialSecNrChecker = true;
 		var passwordChecker = true;

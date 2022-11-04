@@ -10,6 +10,7 @@ public class Ui {
 	// TODO Message skal være private etter hvert, men brukes i BankManager enn så lenge
 	// TODO og skal kun brukes her
 	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
+
 	private static UiPerson _uiPerson = new();
 
 	private static Person? _loggedInPerson;
@@ -20,6 +21,7 @@ public class Ui {
 	}
 
 	private static void Message(string message, ConsoleColor color) {
+
 		Console.ForegroundColor = color;
 		Console.WriteLine(message);
 	}
@@ -132,7 +134,7 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Create a money account":
 				AccountController accountController = new();
-				accountController.CreateBankAccount(person.Id);
+				accountController.CreateBankAccount(_loggedInPerson.Id);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
