@@ -11,7 +11,7 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221104134345_newDB")]
+    [Migration("20221104160229_newDB")]
     partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,41 @@ namespace PG3302Eksamen.Migrations
                     b.ToTable("Accounts");
 
                     b.HasDiscriminator<string>("Type").HasValue("Account");
+                });
+
+            modelBuilder.Entity("PG3302Eksamen.Model.Bill", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MessageField")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("PG3302Eksamen.Model.Person", b =>
@@ -162,34 +197,6 @@ namespace PG3302Eksamen.Migrations
                     b.HasDiscriminator().HasValue("SavingsAccount");
                 });
 
-            modelBuilder.Entity("PG3302Eksamen.Model.Bill", b =>
-                {
-                    b.HasBaseType("PG3302Eksamen.Model.Transaction");
-
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MessageField")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("Payment")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Recipient")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.HasDiscriminator().HasValue("Bill");
-                });
-
             modelBuilder.Entity("PG3302Eksamen.Model.Deposit", b =>
                 {
                     b.HasBaseType("PG3302Eksamen.Model.Transaction");
@@ -197,21 +204,25 @@ namespace PG3302Eksamen.Migrations
                     b.HasDiscriminator().HasValue("Deposit");
                 });
 
-            modelBuilder.Entity("PG3302Eksamen.Model.Transfer", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Payment", b =>
                 {
                     b.HasBaseType("PG3302Eksamen.Model.Transaction");
 
                     b.Property<int>("Receipt")
                         .HasColumnType("INTEGER");
 
-                    b.HasDiscriminator().HasValue("Transfer");
+                    b.HasDiscriminator().HasValue("Payment");
                 });
 
-            modelBuilder.Entity("PG3302Eksamen.Model.Withdraw", b =>
+            modelBuilder.Entity("PG3302Eksamen.Model.Transfer", b =>
                 {
                     b.HasBaseType("PG3302Eksamen.Model.Transaction");
 
-                    b.HasDiscriminator().HasValue("Withdraw");
+                    b.Property<int>("Receipt")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Transfer_Receipt");
+
+                    b.HasDiscriminator().HasValue("Transfer");
                 });
 
             modelBuilder.Entity("PG3302Eksamen.Model.Transaction", b =>

@@ -61,6 +61,9 @@ namespace PG3302Eksamen.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("TEXT");
 
@@ -70,9 +73,6 @@ namespace PG3302Eksamen.Migrations
 
                     b.Property<int>("OwnerId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("Payment")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Recipient")
                         .IsRequired()
