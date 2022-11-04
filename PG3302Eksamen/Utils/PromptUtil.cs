@@ -23,12 +23,15 @@ public static class PromptUtil {
 	}
 
 	public static string PromptEmail(string prompt, string error) {
-		return AnsiConsole.Prompt(
+		var inputFromUser = AnsiConsole.Prompt(
 			new TextPrompt<string>(prompt)
 				.Validate(input
 					=> input.Contains('@')
 						? ValidationResult.Success()
 						: ValidationResult.Error($"[red]{error}[/]")));
+
+		inputFromUser = TrimUtil.TrimInput(inputFromUser);
+		return inputFromUser;
 	}
 
 
@@ -44,7 +47,6 @@ public static class PromptUtil {
 		);
 
 		inputFromUser = TrimUtil.TrimInput(inputFromUser);
-
 		return inputFromUser;
 	}
 
