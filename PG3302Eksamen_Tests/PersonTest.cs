@@ -5,8 +5,9 @@ using PG3302Eksamen.Repositories;
 
 namespace PG3302Eksamen_Tests;
 
-public class Tests {
-	private bool disposedValue; // To detect redundant calls
+public class PersonTest {
+	
+	private bool _disposedValue; // To detect redundant calls
 
 	private BankContext _context = new();
 
@@ -24,11 +25,11 @@ public class Tests {
 
 
 	protected virtual void Dispose(bool disposing) {
-		if (!disposedValue) {
+		if (!_disposedValue) {
 			if (disposing) {
 			}
 
-			disposedValue = true;
+			_disposedValue = true;
 		}
 	}
 
@@ -38,6 +39,26 @@ public class Tests {
 	public void Setup() {
 	}
 
+	[Test]
+	public void GetBySocialSecNumberTest() {
+		Person person = new();
+		var personService = new PersonRepository(_context);
+		var createdPerson = person.CreatePerson(
+			"Elaveien 5",
+			"Ola",
+			"Normann",
+			"123",
+			"33445566",
+			"04048944598",
+			"olanormann@noreg.no"
+		);
+		personService.Insert(createdPerson);
+
+		var findNameBySocialSecNumber = personService.GetBySocialSecNumber(createdPerson.SocialSecurityNumber);
+
+	Assert.That(findNameBySocialSecNumber.FirstName, Is.EqualTo("Ola"));
+
+	}
 	[Test]
 	public void CreatePersonTest() {
 		
@@ -52,7 +73,7 @@ public class Tests {
 			"04048944598",
 			"olanormann@noreg.no"
 			));
-		_context.SaveChanges();
+	
 		Assert.That(personService.GetById(1).Id, Is.EqualTo(1));
 	}
 
@@ -75,6 +96,50 @@ public class Tests {
 	
 		
 		Assert.That(personService.GetAll().ToList().Count(), Is.EqualTo(0));
+	}
+
+	[Test]
+	public void UpdatePersonAdressTest() {
+		Person person = new();
+		var personService = new PersonRepository(_context);
+		var createdPerson = person.CreatePerson(
+			"Elaveien 3",
+			"Ola",
+			"Normann",
+			"123",
+			"33445566",
+			"04048944598",
+			"olanormann@noreg.no"
+		);
+		
+		personService.Insert(createdPerson);
+
+		personService.UpdateAddress(1, "Elaveien 6");
+		var expectedPersonAdress = personService.GetById(1).Address;
+	
+		Assert.That(expectedPersonAdress, Is.EqualTo("Elaveien 6"));
+	}
+	
+	[Test]
+	public void ChangePersonPasswordTest() {
+		Person person = new();
+		var personService = new PersonRepository(_context);
+		var createdPerson = person.CreatePerson(
+			"Elaveien 3",
+			"Ola",
+			"Normann",
+			"123",
+			"33445566",
+			"04048944598",
+			"olanormann@noreg.no"
+		);
+		
+		personService.Insert(createdPerson);
+
+		personService.ChangePassword(1, "1337");
+		var expectedNewPassword = personService.GetById(1).Password;
+	
+		Assert.That(expectedNewPassword, Is.EqualTo("1337"));
 	}
 
 	[Test]

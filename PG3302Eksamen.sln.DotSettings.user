@@ -13,7 +13,7 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5e2ee2e7_002Df5ca_002D4baf_002Da430_002D061b70c66a69/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="DeletePersonTest #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.Tests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.PersonTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6d823a41_002Da903_002D4693_002Db670_002D5a3e1079e9e8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreatePersonTest #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
