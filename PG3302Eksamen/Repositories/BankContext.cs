@@ -16,12 +16,9 @@ public class BankContext : DbContext {
     }
 
     public DbSet<Transaction> Transactions { get; set; } = null!;
-
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<Bill> Bills { get; set; } = null!;
     public DbSet<Person> Persons { get; set; } = null!;
-
-
     private string DbPath { get; }
 
 
@@ -35,9 +32,8 @@ public class BankContext : DbContext {
             .HasDiscriminator<string>("Type")
             .HasValue<Deposit>("Deposit")
             .HasValue<Transfer>("Transfer")
-            .HasValue<Withdraw>("Withdraw");
-
-
+            .HasValue<Payment>("Payment");
+        
         modelBuilder.Entity<SavingAccount>()
             .Property(e => e.Interest)
             .HasColumnName("Interest");
@@ -61,9 +57,6 @@ public class BankContext : DbContext {
             .IsUnique();
     }
 
-    // The following configures EF to create a Sqlite database file in the
-    // special "local" folder for your platform.
-    
     // few adjustments for tests
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

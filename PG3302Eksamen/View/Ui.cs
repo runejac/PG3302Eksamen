@@ -104,6 +104,28 @@ public class Ui {
 		AnsiConsole.Render(tableResult);
 		GoBackToMainMenu();
 	}
+	
+	private static void OverViewOfBills() {
+		var allBills = Person.GetAllBills();
+		
+		var tableResult = new Table()
+			.Border(TableBorder.Square)
+			.BorderColor(Color.Green)
+			.AddColumns("[white]Due date[/]", "[white]Recipient[/]",
+				"[white]Status[/]", "[white]Account number[/]", "[white]Amount[/]");
+		
+		foreach (var bill in allBills) {
+			tableResult.AddRow(
+				"[grey]" + $"{bill.DueDate}" + "[/]",
+				"[grey]" +  $"{bill.Recipient} kr" + "[/]",
+				"[grey]" + $"{bill.Status}" + "[/]",
+				"[grey]" + $"{bill.AccountNumber}" + "[/]",
+				"[grey]" + $"{bill.Payment}" + "[/]"
+			);
+		}
+
+		AnsiConsole.Render(tableResult);
+	}
 
 	private static void UserAccountDetails() {
 		var printUserDetails = Person.GetPerson();
@@ -151,6 +173,7 @@ public class Ui {
 			new[] {
 				"Create a money account",
 				"Pay bills or transfer money",
+				"See all bills",
 				"Check balance",
 				"See user details",
 				"Log out"
@@ -165,6 +188,9 @@ public class Ui {
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
+				break;
+			case "See all bills":
+				OverViewOfBills();
 				break;
 			case "Check balance":
 				ClearConsole();

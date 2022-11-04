@@ -9,6 +9,8 @@ public class PersonController {
 
 	private readonly PersonRepository _personRepository = new(new BankContext());
 	private readonly AccountRepository _accountRepository = new(new BankContext());
+	private readonly BillRepository _billRepository = new(new BankContext());
+
 
 	private Person _person = new();
 
@@ -40,6 +42,11 @@ public class PersonController {
 	public List<Account> GetAllAccounts() {
 		return _accountRepository.GetSortedByOwner(GetPerson().Id).ToList();
 	}
+	
+	public List<Bill> GetAllBills() {
+		return _billRepository.GetSortedByOwner(GetPerson().Id).ToList();
+	}
+	
 
 	public bool ValidateSocialSecurityNumber() {
 		var match = _personRepository.GetAll()

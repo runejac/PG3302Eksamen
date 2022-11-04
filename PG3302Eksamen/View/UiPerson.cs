@@ -16,6 +16,10 @@ public class UiPerson {
 	public List<Account> GetAllAccounts() {
 		return _personController.GetAllAccounts();
 	}
+	
+	public List<Bill> GetAllBills() {
+		return _personController.GetAllBills();
+	}
 
 	public void LogIn() {
 		var ssnEntered = PromptUtil.PromptQuestion(
