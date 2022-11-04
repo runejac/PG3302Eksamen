@@ -5,14 +5,25 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
-	private readonly PersonRepository
-		_personRepository =
-			new(); // FIXME til STIAN: jeg fjerna new(new BankContext()) her, hvis test ikke fungerer er det nok derfor
 
+	private readonly PersonRepository _personRepository = new();
 	private Person _person = new();
 
+	public Person GetPerson() {
+		return _person;
+	}
 
-	// TODO: Probably move creation to its own class, the same with prompt as its not persons job
+	public Person? Authenticate(string ssn, string password) {
+		_person = _personRepository.GetBySocialSecNumber(ssn);
+
+
+		if (ssn == _person.SocialSecurityNumber) {
+			return Verify(password, _person.Password) ? _person : null;
+		}
+
+		return null;
+	}
+
 
 
 	public Person? Authenticate(string ssn, string password) {
@@ -50,8 +61,7 @@ public class PersonController {
 		_personRepository.Insert(_person);
 		return false;
 	}
-
-	public Person getPerson() {
+  public Person getPerson() {
 		return _person;
 	}
 }

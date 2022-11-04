@@ -42,10 +42,10 @@ public class AccountController {
 
 
 	public void CreateBankAccount(int personIdentifier) {
-		var personRep =
-			new PersonRepository(); // FIXME til STIAN: jeg fjerna new PersonRepository(new BankContext()) her, hvis test ikke fungerer er det nok derfor
-		var accRep = new AccountRepository();
 
+		var personRep = new PersonRepository();
+		var accRep = new AccountRepository();
+    
 		AccountTypeChooser(personIdentifier, personRep,
 			GenerateBankAccountNumber(accRep));
 	}

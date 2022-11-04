@@ -10,16 +10,18 @@ public class Ui {
 	// TODO Message skal være private etter hvert, men brukes i BankManager enn så lenge
 	// TODO og skal kun brukes her
 	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
-	private static UiPerson _person = new();
+
+	private static UiPerson _uiPerson = new();
 
 	private static Person? _loggedInPerson;
 
-	public static UiPerson Person {
-		get => _person;
-		set => _person = value ?? throw new ArgumentNullException(nameof(value));
+	private static UiPerson Person {
+		get => _uiPerson;
+		set => _uiPerson = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
-	public static void Message(string message, ConsoleColor color) {
+	private static void Message(string message, ConsoleColor color) {
+
 		Console.ForegroundColor = color;
 		Console.WriteLine(message);
 	}
@@ -43,8 +45,6 @@ public class Ui {
 		);
 	}
 
-
-	// TODO RUNE holder på her, sånn tenker jeg Ui-klassen skal se ut
 	public static void SucceedAddedToDbMessage(Account account) {
 		Message($"{account.Name} was added to your bank account\n" +
 		        $"with interest rate at {account.Interest}%\n" +
@@ -65,24 +65,19 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Register":
 				Person.CreatePerson();
-				//Console.Clear();
-				MainMenuAfterAuthorized(null);
+				Console.Clear();
+				MainMenuAfterAuthorized(_uiPerson.GetPerson());
 				break;
 			case "Login":
-				var personLoggedIn = Person.LogIn();
-				_loggedInPerson = personLoggedIn;
-				if (personLoggedIn != null) {
-					MainMenuAfterAuthorized(personLoggedIn);
-				}
-
-				//Console.Clear();
-				//SuccessfullyRegisteredOrLoggedIn();
+				Person.LogIn();
+				Console.Clear();
+				MainMenuAfterAuthorized(_uiPerson.GetPerson());
 				break;
 		}
 	}
 
-	// TODO under er KUN hardkodet enn så lenge, skal brukes når bruker velger "Check balance".
-	public static void OverViewOfAccounts() {
+	private static void OverViewOfAccounts() {
+		var printAccountDetails = _uiPerson.GetPerson();
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
@@ -91,7 +86,7 @@ public class Ui {
 
 		tableResult.AddRow(
 			"[grey]" + "Sparekonto til kidsa" + "[/]",
-			"[grey]" + $"{_loggedInPerson} kr" + "[/]",
+			"[grey]" + " kr" + "[/]",
 			"[grey]" + "15" + "[/]",
 			"[grey]" + "20" + "[/]"
 		);
@@ -99,7 +94,8 @@ public class Ui {
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void UserAccountDetails() {
+	private static void UserAccountDetails() {
+		var printUserDetails = _uiPerson.GetPerson();
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
@@ -107,18 +103,20 @@ public class Ui {
 				"[white]Email[/]", "[white]Phone number[/]");
 
 		tableResult.AddRow(
-			"[grey]" + $"{_loggedInPerson.FirstName} {_loggedInPerson.LastName}" + "[/]",
-			"[grey]" + $"{_loggedInPerson.Address}" + "[/]",
-			"[grey]" + $"{_loggedInPerson.Email}" + "[/]",
-			"[grey]" + $"{_loggedInPerson.PhoneNumber}" + "[/]"
+			"[grey]" + $"{printUserDetails.FirstName} {printUserDetails.LastName}" +
+			"[/]",
+			"[grey]" + $"{printUserDetails.Address}" + "[/]",
+			"[grey]" + $"{printUserDetails.Email}" + "[/]",
+			"[grey]" + $"{printUserDetails.PhoneNumber}" + "[/]"
 		);
 
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void MainMenuAfterAuthorized(Person? person) {
-		//var uiPerson = new UiPerson();
-		//var getPerson = uiPerson.getPerson();
+	private static void MainMenuAfterAuthorized(Person person) {
+		if (person == null) {
+			throw new ArgumentNullException(nameof(person));
+		}
 
 		Message(
 			$"Greetings {person.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",

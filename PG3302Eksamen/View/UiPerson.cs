@@ -8,8 +8,18 @@ namespace PG3302Eksamen.View;
 public class UiPerson {
 	private readonly PersonController _personController = new();
 
-	public Person getPerson() {
-		return _personController.getPerson();
+	public Person GetPerson() {
+		return _personController.GetPerson();
+	}
+
+	public void LogIn() {
+		var ssnEntered = PromptUtil.PromptQuestion(
+			"Enter your social security number: ",
+			"Invalid social security number entered.");
+		var passwordEntered = PromptUtil.PromptPassword(
+			"Enter your password: ");
+
+		_personController.Authenticate(ssnEntered, passwordEntered);
 	}
 
 	public Person? LogIn() {
@@ -63,7 +73,8 @@ public class UiPerson {
 			var socialSecurityNumber =
 				PromptUtil.PromptQuestion("Enter social security number: ",
 					"Invalid social entered");
-			_personController.CreatePerson(address, firstName, lastName, hashedPassword,
+			_personController.CreatePerson(address, firstName, lastName,
+				hashedPassword,
 				phoneNumber, socialSecurityNumber,
 				email);
 			if (_personController.ValidateSocialSecurityNumber()) {
