@@ -5,6 +5,7 @@ using PG3302Eksamen.View;
 namespace PG3302Eksamen.Controller;
 
 public class AccountController {
+	private readonly BankContext _context = new();
 	private Account currentAccount;
 	private Account savingsAccount;
 
@@ -43,8 +44,8 @@ public class AccountController {
 
 	public void CreateBankAccount(int personIdentifier) {
 
-		var personRep = new PersonRepository();
-		var accRep = new AccountRepository();
+		var personRep = new PersonRepository(_context);
+		var accRep = new AccountRepository(_context);
     
 		AccountTypeChooser(personIdentifier, personRep,
 			GenerateBankAccountNumber(accRep));

@@ -49,7 +49,7 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     public void Transfer(int accountFromId, int accountToId, decimal amount) {
-        var accRepo = new AccountRepository();
+        var accRepo = new AccountRepository(_context);
         var from = accRepo.GetById(accountFromId);
         var to = accRepo.GetById(accountToId);
         if (from.Balance <= amount - 1) {

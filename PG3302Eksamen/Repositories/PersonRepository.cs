@@ -6,8 +6,13 @@ using PG3302Eksamen.View;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class PersonRepository : IPersonRepository, IDisposable {
-	private readonly BankContext _context = new();
+	private readonly BankContext _context;
 	private bool _disposed;
+
+
+	public PersonRepository(BankContext context) {
+		_context = context;
+	}
 
 	public void Dispose() {
 		Dispose(true);

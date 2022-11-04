@@ -6,7 +6,7 @@ namespace PG3302Eksamen.Controller;
 
 public class PersonController {
 
-	private readonly PersonRepository _personRepository = new();
+	private readonly PersonRepository _personRepository = new(new BankContext());
 	private Person _person = new();
 
 	public Person GetPerson() {
