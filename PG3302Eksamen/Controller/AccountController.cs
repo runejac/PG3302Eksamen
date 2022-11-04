@@ -5,7 +5,8 @@ using PG3302Eksamen.View;
 namespace PG3302Eksamen.Controller;
 
 public class AccountController {
-	private readonly BankContext _context = new();
+	private readonly PersonRepository _personRepository = new(new BankContext());
+	private readonly AccountRepository _accountRepository = new(new BankContext());
 	private Account currentAccount;
 	private Account savingsAccount;
 
@@ -44,20 +45,16 @@ public class AccountController {
 
 	public void CreateBankAccount(int personIdentifier) {
 
-		var personRep = new PersonRepository(_context);
-		var accRep = new AccountRepository(_context);
-    
-		AccountTypeChooser(personIdentifier, personRep,
-			GenerateBankAccountNumber(accRep));
+		AccountTypeChooser(personIdentifier, _personRepository, GenerateBankAccountNumber());
 	}
 
-	private string GenerateBankAccountNumber(AccountRepository accRep) {
+	private string GenerateBankAccountNumber() {
 		var random = new Random();
 		var numbers = random.NextInt64(00000000000, 99999999999);
 		var accountNumberGenerated = numbers.ToString();
 
 		// checking for existing account numbers
-		foreach (var accNr in accRep.GetAllAccountNumbers()
+		foreach (var accNr in _accountRepository.GetAllAccountNumbers()
 			         .Where(accNr => accNr.Contains(accountNumberGenerated))) {
 			// if it already exists, create a new one
 			numbers = random.NextInt64(00000000000, 99999999999);
