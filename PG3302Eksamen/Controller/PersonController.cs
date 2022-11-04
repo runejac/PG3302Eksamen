@@ -5,15 +5,12 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
-
-  private readonly PersonRepository personRepository = new(new BankContext());
+	private readonly PersonRepository _personRepository = new();
 	private Person _person = new();
 
-
-
-
-	// TODO: Probably move creation to its own class, the same with prompt as its not persons job
-
+	public Person GetPerson() {
+		return _person;
+	}
 
 	public Person? Authenticate(string ssn, string password) {
 		_person = _personRepository.GetBySocialSecNumber(ssn);
@@ -49,9 +46,5 @@ public class PersonController {
 
 		_personRepository.Insert(_person);
 		return false;
-	}
-
-	public Person getPerson() {
-		return _person;
 	}
 }

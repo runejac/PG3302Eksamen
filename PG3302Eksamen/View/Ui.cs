@@ -10,16 +10,16 @@ public class Ui {
 	// TODO Message skal være private etter hvert, men brukes i BankManager enn så lenge
 	// TODO og skal kun brukes her
 	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
-	private static UiPerson _person = new();
+	private static UiPerson _uiPerson = new();
 
 	private static Person? _loggedInPerson;
 
-	public static UiPerson Person {
-		get => _person;
-		set => _person = value ?? throw new ArgumentNullException(nameof(value));
+	private static UiPerson Person {
+		get => _uiPerson;
+		set => _uiPerson = value ?? throw new ArgumentNullException(nameof(value));
 	}
 
-	public static void Message(string message, ConsoleColor color) {
+	private static void Message(string message, ConsoleColor color) {
 		Console.ForegroundColor = color;
 		Console.WriteLine(message);
 	}
@@ -65,24 +65,24 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Register":
 				Person.CreatePerson();
-				//Console.Clear();
-				MainMenuAfterAuthorized(null);
+				Console.Clear();
+				MainMenuAfterAuthorized(_uiPerson.GetPerson());
 				break;
 			case "Login":
-				var personLoggedIn = Person.LogIn();
-				_loggedInPerson = personLoggedIn;
-				if (personLoggedIn != null) {
-					MainMenuAfterAuthorized(personLoggedIn);
-				}
+				/*var personLoggedIn = */
+				Person.LogIn();
+				/*_loggedInPerson = personLoggedIn;*/
+				/*if (_uiPerson.GetPerson()) {*/
+				Console.Clear();
+				MainMenuAfterAuthorized(_uiPerson.GetPerson());
+				/*}*/
 
-				//Console.Clear();
-				//SuccessfullyRegisteredOrLoggedIn();
 				break;
 		}
 	}
 
 	// TODO under er KUN hardkodet enn så lenge, skal brukes når bruker velger "Check balance".
-	public static void OverViewOfAccounts() {
+	private static void OverViewOfAccounts() {
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
@@ -99,7 +99,7 @@ public class Ui {
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void UserAccountDetails() {
+	private static void UserAccountDetails() {
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
@@ -116,7 +116,10 @@ public class Ui {
 		AnsiConsole.Render(tableResult);
 	}
 
-	public static void MainMenuAfterAuthorized(Person? person) {
+	private static void MainMenuAfterAuthorized(Person person) {
+		if (person == null) {
+			throw new ArgumentNullException(nameof(person));
+		}
 		//var uiPerson = new UiPerson();
 		//var getPerson = uiPerson.getPerson();
 
@@ -136,7 +139,7 @@ public class Ui {
 		switch (selectedChoice) {
 			case "Create a money account":
 				AccountController accountController = new();
-				accountController.CreateBankAccount(_loggedInPerson.Id);
+				accountController.CreateBankAccount(person.Id);
 				break;
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
