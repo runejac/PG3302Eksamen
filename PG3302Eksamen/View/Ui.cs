@@ -11,9 +11,9 @@ public class Ui {
 	// TODO og skal kun brukes her
 	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
 
-	private static UiPerson _uiPerson = new();
+	private static UiPerson? _uiPerson = new();
 
-	private static UiPerson Person {
+	private static UiPerson? Person {
 		get => _uiPerson;
 		set => _uiPerson = value ?? throw new ArgumentNullException(nameof(value));
 	}
@@ -61,18 +61,22 @@ public class Ui {
 	public static void WelcomeMessage() {
 		var selectedChoice = PromptUtil.PromptSelectPrompt(
 			"[cyan]Welcome to Bank Kristiania![/]",
-			new[] { "Register", "Login" }
+			new[] { "Register", "Login", "Exit" }
 		);
 		switch (selectedChoice) {
 			case "Register":
-				Person.CreatePerson();
+				Person!.CreatePerson();
 				ClearConsole();
 				MainMenuAfterAuthorized(Person.GetPerson());
 				break;
 			case "Login":
-				Person.LogIn();
+				Person!.LogIn();
 				ClearConsole();
 				MainMenuAfterAuthorized(Person.GetPerson());
+				break;
+			case "Exit":
+				Message("Good bye, hope to see you soon!", ConsoleColor.Blue);
+				Environment.Exit(0);
 				break;
 		}
 	}
@@ -171,7 +175,13 @@ public class Ui {
 				UserAccountDetails();
 				break;
 			case "Log out":
-				// TODO run code for logging out
+				Message(
+					$"Good bye {Person!.GetPerson().FirstName}, hope to see you soon!",
+					ConsoleColor.Blue);
+				// TODO set timeout 0.5sec or something here before clearing
+				ClearConsole();
+				WelcomeMessage();
+				Person = null;
 				break;
 		}
 	}
