@@ -6,10 +6,11 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
+	private readonly AccountRepository _accountRepository = new(new BankContext());
+	private readonly BillController _billController = new();
+	private readonly BillRepository _billRepository = new(new BankContext());
 
 	private readonly PersonRepository _personRepository = new(new BankContext());
-	private readonly AccountRepository _accountRepository = new(new BankContext());
-	private readonly BillRepository _billRepository = new(new BankContext());
 
 
 	private Person _person = new();
@@ -19,16 +20,22 @@ public class PersonController {
 	}
 
 	public Person? Authenticate(string ssn, string password) {
-		_person = _personRepository.GetBySocialSecNumber(ssn);
-
-
-		if (ssn == _person.SocialSecurityNumber) {
-			return Verify(password, _person.Password) ? _person : null;
+		try {
+			_person = _personRepository.GetBySocialSecNumber(ssn);
+			if (_person != null) {
+				if (ssn == _person.SocialSecurityNumber) {
+					return Verify(password, _person.Password) ? _person : null;
+				}
+			}
+		}
+		// return null when SSN also is wrong
+		catch (Exception e) {
+			return null;
 		}
 
 		return null;
 	}
-	
+
 
 	public void CreatePerson(string address, string firstName, string lastName,
 		string password,
@@ -42,11 +49,15 @@ public class PersonController {
 	public List<Account> GetAllAccounts() {
 		return _accountRepository.GetSortedByOwner(GetPerson().Id).ToList();
 	}
-	
+
 	public List<Bill> GetAllBills() {
 		return _billRepository.GetSortedByOwner(GetPerson().Id).ToList();
 	}
-	
+
+	public void BillGenerator() {
+		_billRepository.Insert(_billController.GenerateBills(GetPerson().Id));
+	}
+
 
 	public bool ValidateSocialSecurityNumber() {
 		var match = _personRepository.GetAll()
@@ -60,6 +71,7 @@ public class PersonController {
 		}
 
 		_personRepository.Insert(_person);
+		BillGenerator();
 		return false;
 	}
 }

@@ -65,14 +65,22 @@ public class Ui {
 		);
 		switch (selectedChoice) {
 			case "Register":
-				Person!.CreatePerson();
+				Person?.CreatePerson();
 				ClearConsole();
 				MainMenuAfterAuthorized(Person.GetPerson());
 				break;
 			case "Login":
-				Person!.LogIn();
-				ClearConsole();
-				MainMenuAfterAuthorized(Person.GetPerson());
+				//Person?.LogIn();
+				if (Person != null && Person.LogIn()) {
+					ClearConsole();
+					MainMenuAfterAuthorized(Person.GetPerson());
+				}
+				else {
+					ClearConsole();
+					InvalidInputMessage("Wrong credentials, try again!");
+					WelcomeMessage();
+				}
+
 				break;
 			case "Exit":
 				Message("Good bye, hope to see you soon!", ConsoleColor.Blue);
@@ -82,7 +90,7 @@ public class Ui {
 	}
 
 	private static void OverViewOfAccounts() {
-		var printAccountDetails = Person.GetAllAccounts();
+		var printAccountDetails = Person!.GetAllAccounts();
 
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
@@ -104,31 +112,33 @@ public class Ui {
 		AnsiConsole.Render(tableResult);
 		GoBackToMainMenu();
 	}
-	
+
 	private static void OverViewOfBills() {
 		var allBills = Person.GetAllBills();
-		
+
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
 			.AddColumns("[white]Due date[/]", "[white]Recipient[/]",
 				"[white]Status[/]", "[white]Account number[/]", "[white]Amount[/]");
-		
+
 		foreach (var bill in allBills) {
 			tableResult.AddRow(
 				"[grey]" + $"{bill.DueDate}" + "[/]",
-				"[grey]" +  $"{bill.Recipient} kr" + "[/]",
+				"[grey]" + $"{bill.Recipient}" + "[/]",
 				"[grey]" + $"{bill.Status}" + "[/]",
 				"[grey]" + $"{bill.AccountNumber}" + "[/]",
-				"[grey]" + $"{bill.Payment}" + "[/]"
+				"[grey]" + $"{bill.Amount}" + "[/]"
 			);
 		}
 
 		AnsiConsole.Render(tableResult);
+
+		GoBackToMainMenu();
 	}
 
 	private static void UserAccountDetails() {
-		var printUserDetails = Person.GetPerson();
+		var printUserDetails = Person!.GetPerson();
 		var tableResult = new Table()
 			.Border(TableBorder.Square)
 			.BorderColor(Color.Green)
@@ -201,10 +211,6 @@ public class Ui {
 				UserAccountDetails();
 				break;
 			case "Log out":
-				Message(
-					$"Good bye {Person!.GetPerson().FirstName}, hope to see you soon!",
-					ConsoleColor.Blue);
-				// TODO set timeout 0.5sec or something here before clearing
 				ClearConsole();
 				WelcomeMessage();
 				Person = null;

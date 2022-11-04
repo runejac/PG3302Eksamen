@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class initCreate : Migration
+    public partial class newDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -37,7 +37,7 @@ namespace PG3302Eksamen.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     DueDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     AccountNumber = table.Column<string>(type: "TEXT", nullable: false),
-                    Payment = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     Recipient = table.Column<string>(type: "TEXT", nullable: false),
                     MessageField = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
