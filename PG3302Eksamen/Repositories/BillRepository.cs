@@ -10,6 +10,8 @@ public sealed class BillRepository : IBillRepository, IDisposable {
     public BillRepository(BankContext bankContext) {
         _context = bankContext;
     }
+    
+
 
     public Bill GetById(int id) {
         return _context.Bills.Find(id) ?? throw new InvalidOperationException();
@@ -40,6 +42,8 @@ public sealed class BillRepository : IBillRepository, IDisposable {
     public IEnumerable<Bill> GetSortedByStatus(BillStatusEnum status) {
         return GetAll().Where(bill => bill.Status.Equals(status));
     }
+
+
 
     public void UpdateBillStatus(int id, BillStatusEnum newStatus) {
         var billToUpdate = GetById(id);
