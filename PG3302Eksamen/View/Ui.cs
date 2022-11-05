@@ -11,6 +11,12 @@ public class Ui {
     // TODO og skal kun brukes her
     // TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
 
+
+    /*var image = new CanvasImage("../../../Assets/money.jpg");
+image.MaxWidth(32);
+image.BilinearResampler();
+AnsiConsole.Write(image);*/
+
     private readonly UiPerson _uiPerson = new();
     private Person? _person;
 
@@ -99,7 +105,35 @@ public class Ui {
             return account.WithdrawLimit;
         }
 
-        AnsiConsole.Write(tableResult);
+        AnsiConsole.Render(tableResult);
+        GoBackToMainMenu();
+    }
+
+    private void OverViewOfBills() {
+        ClearConsole();
+        var allBills = _uiPerson.GetAllBills();
+
+        var tableResult = new Table()
+            .Title("[deeppink2]Overview of your bills[/]")
+            .Border(TableBorder.MinimalHeavyHead)
+            .BorderColor(Color.Green)
+            .AddColumns("[white]Due date[/]", "[white]Recipient[/]",
+                "[white]Account number[/]",
+                "[white]KID/message[/]",
+                "[white]Status[/]", "[white]Amount[/]");
+
+        foreach (var bill in allBills)
+            tableResult.AddRow(
+                "[grey]" + $"{bill.DueDate}" + "[/]",
+                "[grey]" + $"{bill.Recipient}" + "[/]",
+                "[grey]" + $"{bill.AccountNumber}" + "[/]",
+                "[grey]" + $"{bill.MessageField}" + "[/]",
+                "[grey]" + $"{bill.Status}" + "[/]",
+                "[grey]" + $"{bill.Amount} ,-" + "[/]"
+            );
+
+        AnsiConsole.Render(tableResult);
+
         GoBackToMainMenu();
     }
 
@@ -126,8 +160,9 @@ public class Ui {
             new[] {
                 "Create a money account",
                 "Pay bills or transfer money",
-                "Check balance",
-                "See user details",
+                "Display all bills",
+                "Display all accounts",
+                "Display user details",
                 "Log out"
             }
         );
@@ -142,11 +177,14 @@ public class Ui {
             case "Pay bills or transfer money":
                 // TODO run code for transactions
                 break;
-            case "Check balance":
+            case "Display all accounts":
                 ClearConsole();
                 OverViewOfAccounts();
                 break;
-            case "See user details":
+            case "Display all bills":
+                OverViewOfBills();
+                break;
+            case "Display user details":
                 ClearConsole();
                 _uiPerson!.UserAccountDetails();
                 GoBackToMainMenu();

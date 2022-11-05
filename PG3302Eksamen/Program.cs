@@ -11,11 +11,6 @@ internal static class Program {
         ui.WelcomeMessage();
 
 
-        // var personRepository = new PersonRepository();
-        // person objektet må kommet fra en state etter logged in
-        //BankManager.CreateBankAccount(personRepository.GetById(1).Id);
-
-
         /*
         var billRepository = new BillRepository();
         var transactionRepository = new TransactionRepository();

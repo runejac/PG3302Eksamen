@@ -13,10 +13,6 @@ public class Person {
     public string SocialSecurityNumber { get; set; }
 
 
-    // TODO skal addes inn i DB vei
-    //public List<Account> Accounts { get; set; } = new();
-
-
     public Person CreatePerson(string address, string firstName, string lastName,
         string password,
         string phoneNumber,

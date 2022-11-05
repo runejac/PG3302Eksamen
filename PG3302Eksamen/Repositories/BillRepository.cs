@@ -4,8 +4,13 @@ using PG3302Eksamen.Model;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class BillRepository : IBillRepository, IDisposable {
-    private readonly BankContext _context = new();
+    private readonly BankContext _context;
     private bool _disposed;
+
+    public BillRepository(BankContext bankContext) {
+        _context = bankContext;
+    }
+
 
     public Bill GetById(int id) {
         return _context.Bills.Find(id) ?? throw new InvalidOperationException();
@@ -33,6 +38,7 @@ public sealed class BillRepository : IBillRepository, IDisposable {
         return GetAll().Where(bill => bill.Status.Equals(status));
     }
 
+
     public void UpdateBillStatus(int id, BillStatusEnum newStatus) {
         var billToUpdate = GetById(id);
         billToUpdate.Status = newStatus;
@@ -42,6 +48,10 @@ public sealed class BillRepository : IBillRepository, IDisposable {
     public void Dispose() {
         Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    public IEnumerable<Bill> GetSortedByOwner(int id) {
+        return _context.Bills.Where(e => e.OwnerId == id);
     }
 
     private void Dispose(bool disposing) {

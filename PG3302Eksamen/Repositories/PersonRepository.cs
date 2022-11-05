@@ -60,19 +60,6 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         return _context.Persons.FirstOrDefault(person => person.SocialSecurityNumber == ssn);
     }
 
-    /*public Person? GetBySocialSecurityNumber(string ssn) {
-        var person = _context.Persons
-            .Include(person => person.Email)
-            .Include(person => person.FirstName)
-            .Include(person => person.LastName)
-            .Include(person => person.PhoneNumber)
-            .Include(person => person.Address)
-            .Include(person => person.Accounts)
-            .FirstOrDefault(person => person.SocialSecurityNumber.Equals(ssn));
-
-        return person;
-    }*/
-
     private void Dispose(bool disposing) {
         if (!_disposed)
             if (disposing)

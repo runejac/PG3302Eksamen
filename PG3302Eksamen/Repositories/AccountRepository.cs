@@ -43,7 +43,6 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         return GetAll().Where(acc => acc.Name.Equals(name));
     }
 
-    // TODO here we want to sort out accounts on persons ID, lets make a List() of Accounts on Person.cs
     public IEnumerable<Account> GetSortedByOwner(int id) {
         return _context.Accounts.Where(e => e.OwnerId == id);
     }

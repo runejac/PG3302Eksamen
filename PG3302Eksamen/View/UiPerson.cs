@@ -18,6 +18,11 @@ public class UiPerson {
         return _personController.GetAllAccounts();
     }
 
+    public List<Bill> GetAllBills() {
+        return _personController.GetAllBills();
+    }
+
+
     public Person? LogIn() {
         var ssnEntered = PromptUtil.PromptQuestion("Enter your social security number: ",
             "Invalid social security number entered.");
@@ -25,7 +30,10 @@ public class UiPerson {
 
         var person = _personController.Authenticate(ssnEntered, passwordEntered);
 
-        if (person != null) return person;
+        if (person != null) {
+            _personController.BillGenerator();
+            return person;
+        }
 
         PromptUtil.PromptAssertion("Invalid user details", "red");
 

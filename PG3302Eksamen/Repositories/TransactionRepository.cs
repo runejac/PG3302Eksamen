@@ -7,6 +7,10 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     private readonly BankContext _context = new();
     private bool _disposed;
 
+    public TransactionRepository(BankContext context) {
+        _context = context;
+    }
+
     public void Dispose() {
         Dispose(true);
         GC.SuppressFinalize(this);
@@ -42,9 +46,9 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     }
 
     public void PayBill(int billId, string fromAccountNr) {
-        var billRepo = new BillRepository();
+        var billRepo = new BillRepository(_context);
         var idOfBill = billRepo.GetById(billId);
-        billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.PAID);
+        billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.Paid);
         // Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
     }
 

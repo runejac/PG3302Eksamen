@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class newDB : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,6 +27,25 @@ namespace PG3302Eksamen.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bills",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DueDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    AccountNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    Amount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Recipient = table.Column<string>(type: "TEXT", nullable: false),
+                    MessageField = table.Column<string>(type: "TEXT", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    OwnerId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,13 +77,8 @@ namespace PG3302Eksamen.Migrations
                     FromAccountId = table.Column<int>(type: "INTEGER", nullable: false),
                     ToAccountId = table.Column<int>(type: "INTEGER", nullable: false),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    AccountNumber = table.Column<string>(type: "TEXT", nullable: true),
-                    Payment = table.Column<decimal>(type: "TEXT", nullable: true),
-                    Recipient = table.Column<string>(type: "TEXT", nullable: true),
-                    MessageField = table.Column<string>(type: "TEXT", nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: true),
-                    Receipt = table.Column<int>(type: "INTEGER", nullable: true)
+                    Receipt = table.Column<int>(type: "INTEGER", nullable: true),
+                    Transfer_Receipt = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,6 +122,9 @@ namespace PG3302Eksamen.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Bills");
+
             migrationBuilder.DropTable(
                 name: "Persons");
 
