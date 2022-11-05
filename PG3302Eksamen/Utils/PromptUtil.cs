@@ -1,3 +1,4 @@
+using PG3302Eksamen.Model;
 using Spectre.Console;
 
 namespace PG3302Eksamen.Utils;

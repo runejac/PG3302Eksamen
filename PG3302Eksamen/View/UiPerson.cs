@@ -21,6 +21,10 @@ public class UiPerson {
     public List<Bill> GetAllBills() {
         return _personController.GetAllBills();
     }
+    
+    public List<Bill> GetAllUnpaidBills() {
+        return _personController.GetAllUnpaidBills();
+    }
 
 
     public Person? LogIn() {

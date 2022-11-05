@@ -180,7 +180,8 @@ AnsiConsole.Write(image);*/
                 MainMenuAfterAuthorized();
                 break;
             case "Pay bills or transfer money":
-                // TODO run code for transactions
+                ClearConsole();
+                TransactionMenu();
                 break;
             case "Display all accounts":
                 ClearConsole();
@@ -204,5 +205,38 @@ AnsiConsole.Write(image);*/
                 _person = null;
                 break;
         }
+    }
+
+    private void TransactionMenu() {
+        Message(
+            "Do you wish to make a payment or transfer between your own accounts?",
+            ConsoleColor.Green);
+        var selectedChoice = PromptUtil.PromptSelectPrompt("Transaction",
+            new[] {
+                "Make a payment",
+                "Transfer between own accounts"
+            }
+        );
+
+        switch (selectedChoice) {
+            case "Make a payment":
+                ClearConsole();
+                var bills = UnpaidBills();
+                var billNamesArray =bills.Select(bill => bill.Recipient).ToArray();
+                PromptUtil.PromptSelectPrompt("Unpaid bills", billNamesArray);
+                GoBackToMainMenu();
+                break;
+            case "Transfer between own accounts":
+                ClearConsole();
+                //TODO: metode for å vise egne kontoer
+                GoBackToMainMenu();
+                break;
+        }
+    }
+
+    private List<Bill> UnpaidBills() {
+        var unpaidBills = _uiPerson.GetAllUnpaidBills();
+        Console.WriteLine(unpaidBills[0].Id);
+        return unpaidBills;
     }
 }

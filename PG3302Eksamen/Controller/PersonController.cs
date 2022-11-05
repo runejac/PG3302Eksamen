@@ -31,10 +31,13 @@ public class PersonController {
         return _billRepository.GetSortedByOwner(_person.Id).ToList();
     }
 
+    public List<Bill> GetAllUnpaidBills() {
+        return _billRepository.GetSortedByStatus(BillStatusEnum.Notpaid).ToList();
+    }
+    
     public void BillGenerator() {
         _billRepository.Insert(_billController.GenerateBills(_person));
     }
-
 
     public void CreatePerson(string address, string firstName, string lastName,
         string password,
