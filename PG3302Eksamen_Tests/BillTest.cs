@@ -3,25 +3,23 @@ using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Repositories;
 
-namespace PG3302Eksamen_Tests; 
+namespace PG3302Eksamen_Tests;
 
 public class BillTest {
+    private BankContext _context = new();
 
     private bool _disposedValue; // To detect redundant calls
 
-    private BankContext _context = new();
 
-	
     [SetUp]
     public void CreateContextForInMemory() {
         var option = new DbContextOptionsBuilder<BankContext>().UseInMemoryDatabase("test_db").Options;
 
-		
+
         _context = new BankContext(option);
         _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
     }
-    
 
 
     protected virtual void Dispose(bool disposing) {
@@ -46,7 +44,6 @@ public class BillTest {
         var personService = new PersonRepository(_context);
         var transaction = new TransactionRepository(_context);
         var createdPerson = person.CreatePerson(
-            
             "Elaveien 5",
             "Ola",
             "Normann",
@@ -64,15 +61,11 @@ public class BillTest {
             "Hola",
             "Pay now or die",
             3000,
-            BillStatusEnum.NOTPAID,
+            BillStatusEnum.Notpaid,
             DateTime.Now,
             1);
-        
-       
-        
-        billService.UpdateBillStatus(createdPerson.Id, createdBill.Status = BillStatusEnum.NOTPAID);
-        
-      
-        
+
+
+        billService.UpdateBillStatus(createdPerson.Id, createdBill.Status = BillStatusEnum.Notpaid);
     }
 }

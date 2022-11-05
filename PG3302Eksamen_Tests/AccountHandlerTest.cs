@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Repositories;
 
@@ -40,13 +39,13 @@ public class AccountHandlerTest {
     [Test]
     public void ChangeAccountNameTest() {
         AccountRepository accountRepository = new(_context);
-        
+
         var currentAccount = new CurrentAccountFactory().InitializeAccount("Felleskonto", 1, "12345678912");
-        
+
         accountRepository.Insert(currentAccount);
         accountRepository.ChangeAccountName(1, "Brukerkonto");
         var expectedAccountNumber = accountRepository.GetById(1).Name;
-        
+
         Assert.That(expectedAccountNumber, Is.EqualTo("Brukerkonto"));
     }
     /*
