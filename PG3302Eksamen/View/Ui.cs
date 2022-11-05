@@ -177,7 +177,7 @@ AnsiConsole.Write(image);*/
                 ClearConsole();
                 _uiAccount.CreateBankAccountFor(_person);
                 _uiAccount.AskUserWhatTypeOfAccountToBeMade();
-                GoBackToMainMenu();
+                MainMenuAfterAuthorized();
                 break;
             case "Pay bills or transfer money":
                 // TODO run code for transactions
