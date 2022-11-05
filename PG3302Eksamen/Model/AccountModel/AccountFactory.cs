@@ -9,7 +9,7 @@ public abstract class AccountFactory {
     protected abstract Account CreateAccount(
         string name, int ownerId,
         string accountNumber
-        );
+    );
 
     // Also note that, despite its name, the Creator's primary
     // responsibility is not creating products. Usually, it contains some

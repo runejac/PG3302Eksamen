@@ -10,7 +10,6 @@ public sealed class BillRepository : IBillRepository, IDisposable {
     public BillRepository(BankContext bankContext) {
         _context = bankContext;
     }
-    
 
 
     public Bill GetById(int id) {
@@ -19,10 +18,6 @@ public sealed class BillRepository : IBillRepository, IDisposable {
 
     public IEnumerable<Bill> GetAll() {
         return _context.Bills.AsQueryable() ?? throw new InvalidOperationException();
-    }
-    
-    public IEnumerable<Bill> GetSortedByOwner(int id) {
-        return _context.Bills.Where(e => e.OwnerId == id);
     }
 
     public void Insert(Bill entity) {
@@ -44,7 +39,6 @@ public sealed class BillRepository : IBillRepository, IDisposable {
     }
 
 
-
     public void UpdateBillStatus(int id, BillStatusEnum newStatus) {
         var billToUpdate = GetById(id);
         billToUpdate.Status = newStatus;
@@ -56,10 +50,17 @@ public sealed class BillRepository : IBillRepository, IDisposable {
         GC.SuppressFinalize(this);
     }
 
+    public IEnumerable<Bill> GetSortedByOwner(int id) {
+        return _context.Bills.Where(e => e.OwnerId == id);
+    }
+
     private void Dispose(bool disposing) {
-        if (!_disposed)
-            if (disposing)
+        if (!_disposed) {
+            if (disposing) {
                 _context.Dispose();
+            }
+        }
+
         _disposed = true;
     }
 }

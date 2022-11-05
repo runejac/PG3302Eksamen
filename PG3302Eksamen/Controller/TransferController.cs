@@ -4,10 +4,10 @@ using PG3302Eksamen.Model;
 namespace PG3302Eksamen.Controller;
 
 public class TransferController : ITransaction {
-    public Transfer Transfer;
+    private readonly Transfer _transfer;
 
     public TransferController(Transfer transfer) {
-        Transfer = transfer;
+        _transfer = transfer;
     }
 
 
@@ -16,6 +16,6 @@ public class TransferController : ITransaction {
     }
 
     public Transaction getModel<T>() {
-        return Transfer;
+        return _transfer;
     }
 }

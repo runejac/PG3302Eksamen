@@ -1,6 +1,6 @@
 using PG3302Eksamen.Model.AccountModel;
 
-namespace PG3302Eksamen.Model; 
+namespace PG3302Eksamen.Model;
 
 public class Payment : Transaction {
     public new decimal Amount { get; set; }

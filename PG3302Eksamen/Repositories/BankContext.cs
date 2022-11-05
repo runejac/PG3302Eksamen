@@ -11,7 +11,7 @@ public class BankContext : DbContext {
         var path = Environment.GetFolderPath(folder);
         DbPath = Path.Join(path, "bank.db");
     }
-    
+
     public BankContext(DbContextOptions<BankContext> dbContextOptions) : base(dbContextOptions) {
     }
 
@@ -33,7 +33,7 @@ public class BankContext : DbContext {
             .HasValue<Deposit>("Deposit")
             .HasValue<Transfer>("Transfer")
             .HasValue<Payment>("Payment");
-        
+
         modelBuilder.Entity<SavingAccount>()
             .Property(e => e.Interest)
             .HasColumnName("Interest");
@@ -58,9 +58,9 @@ public class BankContext : DbContext {
     }
 
     // few adjustments for tests
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if(!optionsBuilder.IsConfigured)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+        if (!optionsBuilder.IsConfigured) {
             optionsBuilder.UseSqlite($"Data Source={DbPath}");
+        }
     }
 }
