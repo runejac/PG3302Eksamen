@@ -55,9 +55,12 @@ public sealed class BillRepository : IBillRepository, IDisposable {
     }
 
     private void Dispose(bool disposing) {
-        if (!_disposed)
-            if (disposing)
+        if (!_disposed) {
+            if (disposing) {
                 _context.Dispose();
+            }
+        }
+
         _disposed = true;
     }
 }

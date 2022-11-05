@@ -43,7 +43,9 @@ public class BillController {
         Console.WriteLine(next);
 
         foreach (var recipient in _billRecipients) {
-            if (i == next) return recipient;
+            if (i == next) {
+                return recipient;
+            }
 
             i++;
         }

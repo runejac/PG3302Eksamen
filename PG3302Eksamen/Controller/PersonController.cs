@@ -19,8 +19,10 @@ public class PersonController {
 
     public Person? Authenticate(string ssn, string password) {
         _person = _personRepository.GetBySocialSecNumber(ssn);
-        
-        if (ssn == _person?.SocialSecurityNumber) return Verify(password, _person.Password) ? _person : null;
+
+        if (ssn == _person?.SocialSecurityNumber) {
+            return Verify(password, _person.Password) ? _person : null;
+        }
 
         return null;
     }
@@ -54,7 +56,9 @@ public class PersonController {
                 person.SocialSecurityNumber.Equals(_person.SocialSecurityNumber));
 
 
-        if (match is not null && _personRepository.GetAll().ToList().Count >= 1) return true;
+        if (match is not null && _personRepository.GetAll().ToList().Count >= 1) {
+            return true;
+        }
 
         _personRepository.Insert(_person);
         BillGenerator();

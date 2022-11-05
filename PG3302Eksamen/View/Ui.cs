@@ -90,7 +90,7 @@ AnsiConsole.Write(image);*/
                 "[white]Balance[/]",
                 "[white]Interest rate[/]", "[white]Withdrawal limit[/]");
 
-        foreach (var account in printAccountDetails)
+        foreach (var account in printAccountDetails) {
             tableResult.AddRow(
                 "[grey]" + $"{account.Name}" + "[/]",
                 "[grey]" + $"{account.AccountNumber}" + "[/]",
@@ -98,10 +98,14 @@ AnsiConsole.Write(image);*/
                 "[grey]" + $"{account.Interest}" + "[/]",
                 "[grey]" + $"{WithdrawLimit(account)}" + "[/]"
             );
+        }
 
         // Current account will never have withdraw limit?
         dynamic WithdrawLimit(Account account) {
-            if (account.GetAccountType() == "current account") return "Unlimited";
+            if (account.GetAccountType() == "current account") {
+                return "Unlimited";
+            }
+
             return account.WithdrawLimit;
         }
 
@@ -122,7 +126,7 @@ AnsiConsole.Write(image);*/
                 "[white]KID/message[/]",
                 "[white]Status[/]", "[white]Amount[/]");
 
-        foreach (var bill in allBills)
+        foreach (var bill in allBills) {
             tableResult.AddRow(
                 "[grey]" + $"{bill.DueDate}" + "[/]",
                 "[grey]" + $"{bill.Recipient}" + "[/]",
@@ -131,6 +135,7 @@ AnsiConsole.Write(image);*/
                 "[grey]" + $"{bill.Status}" + "[/]",
                 "[grey]" + $"{bill.Amount} ,-" + "[/]"
             );
+        }
 
         AnsiConsole.Render(tableResult);
 

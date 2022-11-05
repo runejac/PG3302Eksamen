@@ -59,7 +59,8 @@ public class BankContext : DbContext {
 
     // few adjustments for tests
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        if (!optionsBuilder.IsConfigured)
+        if (!optionsBuilder.IsConfigured) {
             optionsBuilder.UseSqlite($"Data Source={DbPath}");
+        }
     }
 }
