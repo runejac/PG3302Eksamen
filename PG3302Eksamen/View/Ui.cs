@@ -53,8 +53,8 @@ AnsiConsole.Write(image);*/
                 MainMenuAfterAuthorized();
                 break;
             case "Login":
+                _person = _uiPerson.LogIn();
                 while (_person == null) {
-                    _person = _uiPerson.LogIn();
                     var askExit = PromptUtil.PromptSelectPrompt("", new[] {
                         "Try again",
                         "Exit"
