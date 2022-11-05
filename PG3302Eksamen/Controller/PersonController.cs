@@ -28,8 +28,10 @@ public class PersonController {
 				}
 			}
 		}
+
 		// return null when SSN also is wrong
 		catch (Exception e) {
+			Console.WriteLine(e);
 			return null;
 		}
 
@@ -55,7 +57,7 @@ public class PersonController {
 	}
 
 	public void BillGenerator() {
-		_billRepository.Insert(_billController.GenerateBills(GetPerson().Id));
+		_billRepository.Insert(_billController.GenerateBills(GetPerson()));
 	}
 
 

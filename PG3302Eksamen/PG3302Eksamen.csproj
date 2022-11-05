@@ -19,6 +19,7 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Spectre.Console" Version="0.45.0" />
+        <PackageReference Include="Spectre.Console.ImageSharp" Version="0.45.0" />
     </ItemGroup>
 
     <ItemGroup>
