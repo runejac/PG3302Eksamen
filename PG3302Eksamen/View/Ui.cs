@@ -90,10 +90,12 @@ public class Ui {
 	}
 
 	private static void OverViewOfAccounts() {
+		ClearConsole();
 		var printAccountDetails = Person!.GetAllAccounts();
 
 		var tableResult = new Table()
-			.Border(TableBorder.Square)
+			.Title("[deeppink2]Overview of your accounts[/]")
+			.Border(TableBorder.Rounded)
 			.BorderColor(Color.Green)
 			.AddColumns("[white]Account name[/]", "[white]Account number[/]",
 				"[white]Balance[/]",
@@ -114,21 +116,26 @@ public class Ui {
 	}
 
 	private static void OverViewOfBills() {
+		ClearConsole();
 		var allBills = Person.GetAllBills();
 
 		var tableResult = new Table()
-			.Border(TableBorder.Square)
+			.Title("[deeppink2]Overview of your bills[/]")
+			.Border(TableBorder.MinimalHeavyHead)
 			.BorderColor(Color.Green)
 			.AddColumns("[white]Due date[/]", "[white]Recipient[/]",
-				"[white]Status[/]", "[white]Account number[/]", "[white]Amount[/]");
+				"[white]Account number[/]",
+				"[white]KID/message[/]",
+				"[white]Status[/]", "[white]Amount[/]");
 
 		foreach (var bill in allBills) {
 			tableResult.AddRow(
 				"[grey]" + $"{bill.DueDate}" + "[/]",
 				"[grey]" + $"{bill.Recipient}" + "[/]",
-				"[grey]" + $"{bill.Status}" + "[/]",
 				"[grey]" + $"{bill.AccountNumber}" + "[/]",
-				"[grey]" + $"{bill.Amount}" + "[/]"
+				"[grey]" + $"{bill.MessageField}" + "[/]",
+				"[grey]" + $"{bill.Status}" + "[/]",
+				"[grey]" + $"{bill.Amount} ,-" + "[/]"
 			);
 		}
 
@@ -176,6 +183,11 @@ public class Ui {
 			throw new ArgumentNullException(nameof(person));
 		}
 
+		/*var image = new CanvasImage("../../../Assets/money.jpg");
+		image.MaxWidth(32);
+		image.BilinearResampler();
+		AnsiConsole.Write(image);*/
+
 		Message(
 			$"Greetings {person.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
 			ConsoleColor.Green);
@@ -183,9 +195,9 @@ public class Ui {
 			new[] {
 				"Create a money account",
 				"Pay bills or transfer money",
-				"See all bills",
-				"Check balance",
-				"See user details",
+				"Display all bills",
+				"Display all accounts",
+				"Display user details",
 				"Log out"
 			}
 		);
@@ -199,14 +211,14 @@ public class Ui {
 			case "Pay bills or transfer money":
 				// TODO run code for transactions
 				break;
-			case "See all bills":
+			case "Display all bills":
 				OverViewOfBills();
 				break;
-			case "Check balance":
+			case "Display all accounts":
 				ClearConsole();
 				OverViewOfAccounts();
 				break;
-			case "See user details":
+			case "Display user details":
 				ClearConsole();
 				UserAccountDetails();
 				break;

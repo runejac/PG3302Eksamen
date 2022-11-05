@@ -52,11 +52,10 @@ public class UiPerson {
 			PromptUtil.PromptQuestion("Phone number: ", "Invalid phone number entered");
 		var email = PromptUtil.PromptEmail("Email: ", "Invalid email entered");
 
-		var password = "";
 		var hashedPassword = "";
 
 		while (passwordChecker) {
-			password = PromptUtil.PromptPassword("Password: ");
+			var password = PromptUtil.PromptPassword("Password: ");
 			var confirmPassword = PromptUtil.PromptPassword("Confirm password: ");
 
 
@@ -64,6 +63,7 @@ public class UiPerson {
 				PromptUtil.PromptAssertion("Passwords did not match, try again.");
 			}
 			else {
+				// hashing password before it enters DB
 				hashedPassword = HashPassword(password);
 				passwordChecker = false;
 			}
