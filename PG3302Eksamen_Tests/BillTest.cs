@@ -64,13 +64,13 @@ public class BillTest {
             "Hola",
             "Pay now or die",
             3000,
-            BillStatusEnum.NOTPAID,
+            BillStatusEnum.Notpaid,
             DateTime.Now,
             1);
         
        
         
-        billService.UpdateBillStatus(createdPerson.Id, createdBill.Status = BillStatusEnum.NOTPAID);
+        billService.UpdateBillStatus(createdPerson.Id, createdBill.Status = BillStatusEnum.Notpaid);
         
       
         

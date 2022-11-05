@@ -48,7 +48,7 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     public void PayBill(int billId, string fromAccountNr) {
         var billRepo = new BillRepository(_context);
         var idOfBill = billRepo.GetById(billId);
-        billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.PAID);
+        billRepo.UpdateBillStatus(idOfBill.Id, BillStatusEnum.Paid);
         // Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
     }
 
