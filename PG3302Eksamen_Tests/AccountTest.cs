@@ -50,7 +50,7 @@ public class AccountHandlerTest {
     }
 
     [Test]
-    public void UpdateAccountBalance() {
+    public void UpdateAccountBalanceTest() {
         AccountRepository accountRepository = new(_context);
 
         var savingsAccount = new SavingsAccountFactory().InitializeAccount("Sparekonto", 1, "12345678912");
@@ -64,7 +64,7 @@ public class AccountHandlerTest {
 
     [Test]
 
-    public void GetAllAccountNumbers() {
+    public void GetAllAccountNumbersTest() {
         AccountRepository accountRepository = new(_context);
         
         var savingsAccount = new SavingsAccountFactory().InitializeAccount("Sparekonto", 2, "12345678912");

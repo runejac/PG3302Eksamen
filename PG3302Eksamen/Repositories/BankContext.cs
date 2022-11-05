@@ -10,6 +10,7 @@ public class BankContext : DbContext {
             Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         DbPath = Path.Join(path, "bank.db");
+        Console.WriteLine(DbPath);
     }
 
     public BankContext(DbContextOptions<BankContext> dbContextOptions) : base(dbContextOptions) {
