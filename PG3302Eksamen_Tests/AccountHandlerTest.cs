@@ -72,20 +72,27 @@ public class AccountHandlerTest {
 
         var currentAccount = new CurrentAccountFactory().InitializeAccount("Brukskonto", 2, "12345678901");
         
-        accountRepository.Insert(savingsAccount);
         accountRepository.Insert(currentAccount);
+        accountRepository.Insert(savingsAccount);
+        
+        List<string> actual = new List<string>();    
+                                              
+        actual.Add("12345678901");                   
+        actual.Add("12345678912");  
 
-        Assert.Multiple((() =>
+        Assert.That(accountRepository.GetAllAccountNumbers(), Is.EqualTo(actual));
+
+    }
+
+    //Assert.That(accountRepository.GetAllAccountNumbers(), Has.Count.EqualTo(2));
+            
+    //(accountRepository.GetAllAccountNumbers().Get);
+    
+    /*Assert.Multiple((() =>
         {
             Assert.That(savingsAccount.AccountNumber, Is.EqualTo("123456789121"));
             Assert.That(currentAccount.AccountNumber, Is.EqualTo("123456789011"));
-        }));
-        
-        //CollectionAssert.AreEqual(accountRepository.GetAllAccountNumbers(), Is.EqualTo() );
-            
-            //(accountRepository.GetAllAccountNumbers().Get);
-    }
-
+        }));*/
     /*
     [Test]
 
