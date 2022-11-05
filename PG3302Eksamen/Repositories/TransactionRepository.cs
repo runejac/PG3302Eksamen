@@ -7,6 +7,10 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
     private readonly BankContext _context = new();
     private bool _disposed;
 
+    public TransactionRepository(BankContext context) {
+        _context = context;
+    }
+
     public void Dispose() {
         Dispose(true);
         GC.SuppressFinalize(this);
