@@ -74,13 +74,12 @@ public class AccountHandlerTest {
         accountRepository.Insert(currentAccount);
         accountRepository.Insert(savingsAccount);
         
-        List<string> actual = new List<string>();    
-                                              
-        actual.Add("12345678901");                   
-        actual.Add("12345678912");  
+        var actual = new List<string> {
+            "12345678912",
+            "12345678901"
+        };
 
-        Assert.That(accountRepository.GetAllAccountNumbers(), Is.EqualTo(actual));
-
+        CollectionAssert.AreEquivalent(accountRepository.GetAllAccountNumbers(), actual);
     }
 
     //Assert.That(accountRepository.GetAllAccountNumbers(), Has.Count.EqualTo(2));
