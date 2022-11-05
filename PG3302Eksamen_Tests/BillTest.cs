@@ -64,8 +64,9 @@ public class BillTest {
             BillStatusEnum.Notpaid,
             DateTime.Now,
             1);
-
-
+       
+        
         billService.UpdateBillStatus(createdPerson.Id, createdBill.Status = BillStatusEnum.Notpaid);
+           
     }
 }
