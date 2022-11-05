@@ -7,9 +7,8 @@ internal static class Program {
         /*IUserReader userReader = new UserReader();
         new BankManager(userReader).Run();*/
 
-        Ui.WelcomeMessage();
-
-
+        var ui = new Ui();
+        ui.WelcomeMessage();
 
 
         // var personRepository = new PersonRepository();
@@ -29,7 +28,6 @@ internal static class Program {
         
         var currentAccount = new CurrentAccountFactory().InitializeAccount("konto2",
             personRepository.GetById(2).Id,"111111111");*/
-
 
 
         //accountRepository.Insert(savingAccount);

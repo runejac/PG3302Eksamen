@@ -4,7 +4,6 @@ using PG3302Eksamen.Model;
 namespace PG3302Eksamen.Controller;
 
 public class WithdrawController : ITransaction {
-    
     public WithdrawController(Withdraw withdraw) {
         Withdraw = withdraw;
     }
