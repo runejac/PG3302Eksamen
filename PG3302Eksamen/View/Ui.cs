@@ -7,6 +7,8 @@ namespace PG3302Eksamen.View;
 
 public class Ui {
     private readonly UiAccount _uiAccount = new();
+
+    private readonly UiBill _uiBill = new();
     // TODO Message skal være private etter hvert, men brukes i BankManager enn så lenge
     // TODO og skal kun brukes her
     // TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
@@ -41,7 +43,7 @@ AnsiConsole.Write(image);*/
     }
 
     public void WelcomeMessage() {
-        var selectedChoice = PromptUtil.PromptSelectPrompt(
+        var selectedChoice = PromptUtil.PromptSelect(
             "[cyan]Welcome to Bank Kristiania![/]",
             new[] { "Register", "Login", "Exit" }
         );
@@ -55,7 +57,7 @@ AnsiConsole.Write(image);*/
             case "Login":
                 _person = _uiPerson.LogIn();
                 while (_person == null) {
-                    var askExit = PromptUtil.PromptSelectPrompt("", new[] {
+                    var askExit = PromptUtil.PromptSelect("", new[] {
                         "Try again",
                         "Exit"
                     });
@@ -144,7 +146,7 @@ AnsiConsole.Write(image);*/
 
 
     private void GoBackToMainMenu() {
-        var selectedChoice = PromptUtil.PromptSelectPrompt("",
+        var selectedChoice = PromptUtil.PromptSelect("",
             new[] {
                 "Back"
             }
@@ -161,7 +163,7 @@ AnsiConsole.Write(image);*/
         Message(
             $"Greetings {_person?.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
             ConsoleColor.Green);
-        var selectedChoice = PromptUtil.PromptSelectPrompt("MAIN MENU",
+        var selectedChoice = PromptUtil.PromptSelect("MAIN MENU",
             new[] {
                 "Create a money account",
                 "Pay bills or transfer money",
@@ -211,7 +213,7 @@ AnsiConsole.Write(image);*/
         Message(
             "Do you wish to make a payment or transfer between your own accounts?",
             ConsoleColor.Green);
-        var selectedChoice = PromptUtil.PromptSelectPrompt("Transaction",
+        var selectedChoice = PromptUtil.PromptSelect("Transaction",
             new[] {
                 "Make a payment",
                 "Transfer between own accounts"
@@ -221,22 +223,22 @@ AnsiConsole.Write(image);*/
         switch (selectedChoice) {
             case "Make a payment":
                 ClearConsole();
-                var bills = UnpaidBills();
-                var billNamesArray =bills.Select(bill => bill.Recipient).ToArray();
-                PromptUtil.PromptSelectPrompt("Unpaid bills", billNamesArray);
-                GoBackToMainMenu();
+                var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
+                var selectedBillToPay = PromptUtil.PromptSelectForBills("Unpaid bills", billsToPay);
+                
                 break;
             case "Transfer between own accounts":
                 ClearConsole();
-                //TODO: metode for å vise egne kontoer
-                GoBackToMainMenu();
+                 var personAccounts = _uiPerson.GetAllAccounts();
+                var selectedAccount = PromptUtil.PromptSelectForAccounts("Transfer from account", personAccounts);
+                var amount = PromptUtil.PromptAmountInput("Transfer amount: ", "Not enough balance", selectedAccount);
+                if (amount.Equals(0)) {
+                    ClearConsole();
+                    MainMenuAfterAuthorized();
+                }
+                
                 break;
         }
     }
-
-    private List<Bill> UnpaidBills() {
-        var unpaidBills = _uiPerson.GetAllUnpaidBills();
-        Console.WriteLine(unpaidBills[0].Id);
-        return unpaidBills;
-    }
+    
 }

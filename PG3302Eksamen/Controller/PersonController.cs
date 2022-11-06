@@ -34,7 +34,7 @@ public class PersonController {
     public List<Bill> GetAllUnpaidBills() {
         return _billRepository.GetSortedByStatus(BillStatusEnum.Notpaid).ToList();
     }
-    
+
     public void BillGenerator() {
         _billRepository.Insert(_billController.GenerateBills(_person));
     }

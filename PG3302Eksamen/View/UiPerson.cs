@@ -14,14 +14,14 @@ public class UiPerson {
         return _personController.GetPerson();
     }
 
-    public List<Account> GetAllAccounts() {
+    public IEnumerable<Account> GetAllAccounts() {
         return _personController.GetAllAccounts();
     }
 
-    public List<Bill> GetAllBills() {
+    public IEnumerable<Bill> GetAllBills() {
         return _personController.GetAllBills();
     }
-    
+
     public List<Bill> GetAllUnpaidBills() {
         return _personController.GetAllUnpaidBills();
     }

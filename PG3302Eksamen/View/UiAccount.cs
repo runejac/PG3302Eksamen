@@ -16,7 +16,7 @@ public class UiAccount {
     }
 
     public void AskUserWhatTypeOfAccountToBeMade() {
-        var accountTypeAnswer = PromptUtil.PromptSelectPrompt(
+        var accountTypeAnswer = PromptUtil.PromptSelect(
             "Do you want it to be a savings account or a current account?",
             new[] { "Current account", "Savings account", "Back" });
 
@@ -73,4 +73,5 @@ public class UiAccount {
 
         AnsiConsole.Render(tableResult);*/
     }
+    
 }
