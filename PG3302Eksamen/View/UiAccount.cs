@@ -8,10 +8,10 @@ namespace PG3302Eksamen.View;
 public class UiAccount {
 	private readonly AccountController _accountController = new();
 	private readonly TransferController _transferController = new();
-	private Person? _person;
+	private Person _person;
 
 
-	public void CreateBankAccountFor(Person? person) {
+	public void CreateBankAccountFor(Person person) {
 		_person = person;
 		_accountController.CreateBankAccount(_person);
 	}

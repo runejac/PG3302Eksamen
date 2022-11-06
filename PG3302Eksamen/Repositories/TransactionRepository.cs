@@ -4,7 +4,7 @@ using PG3302Eksamen.Model;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class TransactionRepository : ITransactionRepository, IDisposable {
-	private readonly BankContext _context = new();
+	private readonly BankContext _context;
 	private bool _disposed;
 
 	public TransactionRepository(BankContext context) {
@@ -25,12 +25,16 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
 		       throw new InvalidOperationException();
 	}
 
+	public void Insert(Transaction entity) {
+		throw new NotImplementedException();
+	}
+
 	public void Remove(Transaction entity) {
 		_context.Remove(entity);
 		_context.SaveChanges();
 	}
 
-	public void Insert(Transaction entity) {
+	public void ProcessTransaction(Transaction entity) {
 		_context.Add(entity);
 		_context.SaveChanges();
 	}
@@ -53,8 +57,10 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
 		// Insert(new Transaction().CreateTransaction(idOfBill.Id, DateTime.Now, fromAccountNr, idOfBill.AccountNumber));
 	}
 
-	public void Transfer(int accountFromId, int accountToId, decimal amount) {
+	public void ProcessTransaction() {
+		throw new NotImplementedException();
 	}
+
 
 	private void Dispose(bool disposing) {
 		if (!_disposed) {

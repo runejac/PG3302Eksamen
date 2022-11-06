@@ -7,7 +7,7 @@ namespace PG3302Eksamen.Controller;
 public class AccountController {
     private readonly AccountRepository _accountRepository = new(new BankContext());
     private Account _account;
-    private Person? _person;
+    private Person _person;
 
 
     public void CreateSavingsAccount(string name,
@@ -27,7 +27,7 @@ public class AccountController {
     }
 
 
-    public void CreateBankAccount(Person? person) {
+    public void CreateBankAccount(Person person) {
         _person = person;
     }
 

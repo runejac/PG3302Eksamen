@@ -7,24 +7,31 @@ namespace PG3302Eksamen.Controller;
 
 public class TransferController : ITransaction {
 	private readonly AccountRepository _accountRepository = new(new BankContext());
-	private readonly TransactionManager _transactionManager;
-	private readonly Transfer _transfer;
+	private readonly TransactionRepository _transactionRepository = new(new BankContext());
+	private  Transfer _transfer = new();
+	private Transaction _transaction;
+
 
 
 	public void Pay() {
 		throw new NotImplementedException();
 	}
 
+	public void Execute() {
+		throw new NotImplementedException();
+	}
+	
+
 	public void Execute(decimal amount, Account fromAccount, Account toAccount) {
-		//_transactionManager.CreateTransactionManager();
+		var transaction = _transfer.CreateTransfer(amount, fromAccount, toAccount);
+		_transactionRepository.ProcessTransaction(transaction);
 
 		fromAccount.Balance -= amount;
 		toAccount.Balance += amount;
 		_accountRepository.Update(fromAccount);
 		_accountRepository.Update(toAccount);
-
-		//_accountRepository.Update();
 	}
+	
 
 
 	public Transaction getModel<T>() {

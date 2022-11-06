@@ -10,7 +10,7 @@ namespace PG3302Eksamen.View;
 public class UiPerson {
     private readonly PersonController _personController = new();
 
-    public Person? GetPerson() {
+    public Person GetPerson() {
         return _personController.GetPerson();
     }
 
@@ -27,7 +27,7 @@ public class UiPerson {
     }
 
 
-    public Person? LogIn() {
+    public Person LogIn() {
         var ssnEntered = PromptUtil.PromptQuestion("Enter your social security number: ",
             "Invalid social security number entered.");
         var passwordEntered = PromptUtil.PromptPassword("Enter your password: ");

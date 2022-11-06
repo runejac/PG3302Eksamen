@@ -20,7 +20,7 @@ image.BilinearResampler();
 AnsiConsole.Write(image);*/
 
 	private readonly UiPerson _uiPerson = new();
-	private Person? _person;
+	private Person _person;
 
 
 	private void ClearConsole() {
@@ -256,7 +256,8 @@ AnsiConsole.Write(image);*/
 				break;
 			case "Transfer between own accounts":
 				ClearConsole();
-				var personAccounts = _uiPerson.GetAllAccounts();
+				var personAccounts = _uiPerson.GetAllAccounts().ToList();
+				
 				var selectedFromAccount =
 					PromptUtil.PromptSelectForAccounts("Transfer from account",
 						personAccounts);

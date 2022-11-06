@@ -47,7 +47,16 @@ public class BankContext : DbContext {
         modelBuilder.Entity<CurrentAccount>()
             .Property(e => e.WithdrawLimit)
             .HasColumnName("WithdrawLimit");
+        
+        
+        // TODO: Unique constraint violation, maybe we need to add acc as ID.. not entity :(
 
+        modelBuilder.Entity<Transaction>()
+            .HasOne(p => p.FromAccount);
+        modelBuilder.Entity<Transaction>()
+            .HasOne(p => p.ToAccount);
+            
+        
         modelBuilder.Entity<Person>()
             .HasIndex(e => new { e.SocialSecurityNumber })
             .IsUnique();

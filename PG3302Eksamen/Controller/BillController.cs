@@ -62,7 +62,7 @@ public class BillController {
 	}
 
 
-	public Bill GenerateBills(Person? person) {
+	public Bill GenerateBills(Person person) {
 		return _bill.CreateBill(_ac.GenerateBankAccountNumber(),
 			UseRandomRecipient(),
 			GenerateRandomKidNumber(),

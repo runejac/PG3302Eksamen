@@ -11,20 +11,20 @@ public class PersonController {
     private readonly BillRepository _billRepository = new(new BankContext());
     private readonly PersonRepository _personRepository = new(new BankContext());
 
-    private Person? _person = new();
+    private Person _person = new();
 
-    public Person? GetPerson() {
+    public Person GetPerson() {
         return _person;
     }
 
-    public Person? Authenticate(string ssn, string password) {
+    public dynamic Authenticate(string ssn, string password) {
         _person = _personRepository.GetBySocialSecNumber(ssn);
 
-        if (ssn == _person?.SocialSecurityNumber) {
-            return Verify(password, _person.Password) ? _person : null;
+        if (ssn == _person.SocialSecurityNumber) {
+            return (Verify(password, _person.Password) ? _person : 0);
         }
 
-        return null;
+        return 0;
     }
 
     public List<Bill> GetAllBills() {

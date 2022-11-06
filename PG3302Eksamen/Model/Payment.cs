@@ -9,7 +9,7 @@ public class Payment : Transaction {
 
     public new int Id { get; set; }
 
-    public Payment CreatePayment(Account toAccount, Account fromAccount, decimal amount) {
+    public Transaction CreatePayment(Account toAccount, Account fromAccount, decimal amount) {
         return new Payment {
             ToAccount = toAccount,
             FromAccount = fromAccount,

@@ -5,7 +5,7 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Controller;
 
 public class DepositController : ITransaction {
-	private Deposit _deposit = new();
+	private Deposit _deposit;
 
 
 	public void Pay() {
@@ -26,6 +26,6 @@ public class DepositController : ITransaction {
 
 
 	public void CreateDeposit(Account fromAccount, Account toAccount, decimal amount) {
-		_deposit = _deposit.CreateDeposit(fromAccount, toAccount, amount);
+		_deposit = (Deposit)_deposit.CreateDeposit(fromAccount, toAccount, amount);
 	}
 }
