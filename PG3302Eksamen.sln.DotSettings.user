@@ -1,17 +1,23 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=A55DA503_002D5364_002D4F14_002D9B8D_002D88E80433A096_002Ff_003AUnitTest1_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7c7319cb_002D2be3_002D44e5_002D8eb1_002Db2f95a38828f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllAccountNumbers" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.AccountHandlerTest.GetAllAccountNumbers&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7c7319cb_002D2be3_002D44e5_002D8eb1_002Db2f95a38828f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllAccountNumbers" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.AccountHandlerTest.GetAllAccountNumbers&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=85fa3843_002Dd014_002D4022_002D904c_002Dab592cb87a2d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAllAccountNumbers" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.AccountHandlerTest.GetAllAccountNumbers&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=85fa3843_002Dd014_002D4022_002D904c_002Dab592cb87a2d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetAllAccountNumbers" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.AccountHandlerTest.GetAllAccountNumbers&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=91343544_002D63d4_002D4436_002D8d22_002Ddcbbebdb33ab/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="BillTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.BillTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::A55DA503-5364-4F14-9B8D-88E80433A096::net6.0::PG3302Eksamen_Tests.AccountHandlerTest.GetAllAccountNumbers&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	</wpf:ResourceDictionary>
