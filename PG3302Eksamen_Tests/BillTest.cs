@@ -58,4 +58,45 @@ public class BillTest {
        Assert.That(createdBill.Status, Is.EqualTo(BillStatusEnum.Paid));
         
     }
+
+    [Test]
+    public void BillSortedByOwnerIdTest() {
+        Bill bill = new();
+        var billService = new BillRepository(_context);
+
+        var createdBill1 = bill.CreateBill(
+            "12345678912",
+            "Trude Drevland",
+            "Frist 28 november",
+            100,
+            BillStatusEnum.Notpaid,
+            DateTime.Now, 
+            3);
+        
+        var createdBill2 = bill.CreateBill(
+            "12345678911",
+            "Hermann Friele",
+            "For middag",
+            4000,
+            BillStatusEnum.Paid,
+            DateTime.Now, 
+            1);
+        
+        var createdBill3 = bill.CreateBill(
+            "12345678913",
+            "Patti Snitt",
+            "Happy birthday",
+            200,
+            BillStatusEnum.Paid,
+            DateTime.Now, 
+            3);
+        
+        billService.Insert(createdBill1);
+        billService.Insert(createdBill2);
+        billService.Insert(createdBill3);
+
+       
+        
+        Assert.That(billService.GetSortedByOwner(3), Is.EqualTo(3));
+    }
 }
