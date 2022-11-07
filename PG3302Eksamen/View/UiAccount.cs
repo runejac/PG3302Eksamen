@@ -40,7 +40,6 @@ public class UiAccount {
 				break;
 			}
 			case "[red]Back[/]":
-				// TODO mulig denne er feil her, men funker å gå tilbake
 				_ui = new Ui();
 				_ui.ClearConsole();
 				_ui.MainMenuAfterAuthorized();

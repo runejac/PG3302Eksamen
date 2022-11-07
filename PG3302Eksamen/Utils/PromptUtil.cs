@@ -75,14 +75,14 @@ public static class PromptUtil {
 		Account account) {
 		var result = AnsiConsole.Prompt(new TextPrompt<decimal>(question));
 
-		if (account.Balance > result) {
+		if (account.Balance >= result) {
 			return result;
 		}
 
 		PromptAssertion(error, "red");
 
 		if (PromptConfirmation("Try again?")) {
-			PromptAmountInput(question, error, account);
+			return PromptAmountInput(question, error, account);
 		}
 
 		return 0;

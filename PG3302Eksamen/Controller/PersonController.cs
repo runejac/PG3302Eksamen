@@ -6,69 +6,69 @@ using static BCrypt.Net.BCrypt;
 namespace PG3302Eksamen.Controller;
 
 public class PersonController {
-    private readonly AccountRepository _accountRepository = new(new BankContext());
-    private readonly BillController _billController = new();
-    private readonly BillRepository _billRepository = new(new BankContext());
-    private readonly PersonRepository _personRepository = new(new BankContext());
+	private readonly AccountRepository _accountRepository = new(new BankContext());
+	private readonly BillController _billController = new();
+	private readonly BillRepository _billRepository = new(new BankContext());
+	private readonly PersonRepository _personRepository = new(new BankContext());
 
-    private Person _person = new();
+	private Person _person = new();
 
-    public Person GetPerson() {
-        return _person;
-    }
+	public Person GetPerson() {
+		return _person;
+	}
 
-    public dynamic Authenticate(string ssn, string password) {
-        _person = _personRepository.GetBySocialSecNumber(ssn);
+	public dynamic Authenticate(string ssn, string password) {
+		_person = _personRepository.GetBySocialSecNumber(ssn);
 
-        if (ssn == _person.SocialSecurityNumber) {
-            return (Verify(password, _person.Password) ? _person : 0);
-        }
+		if (ssn == _person.SocialSecurityNumber) {
+			return Verify(password, _person.Password) ? _person : 0;
+		}
 
-        return 0;
-    }
+		return 0;
+	}
 
-    public List<Bill> GetAllBills() {
-        return _billRepository.GetSortedByOwner(_person.Id).ToList();
-    }
+	public List<Bill> GetAllBills() {
+		return _billRepository.GetSortedByOwner(_person.Id).ToList();
+	}
 
-    public List<Bill> GetAllUnpaidBills() {
-        return _billRepository.GetSortedByStatus(BillStatusEnum.Notpaid).ToList();
-    }
+	public List<Bill> GetAllUnpaidBills() {
+		return _billRepository.GetSortedByStatus(BillStatusEnum.Notpaid).ToList();
+	}
 
-    public void BillGenerator() {
-        _billRepository.Insert(_billController.GenerateBills(_person));
-    }
+	public void BillGenerator() {
+		_billRepository.Insert(_billController.GenerateBills(_person));
+	}
 
-    public void CreatePerson(string address, string firstName, string lastName,
-        string password,
-        string phoneNumber,
-        string socialSecurityNumber, string email) {
-        _person = _person.CreatePerson(address, firstName, lastName, password,
-            phoneNumber,
-            socialSecurityNumber, email);
-    }
+	public void CreatePerson(string address, string firstName, string lastName,
+		string password,
+		string phoneNumber,
+		string socialSecurityNumber, string email) {
+		_person = _person.CreatePerson(address, firstName, lastName, password,
+			phoneNumber,
+			socialSecurityNumber, email);
+	}
 
-    public List<Account> GetAllAccounts() {
-        return _accountRepository.GetSortedByOwner(_person.Id).ToList();
-    }
+	public List<Account> GetAllAccounts() {
+		return _accountRepository.GetSortedByOwner(_person.Id).ToList();
+	}
 
-    public bool ValidateSocialSecurityNumber() {
-        var match = _personRepository.GetAll()
-            .ToList()
-            .FirstOrDefault(person =>
-                person.SocialSecurityNumber.Equals(_person.SocialSecurityNumber));
+	public bool ValidateSocialSecurityNumber() {
+		var match = _personRepository.GetAll()
+			.ToList()
+			.FirstOrDefault(person =>
+				person.SocialSecurityNumber.Equals(_person.SocialSecurityNumber));
 
 
-        if (match is not null && _personRepository.GetAll().ToList().Count >= 1) {
-            return true;
-        }
+		if (match is not null && _personRepository.GetAll().ToList().Count >= 1) {
+			return true;
+		}
 
-        _personRepository.Insert(_person);
-        BillGenerator();
-        return false;
-    }
+		_personRepository.Insert(_person);
+		BillGenerator();
+		return false;
+	}
 
-    public void AddAccount(Account account) {
-        _personRepository.AddNewAccount(account);
-    }
+	public void AddAccount(Account account) {
+		_personRepository.AddNewAccount(account);
+	}
 }

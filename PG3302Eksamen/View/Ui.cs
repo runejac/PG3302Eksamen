@@ -9,18 +9,10 @@ public class Ui {
 	private readonly UiAccount _uiAccount = new();
 
 	private readonly UiBill _uiBill = new();
-	// TODO Message skal være private etter hvert, men brukes i BankManager enn så lenge
-	// TODO og skal kun brukes her
-	// TODO, så skrives custom meldinger her og calles hvor de brukes tror jeg
 
-
-	/*var image = new CanvasImage("../../../Assets/money.jpg");
-image.MaxWidth(32);
-image.BilinearResampler();
-AnsiConsole.Write(image);*/
-
-	private readonly UiPerson _uiPerson = new();
 	private Person _person;
+
+	private UiPerson _uiPerson;
 
 
 	public void ClearConsole() {
@@ -49,30 +41,28 @@ AnsiConsole.Write(image);*/
 		);
 		switch (selectedChoice) {
 			case "Register":
+				_uiPerson = new UiPerson();
 				_uiPerson.CreatePerson();
 				_person = _uiPerson.GetPerson();
 				ClearConsole();
 				MainMenuAfterAuthorized();
 				break;
 			case "Login":
-				_person = _uiPerson.LogIn();
-				while (_person == null) {
-					var askExit = PromptUtil.PromptSelect("", new[] {
-						"Try again",
-						"[red]Exit[/]"
-					});
-
-					if (askExit == "[red]Exit[/]") {
-						ClearConsole();
-						WelcomeMessage();
-					}
-					else {
-						_person = _uiPerson.LogIn();
-					}
+				_uiPerson = new UiPerson();
+				try {
+					_person = _uiPerson.LogIn();
+					ClearConsole();
+					MainMenuAfterAuthorized();
+				}
+				catch (Exception e) {
+					Message("Wrong credentials, try again or register.",
+						ConsoleColor.Red);
+					Thread.Sleep(3000);
+					_uiPerson = null;
+					ClearConsole();
+					WelcomeMessage();
 				}
 
-				ClearConsole();
-				MainMenuAfterAuthorized();
 				break;
 			case "[red]Exit[/]":
 				Message("Good bye, hope to see you soon!", ConsoleColor.Blue);
@@ -131,7 +121,6 @@ AnsiConsole.Write(image);*/
 
 			return account.WithdrawLimit;
 		}
-
 
 		AnsiConsole.Render(table);
 	}
@@ -223,7 +212,7 @@ AnsiConsole.Write(image);*/
 				Message(
 					$"Good bye {_person?.FirstName}, hope to see you soon!",
 					ConsoleColor.Blue);
-				// TODO set timeout 0.5sec or something here before clearing
+				Thread.Sleep(3000);
 				ClearConsole();
 				WelcomeMessage();
 				_person = null;
@@ -250,9 +239,6 @@ AnsiConsole.Write(image);*/
 		switch (selectedChoice) {
 			case "Make a payment":
 				ClearConsole();
-				/*var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
-				var selectedBillToPay =
-					PromptUtil.PromptSelectForBills("Unpaid bills", billsToPay);*/
 
 				selectedFromAccount =
 					PromptUtil.PromptSelectForAccounts(
@@ -267,13 +253,22 @@ AnsiConsole.Write(image);*/
 					PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
 						billsToPay);
 
-				_uiBill.Calculate(selectedFromAccount, selectedBill);
+				// TODO sjekke at selectedBill.Amount ikke er større enn selectedFromAccount.Amount
 
-				Message(
-					$"Successfully paid {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
-					ConsoleColor.Green);
+				if (selectedBill.Amount <= selectedFromAccount.Balance) {
+					_uiBill.Calculate(selectedFromAccount, selectedBill);
+					Message(
+						$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
+						ConsoleColor.Green);
 
-				TransactionMenu();
+					TransactionMenu();
+				}
+				else {
+					Message("Not enough money in account to make the payment.",
+						ConsoleColor.Red);
+					TransactionMenu();
+				}
+
 
 				break;
 			case "Transfer between own accounts":
@@ -289,6 +284,11 @@ AnsiConsole.Write(image);*/
 				var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
 					"Not enough balance", selectedFromAccount);
 
+				if (amount.Equals(0)) {
+					ClearConsole();
+					MainMenuAfterAuthorized();
+				}
+
 				var listOfAvailableAccountsTo = personAccounts.Where(account =>
 					!account.Equals(selectedFromAccount));
 
@@ -296,16 +296,8 @@ AnsiConsole.Write(image);*/
 					PromptUtil.PromptSelectForAccounts("Transfer to account",
 						listOfAvailableAccountsTo);
 
-
-				if (amount.Equals(0)) {
-					ClearConsole();
-					MainMenuAfterAuthorized();
-				}
-
 				_uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
-
 				TransactionMenu();
-
 				break;
 			case "[red]Back[/]":
 				ClearConsole();
