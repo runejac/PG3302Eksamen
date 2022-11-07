@@ -23,7 +23,7 @@ AnsiConsole.Write(image);*/
 	private Person _person;
 
 
-	private void ClearConsole() {
+	public void ClearConsole() {
 		Console.Clear();
 	}
 
@@ -45,7 +45,7 @@ AnsiConsole.Write(image);*/
 	public void WelcomeMessage() {
 		var selectedChoice = PromptUtil.PromptSelect(
 			"[cyan]Welcome to Bank Kristiania![/]",
-			new[] { "Register", "Login", "Exit" }
+			new[] { "Register", "Login", "[red]Exit[/]" }
 		);
 		switch (selectedChoice) {
 			case "Register":
@@ -59,10 +59,10 @@ AnsiConsole.Write(image);*/
 				while (_person == null) {
 					var askExit = PromptUtil.PromptSelect("", new[] {
 						"Try again",
-						"Exit"
+						"[red]Exit[/]"
 					});
 
-					if (askExit == "Exit") {
+					if (askExit == "[red]Exit[/]") {
 						ClearConsole();
 						WelcomeMessage();
 					}
@@ -74,7 +74,7 @@ AnsiConsole.Write(image);*/
 				ClearConsole();
 				MainMenuAfterAuthorized();
 				break;
-			case "Exit":
+			case "[red]Exit[/]":
 				Message("Good bye, hope to see you soon!", ConsoleColor.Blue);
 				Environment.Exit(0);
 				break;
@@ -166,21 +166,21 @@ AnsiConsole.Write(image);*/
 	}
 
 
-	private void GoBackToMainMenu() {
+	public void GoBackToMainMenu() {
 		var selectedChoice = PromptUtil.PromptSelect("",
 			new[] {
-				"Back"
+				"[red]Back[/]"
 			}
 		);
 		switch (selectedChoice) {
-			case "Back":
+			case "[red]Back[/]":
 				ClearConsole();
 				MainMenuAfterAuthorized();
 				break;
 		}
 	}
 
-	private void MainMenuAfterAuthorized() {
+	public void MainMenuAfterAuthorized() {
 		Message(
 			$"Greetings {_person?.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
 			ConsoleColor.Green);
@@ -191,7 +191,7 @@ AnsiConsole.Write(image);*/
 				"Display all bills",
 				"Display all accounts",
 				"Display user details",
-				"Log out"
+				"[red]Log out[/]"
 			}
 		);
 
@@ -223,7 +223,7 @@ AnsiConsole.Write(image);*/
 				_uiPerson!.UserAccountDetails();
 				GoBackToMainMenu();
 				break;
-			case "Log out":
+			case "[red]Log out[/]":
 				Message(
 					$"Good bye {_person?.FirstName}, hope to see you soon!",
 					ConsoleColor.Blue);
@@ -242,7 +242,8 @@ AnsiConsole.Write(image);*/
 		var selectedChoice = PromptUtil.PromptSelect("Transaction",
 			new[] {
 				"Make a payment",
-				"Transfer between own accounts"
+				"Transfer between own accounts",
+				"[red]Back[/]"
 			}
 		);
 
@@ -257,7 +258,7 @@ AnsiConsole.Write(image);*/
 			case "Transfer between own accounts":
 				ClearConsole();
 				var personAccounts = _uiPerson.GetAllAccounts().ToList();
-				
+
 				var selectedFromAccount =
 					PromptUtil.PromptSelectForAccounts("Transfer from account",
 						personAccounts);
@@ -282,6 +283,10 @@ AnsiConsole.Write(image);*/
 
 				_uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
 
+				break;
+			case "[red]Back[/]":
+				ClearConsole();
+				MainMenuAfterAuthorized();
 				break;
 		}
 	}

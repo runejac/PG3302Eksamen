@@ -9,6 +9,7 @@ public class UiAccount {
 	private readonly AccountController _accountController = new();
 	private readonly TransferController _transferController = new();
 	private Person _person;
+	private Ui _ui;
 
 
 	public void CreateBankAccountFor(Person person) {
@@ -19,7 +20,7 @@ public class UiAccount {
 	public void AskUserWhatTypeOfAccountToBeMade() {
 		var accountTypeAnswer = PromptUtil.PromptSelect(
 			"Do you want it to be a savings account or a current account?",
-			new[] { "Current account", "Savings account", "Back" });
+			new[] { "Current account", "Savings account", "[red]Back[/]" });
 
 		switch (accountTypeAnswer) {
 			case "Current account": {
@@ -38,19 +39,27 @@ public class UiAccount {
 				SucceedAddedToDbMessage(savedAccount);
 				break;
 			}
+			case "[red]Back[/]":
+				// TODO mulig denne er feil her, men funker å gå tilbake
+				_ui = new Ui();
+				_ui.ClearConsole();
+				_ui.MainMenuAfterAuthorized();
+				break;
 		}
 	}
 
 	private string AskAccountName(string accountTypeAnswer) {
 		return PromptUtil.PromptQuestion(
-			$"You've chosen to create an {accountTypeAnswer}\n" +
-			$"What do you want to name your {accountTypeAnswer}?", "Invalid choice");
+			$"You've chosen to create an [blue]{accountTypeAnswer}[/]\n" +
+			$"What do you want to name your [blue]{accountTypeAnswer}[/]?",
+			"Invalid choice");
 	}
 
 	public static void SucceedAddedToDbMessage(Account account) {
-		PromptUtil.PromptAssertion($"{account.Name} was added to your bank account\n" +
-		                           $"with interest rate at {account.Interest}%\n" +
-		                           $"{(account.WithdrawLimit > 0 ? $"and savings account has a yearly withdraw limit at {account.WithdrawLimit}" : "")}",
+		PromptUtil.PromptAssertion(
+			$"{account.Name} was added to your bank account\n" +
+			$"with interest rate at: {account.Interest}%\n" +
+			$"{(account.WithdrawLimit > 0 ? $"and savings account has a yearly withdraw limit at {account.WithdrawLimit}" : "")}",
 			"green");
 	}
 
