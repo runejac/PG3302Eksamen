@@ -88,7 +88,7 @@ AnsiConsole.Write(image);*/
 
 		if (selectedAccount != null) {
 			table = new Table()
-				.Border(TableBorder.Square)
+				.Border(TableBorder.MinimalHeavyHead)
 				.BorderColor(Color.Green)
 				.AddColumns("[white]Account name[/]", "[white]Account number[/]",
 					"[white]Balance[/]",
@@ -105,7 +105,7 @@ AnsiConsole.Write(image);*/
 		}
 		else {
 			table = new Table()
-				.Border(TableBorder.Square)
+				.Border(TableBorder.MinimalHeavyHead)
 				.BorderColor(Color.Green)
 				.AddColumns("[white]Account name[/]", "[white]Account number[/]",
 					"[white]Balance[/]",
@@ -186,7 +186,7 @@ AnsiConsole.Write(image);*/
 			ConsoleColor.Green);
 		var selectedChoice = PromptUtil.PromptSelect("MAIN MENU",
 			new[] {
-				"Create a money account",
+				"Create an account",
 				"Pay bills or transfer money",
 				"Display all bills",
 				"Display all accounts",
@@ -196,7 +196,7 @@ AnsiConsole.Write(image);*/
 		);
 
 		switch (selectedChoice) {
-			case "Create a money account":
+			case "Create an account":
 				ClearConsole();
 				_uiAccount.CreateBankAccountFor(_person);
 				_uiAccount.AskUserWhatTypeOfAccountToBeMade();
@@ -209,11 +209,7 @@ AnsiConsole.Write(image);*/
 			case "Display all accounts":
 				ClearConsole();
 				OverViewOfAccounts(null);
-
-				PromptUtil.PromptSelectForAccounts("",
-					_uiPerson.GetAllAccounts());
-				// TODO skal vise ny tabell med tidligere transaksjoner
-
+				GoBackToMainMenu();
 				break;
 			case "Display all bills":
 				OverViewOfBills();
@@ -236,6 +232,10 @@ AnsiConsole.Write(image);*/
 	}
 
 	private void TransactionMenu() {
+		var personAccounts = _uiPerson.GetAllAccounts().ToList();
+		Account selectedFromAccount;
+		Bill selectedBill;
+
 		Message(
 			"Do you wish to make a payment or transfer between your own accounts?",
 			ConsoleColor.Green);
@@ -250,16 +250,37 @@ AnsiConsole.Write(image);*/
 		switch (selectedChoice) {
 			case "Make a payment":
 				ClearConsole();
-				var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
+				/*var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
 				var selectedBillToPay =
-					PromptUtil.PromptSelectForBills("Unpaid bills", billsToPay);
+					PromptUtil.PromptSelectForBills("Unpaid bills", billsToPay);*/
+
+				selectedFromAccount =
+					PromptUtil.PromptSelectForAccounts(
+						"Which account do you want to use?",
+						personAccounts);
+
+				OverViewOfAccounts(selectedFromAccount);
+
+				var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
+
+				selectedBill =
+					PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
+						billsToPay);
+
+				_uiBill.Calculate(selectedFromAccount, selectedBill);
+
+				Message(
+					$"Successfully paid {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
+					ConsoleColor.Green);
+
+				TransactionMenu();
 
 				break;
 			case "Transfer between own accounts":
 				ClearConsole();
-				var personAccounts = _uiPerson.GetAllAccounts().ToList();
 
-				var selectedFromAccount =
+
+				selectedFromAccount =
 					PromptUtil.PromptSelectForAccounts("Transfer from account",
 						personAccounts);
 
@@ -282,6 +303,8 @@ AnsiConsole.Write(image);*/
 				}
 
 				_uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
+
+				TransactionMenu();
 
 				break;
 			case "[red]Back[/]":

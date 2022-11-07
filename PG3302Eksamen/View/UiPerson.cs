@@ -99,7 +99,7 @@ public class UiPerson {
 	public void UserAccountDetails() {
 		var printUserDetails = GetPerson();
 		var tableResult = new Table()
-			.Border(TableBorder.Square)
+			.Border(TableBorder.MinimalHeavyHead)
 			.BorderColor(Color.Green)
 			.AddColumns("[white]Name[/]", "[white]Address[/]",
 				"[white]Email[/]", "[white]Phone number[/]");
