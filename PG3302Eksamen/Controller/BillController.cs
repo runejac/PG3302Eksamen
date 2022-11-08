@@ -11,32 +11,24 @@ public class BillController {
     private readonly Bill _bill = new();
     private readonly BillRepository _billRepository = new(new BankContext());
     private readonly Payment _payment = new();
-    private readonly Person _person = new();
     private readonly TransactionRepository _transactionRepository = new(new BankContext());
     private List<string> _billRecipients;
 
+    
 
-    public Person GetPerson() {
-        return _person;
-    }
-
-    public List<Bill> GetAllBills() {
-        return _billRepository.GetSortedByOwner(GetPerson().Id).ToList();
-    }
-
-    private void AddBillRecipients() {
-        _billRecipients = new List<string> {
-            "Rent to Jack Sparrow",
-            "PayPal",
-            "Amazon.com",
-            "Netflix AS",
-            "Foodora AS",
-            "Electricity AS",
-            "Spotify account",
-            "Kondomeriet AS",
-            "Mamma"
-        };
-    }
+	private void AddBillRecipients() {
+		_billRecipients = new List<string> {
+			"Rent to Jack Sparrow",
+			"PayPal",
+			"Amazon.com",
+			"Netflix AS",
+			"Foodora AS",
+			"Electricity AS",
+			"Spotify account",
+			"Kondomeriet AS",
+			"Mamma"
+		};
+	}
 
     private string UseRandomRecipient() {
         AddBillRecipients();
@@ -44,25 +36,25 @@ public class BillController {
         var i = 0;
         var next = random.Next(_billRecipients.Count);
 
-        foreach (var recipient in _billRecipients) {
-            if (i == next) {
-                return recipient;
-            }
+		foreach (var recipient in _billRecipients) {
+			if (i == next) {
+				return recipient;
+			}
 
-            i++;
-        }
+			i++;
+		}
 
-        return "";
-    }
+		return "";
+	}
 
-    private static string GenerateRandomKidNumber() {
-        var random = new Random();
-        var numbers = random.NextInt64(0000000000, 9999999999);
-        var accountNumberGenerated = numbers.ToString();
+	private static string GenerateRandomKidNumber() {
+		var random = new Random();
+		var numbers = random.NextInt64(0000000000, 9999999999);
+		var accountNumberGenerated = numbers.ToString();
 
-        // make an KID number / message
-        return "7777" + accountNumberGenerated;
-    }
+		// make an KID number / message
+		return "7777" + accountNumberGenerated;
+	}
 
 
     public Bill GenerateBills(Person person, Account account) {
@@ -78,10 +70,10 @@ public class BillController {
 
 
     public void ExecuteBillPayment(Account selectedFromAccount, Bill selectedBill) {
+	    
         var transaction = _payment.CreatePayment(selectedBill.ToAccount, selectedFromAccount, selectedBill.Amount);
 
 
-        // TODO does pay a bill, but can not make transaction of it yet
         _transactionRepository.ProcessTransaction(transaction);
 
 

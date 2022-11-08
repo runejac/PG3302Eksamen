@@ -5,31 +5,31 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class AccountRepository : IAccountRepository, IDisposable {
-    private readonly BankContext _context;
+	private readonly BankContext _context;
 
-    private bool _disposed;
+	private bool _disposed;
 
-    public AccountRepository(BankContext context) {
-        _context = context;
-    }
+	public AccountRepository(BankContext context) {
+		_context = context;
+	}
 
-    public Account GetById(int id) {
-        return _context.Accounts.Find(id) ?? throw new InvalidOperationException();
-    }
+	public Account GetById(int id) {
+		return _context.Accounts.Find(id) ?? throw new InvalidOperationException();
+	}
 
-    public IEnumerable<Account> GetAll() {
-        return _context.Accounts.AsQueryable() ?? throw new InvalidOperationException();
-    }
+	public IEnumerable<Account> GetAll() {
+		return _context.Accounts.AsQueryable() ?? throw new InvalidOperationException();
+	}
 
-    public void Insert(Account entity) {
-        _context.Add(entity);
-        _context.SaveChanges();
-    }
+	public void Insert(Account entity) {
+		_context.Add(entity);
+		_context.SaveChanges();
+	}
 
-    public void Remove(Account entity) {
-        _context.Remove(entity);
-        _context.SaveChanges();
-    }
+	public void Remove(Account entity) {
+		_context.Remove(entity);
+		_context.SaveChanges();
+	}
 
     public void Update(Account entity) {
         _context.Update(entity);
@@ -40,46 +40,47 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
         var response = GetAll();
         return response.Select(accounts => accounts.AccountNumber).ToList();
     }
+    
 
-    public IOrderedEnumerable<Account> GetSortedByBalance() {
-        return GetAll().OrderByDescending(acc => acc.Balance);
-    }
+	public IOrderedEnumerable<Account> GetSortedByBalance() {
+		return GetAll().OrderByDescending(acc => acc.Balance);
+	}
 
-    public IEnumerable<Account> GetSortedByName(string name) {
-        return GetAll().Where(acc => acc.Name.Equals(name));
-    }
+	public IEnumerable<Account> GetSortedByName(string name) {
+		return GetAll().Where(acc => acc.Name.Equals(name));
+	}
 
-    public IEnumerable<Account> GetSortedByOwner(int id) {
-        return _context.Accounts.Where(e => e.OwnerId == id);
-    }
+	public IEnumerable<Account> GetSortedByOwner(int id) {
+		return _context.Accounts.Where(e => e.OwnerId == id);
+	}
 
-    public void ChangeAccountName(int id, string newName) {
-        var accountToUpdate = GetById(id);
-        accountToUpdate.Name = newName;
-        _context.SaveChanges();
-    }
+	public void ChangeAccountName(int id, string newName) {
+		var accountToUpdate = GetById(id);
+		accountToUpdate.Name = newName;
+		_context.SaveChanges();
+	}
 
-    public void Save() {
-        _context.SaveChanges();
-    }
+	public void Save() {
+		_context.SaveChanges();
+	}
 
-    public void Dispose() {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
+	public void Dispose() {
+		Dispose(true);
+		GC.SuppressFinalize(this);
+	}
 
-    public void Update(Transaction transaction) {
-        _context.Update(transaction);
-        _context.SaveChanges();
-    }
+	public void Update(Transaction transaction) {
+		_context.Update(transaction);
+		_context.SaveChanges();
+	}
 
-    private void Dispose(bool disposing) {
-        if (!_disposed) {
-            if (disposing) {
-                _context.Dispose();
-            }
-        }
+	private void Dispose(bool disposing) {
+		if (!_disposed) {
+			if (disposing) {
+				_context.Dispose();
+			}
+		}
 
-        _disposed = true;
-    }
+		_disposed = true;
+	}
 }

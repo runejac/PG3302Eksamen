@@ -153,11 +153,9 @@ namespace PG3302Eksamen.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromAccount")
-                        .IsUnique();
+                    b.HasIndex("FromAccount");
 
-                    b.HasIndex("ToAccount")
-                        .IsUnique();
+                    b.HasIndex("ToAccount");
 
                     b.ToTable("Transactions");
 

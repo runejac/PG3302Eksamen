@@ -40,7 +40,7 @@ public class AccountController {
         foreach (var _ in _accountRepository.GetAllAccountNumbers()
                      .Where(accNr => accNr.Contains(accountNumberGenerated))) {
             // if it already exists, create a new one
-            numbers = random.NextInt64(00000000000, 99999999999);
+            numbers = random.NextInt64(00000, 99999);
             accountNumberGenerated = numbers.ToString();
         }
 

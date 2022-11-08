@@ -11,8 +11,8 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221108150419_new11")]
-    partial class new11
+    [Migration("20221108154448_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -155,11 +155,9 @@ namespace PG3302Eksamen.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FromAccount")
-                        .IsUnique();
+                    b.HasIndex("FromAccount");
 
-                    b.HasIndex("ToAccount")
-                        .IsUnique();
+                    b.HasIndex("ToAccount");
 
                     b.ToTable("Transactions");
 

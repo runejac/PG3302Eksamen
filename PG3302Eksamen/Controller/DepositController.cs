@@ -8,24 +8,24 @@ public class DepositController : ITransaction {
     private Deposit _deposit;
 
 
-    public void Pay() {
-        throw new NotImplementedException();
-    }
 
-    public Transaction getModel<T>() {
-        return _deposit;
-    }
+	public void Pay() {
+		throw new NotImplementedException();
+	}
 
-    public void Execute() {
-        throw new NotImplementedException();
-    }
+	public void Execute() {
+		throw new NotImplementedException();
+	}
 
-    public void Execute(decimal amount, Account fromAccount, Account toAccount) {
-        throw new NotImplementedException();
-    }
+	public void Execute(decimal amount, Account fromAccount, Account toAccount) {
+		throw new NotImplementedException();
+	}
 
+	public Transaction getModel<T>() {
+		return _deposit;
+	}
 
-    public void CreateDeposit(Account fromAccount, Account toAccount, decimal amount) {
-        _deposit = (Deposit)_deposit.CreateDeposit(fromAccount, toAccount, amount);
-    }
+	public void CreateDeposit(Account fromAccount, Account toAccount, decimal amount) {
+		_deposit = (Deposit)_deposit.CreateDeposit(fromAccount, toAccount, amount);
+	}
 }

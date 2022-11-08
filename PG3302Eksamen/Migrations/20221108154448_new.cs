@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class new111111111 : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -87,8 +87,7 @@ namespace PG3302Eksamen.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Bills_ToAccount",
                 table: "Bills",
-                column: "ToAccount",
-                unique: true);
+                column: "ToAccount");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Persons_Id",
@@ -105,14 +104,12 @@ namespace PG3302Eksamen.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_FromAccount",
                 table: "Transactions",
-                column: "FromAccount",
-                unique: true);
+                column: "FromAccount");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transactions_ToAccount",
                 table: "Transactions",
-                column: "ToAccount",
-                unique: true);
+                column: "ToAccount");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

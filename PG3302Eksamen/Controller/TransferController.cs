@@ -16,9 +16,9 @@ public class TransferController : ITransaction {
     private Transaction _transaction;
 
 
-    public void Pay() {
-        throw new NotImplementedException();
-    }
+	public void Pay() {
+		throw new NotImplementedException();
+	}
 
     public void Execute() {
         throw new NotImplementedException();
