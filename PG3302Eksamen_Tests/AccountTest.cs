@@ -67,7 +67,7 @@ public class AccountHandlerTest {
 		Assert.That(savingsAccount.Balance, Is.EqualTo(2000));
 	}
 
-	[Test]
+	[Theory]
 	public void GetAllAccountNumbers() {
 		AccountRepository accountRepository = new(_context);
 

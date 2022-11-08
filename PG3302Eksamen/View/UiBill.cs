@@ -1,6 +1,7 @@
 using PG3302Eksamen.Controller;
 using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
+using Spectre.Console;
 
 namespace PG3302Eksamen.View;
 
@@ -21,5 +22,34 @@ public class UiBill {
 
 	public void Calculate(Account selectedFromAccount, Bill selectedBill) {
 		_transferController.ExecuteBillPayment(selectedFromAccount, selectedBill);
+	}
+
+	public void OverViewOfBills(Ui ui) {
+		ui.ClearConsole();
+		var allBills = ui.UiPerson.GetAllBills();
+
+		var tableResult = new Table()
+			.Title("[deeppink2]Overview of your bills[/]")
+			.Border(TableBorder.MinimalHeavyHead)
+			.BorderColor(Color.Green)
+			.AddColumns("[white]Due date[/]", "[white]Recipient[/]",
+				"[white]Account number[/]",
+				"[white]KID/message[/]",
+				"[white]Status[/]", "[white]Amount[/]");
+
+		foreach (var bill in allBills) {
+			tableResult.AddRow(
+				"[grey]" + $"{bill.DueDate}" + "[/]",
+				"[grey]" + $"{bill.Recipient}" + "[/]",
+				"[grey]" + $"{bill.AccountNumber}" + "[/]",
+				"[grey]" + $"{bill.MessageField}" + "[/]",
+				"[grey]" + $"{bill.Status}" + "[/]",
+				"[grey]" + $"{bill.Amount} ,-" + "[/]"
+			);
+		}
+
+		AnsiConsole.Render(tableResult);
+
+		ui.GoBackToMainMenu();
 	}
 }

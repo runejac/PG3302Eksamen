@@ -61,35 +61,6 @@ public class Ui {
 
 	// TODO: Move to UiAccount
 
-	private void OverViewOfBills() {
-		ClearConsole();
-		var allBills = UiPerson.GetAllBills();
-
-		var tableResult = new Table()
-			.Title("[deeppink2]Overview of your bills[/]")
-			.Border(TableBorder.MinimalHeavyHead)
-			.BorderColor(Color.Green)
-			.AddColumns("[white]Due date[/]", "[white]Recipient[/]",
-				"[white]Account number[/]",
-				"[white]KID/message[/]",
-				"[white]Status[/]", "[white]Amount[/]");
-
-		foreach (var bill in allBills) {
-			tableResult.AddRow(
-				"[grey]" + $"{bill.DueDate}" + "[/]",
-				"[grey]" + $"{bill.Recipient}" + "[/]",
-				"[grey]" + $"{bill.AccountNumber}" + "[/]",
-				"[grey]" + $"{bill.MessageField}" + "[/]",
-				"[grey]" + $"{bill.Status}" + "[/]",
-				"[grey]" + $"{bill.Amount} ,-" + "[/]"
-			);
-		}
-
-		AnsiConsole.Render(tableResult);
-
-		GoBackToMainMenu();
-	}
-
 
 	public void GoBackToMainMenu() {
 		var selectedChoice = PromptUtil.PromptSelect("",
@@ -137,7 +108,7 @@ public class Ui {
 				GoBackToMainMenu();
 				break;
 			case "Display all bills":
-				OverViewOfBills();
+				_uiBill.OverViewOfBills(this);
 				break;
 			case "Display user details":
 				ClearConsole();
@@ -198,7 +169,7 @@ public class Ui {
 						Message(
 							$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
 							ConsoleColor.Green);
-
+						
 						TransactionMenu();
 					}
 					else {
@@ -213,7 +184,6 @@ public class Ui {
 						ConsoleColor.Red);
 					MainMenuAfterAuthorized();
 				}
-
 
 				break;
 			case "Transfer between own accounts":
@@ -252,7 +222,6 @@ public class Ui {
 						ConsoleColor.Red);
 					MainMenuAfterAuthorized();
 				}
-
 
 				break;
 			case "[red]Back[/]":
