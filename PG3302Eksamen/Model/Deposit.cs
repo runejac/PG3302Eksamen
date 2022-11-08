@@ -3,8 +3,6 @@
 namespace PG3302Eksamen.Model;
 
 public class Deposit : Transaction {
-    public new decimal Amount { get; set; }
-
     public new int Id { get; set; }
 
 

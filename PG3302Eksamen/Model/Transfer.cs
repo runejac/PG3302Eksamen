@@ -3,7 +3,6 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Model;
 
 public class Transfer : Transaction {
-    public new decimal Amount { get; set; }
     public new int Id { get; set; }
 
     public Transaction CreateTransfer(decimal amount, Account fromAccount,

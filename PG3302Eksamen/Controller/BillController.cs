@@ -14,21 +14,20 @@ public class BillController {
     private readonly TransactionRepository _transactionRepository = new(new BankContext());
     private List<string> _billRecipients;
 
-    
 
-	private void AddBillRecipients() {
-		_billRecipients = new List<string> {
-			"Rent to Jack Sparrow",
-			"PayPal",
-			"Amazon.com",
-			"Netflix AS",
-			"Foodora AS",
-			"Electricity AS",
-			"Spotify account",
-			"Kondomeriet AS",
-			"Mamma"
-		};
-	}
+    private void AddBillRecipients() {
+        _billRecipients = new List<string> {
+            "Rent to Jack Sparrow",
+            "PayPal",
+            "Amazon.com",
+            "Netflix AS",
+            "Foodora AS",
+            "Electricity AS",
+            "Spotify account",
+            "Kondomeriet AS",
+            "Mamma"
+        };
+    }
 
     private string UseRandomRecipient() {
         AddBillRecipients();
@@ -36,25 +35,25 @@ public class BillController {
         var i = 0;
         var next = random.Next(_billRecipients.Count);
 
-		foreach (var recipient in _billRecipients) {
-			if (i == next) {
-				return recipient;
-			}
+        foreach (var recipient in _billRecipients) {
+            if (i == next) {
+                return recipient;
+            }
 
-			i++;
-		}
+            i++;
+        }
 
-		return "";
-	}
+        return "";
+    }
 
-	private static string GenerateRandomKidNumber() {
-		var random = new Random();
-		var numbers = random.NextInt64(0000000000, 9999999999);
-		var accountNumberGenerated = numbers.ToString();
+    private static string GenerateRandomKidNumber() {
+        var random = new Random();
+        var numbers = random.NextInt64(0000000000, 9999999999);
+        var accountNumberGenerated = numbers.ToString();
 
-		// make an KID number / message
-		return "7777" + accountNumberGenerated;
-	}
+        // make an KID number / message
+        return "7777" + accountNumberGenerated;
+    }
 
 
     public Bill GenerateBills(Person person, Account account) {
@@ -70,7 +69,6 @@ public class BillController {
 
 
     public void ExecuteBillPayment(Account selectedFromAccount, Bill selectedBill) {
-	    
         var transaction = _payment.CreatePayment(selectedBill.ToAccount, selectedFromAccount, selectedBill.Amount);
 
 
