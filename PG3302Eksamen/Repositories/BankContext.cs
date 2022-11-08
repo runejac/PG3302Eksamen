@@ -57,10 +57,13 @@ public class BankContext : DbContext {
         modelBuilder.Entity<Transaction>()
             .HasIndex(e => new { e.FromAccount })
             .IsUnique();
+        
 
         modelBuilder.Entity<Bill>()
             .HasIndex(e => new { e.ToAccount })
-            .IsUnique();
+            .IsUnique(false);
+        
+        
 
         modelBuilder.Entity<Person>()
             .HasIndex(e => new { e.SocialSecurityNumber })

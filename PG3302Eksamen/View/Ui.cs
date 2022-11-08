@@ -250,10 +250,7 @@ AnsiConsole.Write(image);*/
         switch (selectedChoice) {
             case "Make a payment":
                 ClearConsole();
-                /*var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
-                var selectedBillToPay =
-                    PromptUtil.PromptSelectForBills("Unpaid bills", billsToPay);*/
-
+                
                 selectedFromAccount =
                     PromptUtil.PromptSelectForAccounts(
                         "Which account do you want to use?",
