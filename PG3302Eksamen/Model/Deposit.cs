@@ -10,8 +10,8 @@ public class Deposit : Transaction {
 
     public Transaction CreateDeposit(Account toAccount, Account fromAccount, decimal amount) {
         return new Deposit {
-            ToAccount = toAccount,
-            FromAccount = fromAccount,
+            ToAccount = toAccount.Id,
+            FromAccount = fromAccount.Id,
             Amount = amount
         };
     }

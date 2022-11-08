@@ -16,6 +16,7 @@ public class BankContext : DbContext {
     }
 
     public DbSet<Transaction> Transactions { get; set; } = null!;
+
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<Bill> Bills { get; set; } = null!;
     public DbSet<Person> Persons { get; set; } = null!;
@@ -47,16 +48,20 @@ public class BankContext : DbContext {
         modelBuilder.Entity<CurrentAccount>()
             .Property(e => e.WithdrawLimit)
             .HasColumnName("WithdrawLimit");
-        
-        
-        // TODO: Unique constraint violation, maybe we need to add acc as ID.. not entity :(
+
 
         modelBuilder.Entity<Transaction>()
-            .HasOne(p => p.FromAccount);
+            .HasIndex(e => new { e.ToAccount })
+            .IsUnique();
+
         modelBuilder.Entity<Transaction>()
-            .HasOne(p => p.ToAccount);
-            
-        
+            .HasIndex(e => new { e.FromAccount })
+            .IsUnique();
+
+        modelBuilder.Entity<Bill>()
+            .HasIndex(e => new { e.ToAccount })
+            .IsUnique();
+
         modelBuilder.Entity<Person>()
             .HasIndex(e => new { e.SocialSecurityNumber })
             .IsUnique();

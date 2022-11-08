@@ -19,7 +19,7 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
     }
 
     public Person GetById(int id) {
-        return _context.Persons.Find(id) ?? throw new InvalidOperationException();
+        return _context.Persons.Find(id)!;
     }
 
     // TODO usikker på om disse skal være toList() eller ikke, de konverteres ofte til det når vi bruker det
@@ -54,6 +54,11 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         var personToUpdate = GetById(id);
         personToUpdate.Password = newPassword;
         _context.SaveChanges();
+    }
+
+    public bool CheckIfExists(int id) {
+        var person = _context.Persons.Find(id);
+        return person != null;
     }
 
     public Person GetBySocialSecNumber(string ssn) {

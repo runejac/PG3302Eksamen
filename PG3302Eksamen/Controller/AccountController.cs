@@ -33,7 +33,7 @@ public class AccountController {
 
     public string GenerateBankAccountNumber() {
         var random = new Random();
-        var numbers = random.NextInt64(00000000000, 99999999999);
+        var numbers = random.NextInt64(00000, 99999);
         var accountNumberGenerated = numbers.ToString();
 
         // checking for existing account numbers

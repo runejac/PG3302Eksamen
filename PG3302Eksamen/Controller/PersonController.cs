@@ -21,7 +21,7 @@ public class PersonController {
         _person = _personRepository.GetBySocialSecNumber(ssn);
 
         if (ssn == _person.SocialSecurityNumber) {
-            return (Verify(password, _person.Password) ? _person : 0);
+            return Verify(password, _person.Password) ? _person : 0;
         }
 
         return 0;
@@ -36,7 +36,9 @@ public class PersonController {
     }
 
     public void BillGenerator() {
-        _billRepository.Insert(_billController.GenerateBills(_person));
+        var adminAccount = _accountRepository.GetById(1); //Hardcoded admin account for bill payment
+
+        _billRepository.Insert(_billController.GenerateBills(_person, adminAccount));
     }
 
     public void CreatePerson(string address, string firstName, string lastName,

@@ -1,41 +1,28 @@
+using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
+using PG3302Eksamen.Repositories;
 using PG3302Eksamen.View;
 
 namespace PG3302Eksamen;
 
 internal static class Program {
     private static void Main(string[] args) {
-        /*IUserReader userReader = new UserReader();
-        new BankManager(userReader).Run();*/
+        var personRepository = new PersonRepository(new BankContext());
+        var accountRepository = new AccountRepository(new BankContext());
+        var exist = personRepository.CheckIfExists(1);
+        if (!exist) {
+            var person = new Person().CreatePerson("This is", "Admin", "Placeholder",
+                "Person", "0", "0", "@");
+            personRepository.Insert(person);
+
+
+            var savingAccount = new CurrentAccountFactory().InitializeAccount("Bill account", person.Id,
+                "111111111");
+
+            accountRepository.Insert(savingAccount);
+        }
 
         var ui = new Ui();
         ui.WelcomeMessage();
-
-
-        /*
-        var billRepository = new BillRepository();
-        var transactionRepository = new TransactionRepository();
-        var accountRepository = new AccountRepository();
-        
-
-        var savingAccount = new SavingsAccountFactory().InitializeAccount("konto1",
-            personRepository.GetById(1).Id,
-            "111111111");
-        
-        var currentAccount = new CurrentAccountFactory().InitializeAccount("konto2",
-            personRepository.GetById(2).Id,"111111111");*/
-
-
-        //accountRepository.Insert(savingAccount);
-        //accountRepository.Insert(currentAccount);
-        //accountRepository.UpdateBalance(accountRepository.GetById(1).Id, 1000);
-        //accountRepository.UpdateBalance(accountRepository.GetById(2).Id, 1000);
-
-
-        //personRepository.Insert(new Person("fiskeveien 2", "joachim", "christ",
-        //"123", "90237461", "1234", DateTime.Today));
-        //personRepository.Insert(new Person("fiskeveien 3", "rune", "christ",
-        //	"12345", "90231", "124", DateTime.Today));
-
-        //transactionRepository.Transfer(2, 1, 1);
     }
 }
