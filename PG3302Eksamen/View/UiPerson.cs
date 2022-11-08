@@ -56,7 +56,7 @@ public class UiPerson {
 		var lastName =
 			PromptUtil.PromptQuestion("Last name: ", "Invalid last name entered");
 		var phoneNumber =
-			PromptUtil.PromptQuestion("Phone number: ", "Invalid phone number entered");
+			PromptUtil.PromptPhoneNr("Phone number: ", "Invalid phone number entered");
 		var email = PromptUtil.PromptEmail("Email: ", "Invalid email entered");
 
 		var password = "";

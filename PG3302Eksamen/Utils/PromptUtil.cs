@@ -36,16 +36,16 @@ public static class PromptUtil {
 				.UseConverter(q => q.Name + " | Balance: " + q.Balance));
 	}
 
-	public static string PromptPassword(string prompt) {
+	public static string PromptPassword(string question) {
 		return AnsiConsole.Prompt(
-			new TextPrompt<string>(prompt)
+			new TextPrompt<string>(question)
 				.PromptStyle("grey50")
 				.Secret());
 	}
 
-	public static string PromptEmail(string prompt, string error) {
+	public static string PromptEmail(string question, string error) {
 		var inputFromUser = AnsiConsole.Prompt(
-			new TextPrompt<string>(prompt)
+			new TextPrompt<string>(question)
 				.Validate(input
 					=> input.Contains('@')
 						? ValidationResult.Success()
@@ -56,7 +56,18 @@ public static class PromptUtil {
 	}
 
 
-	// TODO: Validate correctly, now it only checks for no input
+	public static string PromptPhoneNr(string question, string error) {
+		var inputFromUser = AnsiConsole.Prompt(
+			new TextPrompt<string>(question)
+				.Validate(input
+					=> input.Any(char.IsDigit)
+						? ValidationResult.Success()
+						: ValidationResult.Error("[red]" + error + "[/]"))
+		);
+
+		inputFromUser = TrimUtil.TrimInput(inputFromUser);
+		return inputFromUser;
+	}
 
 	public static string PromptQuestion(string question, string error) {
 		var inputFromUser = AnsiConsole.Prompt(
