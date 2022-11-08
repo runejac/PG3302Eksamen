@@ -58,9 +58,10 @@ public static class PromptUtil {
 
 	public static string PromptPhoneNr(string question, string error) {
 		var inputFromUser = AnsiConsole.Prompt(
+			// phonenr saves as string because no math operation
 			new TextPrompt<string>(question)
 				.Validate(input
-					=> input.All(char.IsDigit)
+					=> input.All(char.IsDigit) && input.Length == 8
 						? ValidationResult.Success()
 						: ValidationResult.Error("[red]" + error + "[/]"))
 		);

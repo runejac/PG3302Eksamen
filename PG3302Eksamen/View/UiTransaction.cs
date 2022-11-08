@@ -34,25 +34,35 @@ public class UiTransaction {
 
 					uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
 
-					var billsToPay = bill.UnpaidBills(ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson()));
+					var billsToPay =
+						bill.UnpaidBills(
+							ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson()));
 
-					selectedBill =
-						PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
-							billsToPay);
-					
-					if (selectedBill.Amount <= selectedFromAccount.Balance) {
-						bill.Calculate(selectedFromAccount, selectedBill);
-						PromptUtil.PromptAssertion(
-							$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
-							"green");
+					if (billsToPay.Any()) {
+						selectedBill =
+							PromptUtil.PromptSelectForBills(
+								"Which bill do you want to pay?",
+								billsToPay);
 
-						TransactionMenu(ui, uiAccount, bill);
+						if (selectedBill.Amount <= selectedFromAccount.Balance) {
+							bill.Calculate(selectedFromAccount, selectedBill);
+							PromptUtil.PromptAssertion(
+								$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
+								"green");
+
+							TransactionMenu(ui, uiAccount, bill);
+						}
+						else {
+							PromptUtil.PromptAssertion(
+								"Not enough money in account to make the payment.",
+								"red");
+							TransactionMenu(ui, uiAccount, bill);
+						}
 					}
 					else {
 						PromptUtil.PromptAssertion(
-							"Not enough money in account to make the payment.",
-							"red");
-						TransactionMenu(ui, uiAccount, bill);
+							"No bills found, up-to-date on payments!", "green");
+						ui.MainMenuAfterAuthorized();
 					}
 				}
 				else {
@@ -83,6 +93,7 @@ public class UiTransaction {
 						ui.MainMenuAfterAuthorized();
 					}
 
+
 					var listOfAvailableAccountsTo = personAccounts.Where(account =>
 						!account.Equals(selectedFromAccount));
 
@@ -91,6 +102,11 @@ public class UiTransaction {
 							listOfAvailableAccountsTo);
 
 					uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
+
+					PromptUtil.PromptAssertion(
+						$"Successfully transferred {amount} kr from {selectedFromAccount.Name} to {selectedToAccount.Name}",
+						"green");
+
 					TransactionMenu(ui, uiAccount, bill);
 				}
 				else {

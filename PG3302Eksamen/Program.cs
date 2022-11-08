@@ -6,23 +6,24 @@ using PG3302Eksamen.View;
 namespace PG3302Eksamen;
 
 internal static class Program {
-    private static void Main(string[] args) {
-        var personRepository = new PersonRepository(new BankContext());
-        var accountRepository = new AccountRepository(new BankContext());
-        var exist = personRepository.CheckIfExists(1);
-        if (!exist) {
-            var person = new Person().CreatePerson("This is", "Admin", "Placeholder",
-                "Person", "0", "0", "@");
-            personRepository.Insert(person);
+	private static void Main(string[] args) {
+		var personRepository = new PersonRepository(new BankContext());
+		var accountRepository = new AccountRepository(new BankContext());
+		var exist = personRepository.CheckIfExists(1);
+		if (!exist) {
+			var person = new Person().CreatePerson("This is", "Admin", "Placeholder",
+				"Person", "0", "0", "@");
+			personRepository.Insert(person);
 
 
-            var savingAccount = new CurrentAccountFactory().InitializeAccount("Bill account", person.Id,
-                "111111111");
+			var savingAccount = new CurrentAccountFactory().InitializeAccount(
+				"Bill account", person.Id,
+				"111111111");
 
-            accountRepository.Insert(savingAccount);
-        }
+			accountRepository.Insert(savingAccount);
+		}
 
-        var ui = new Ui();
-        ui.WelcomeMessage();
-    }
+		var ui = new Ui();
+		ui.WelcomeMessage();
+	}
 }

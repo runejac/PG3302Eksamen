@@ -6,15 +6,17 @@ using PG3302Eksamen.Utils;
 namespace PG3302Eksamen.Controller;
 
 public class BillController {
-    private readonly AccountController _ac = new();
-    private readonly AccountRepository _accountRepository = new(new BankContext());
-    private readonly Bill _bill = new();
-    private readonly BillRepository _billRepository = new(new BankContext());
-    private readonly Payment _payment = new();
-    private readonly TransactionRepository _transactionRepository = new(new BankContext());
-    private List<string> _billRecipients;
+	private readonly AccountController _ac = new();
+	private readonly AccountRepository _accountRepository = new(new BankContext());
+	private readonly Bill _bill = new();
+	private readonly BillRepository _billRepository = new(new BankContext());
+	private readonly Payment _payment = new();
 
-    
+	private readonly TransactionRepository
+		_transactionRepository = new(new BankContext());
+
+	private List<string> _billRecipients;
+
 
 	private void AddBillRecipients() {
 		_billRecipients = new List<string> {
@@ -30,11 +32,11 @@ public class BillController {
 		};
 	}
 
-    private string UseRandomRecipient() {
-        AddBillRecipients();
-        var random = new Random();
-        var i = 0;
-        var next = random.Next(_billRecipients.Count);
+	private string UseRandomRecipient() {
+		AddBillRecipients();
+		var random = new Random();
+		var i = 0;
+		var next = random.Next(_billRecipients.Count);
 
 		foreach (var recipient in _billRecipients) {
 			if (i == next) {
@@ -57,30 +59,30 @@ public class BillController {
 	}
 
 
-    public Bill GenerateBills(Person person, Account account) {
-        return _bill.CreateBill(
-            account,
-            UseRandomRecipient(),
-            GenerateRandomKidNumber(),
-            AmountGeneratorUtil.GenerateAmount(50, 700),
-            BillStatusEnum.Notpaid,
-            DateTime.Today.AddDays(14),
-            person.Id);
-    }
+	public Bill GenerateBills(Person person, Account account) {
+		return _bill.CreateBill(
+			account,
+			UseRandomRecipient(),
+			GenerateRandomKidNumber(),
+			AmountGeneratorUtil.GenerateAmount(50, 700),
+			BillStatusEnum.Notpaid,
+			DateTime.Today.AddDays(14),
+			person.Id);
+	}
 
 
-    public void ExecuteBillPayment(Account selectedFromAccount, Bill selectedBill) {
-	    
-        var transaction = _payment.CreatePayment(selectedBill.ToAccount, selectedFromAccount, selectedBill.Amount);
+	public void ExecuteBillPayment(Account selectedFromAccount, Bill selectedBill) {
+		var transaction = _payment.CreatePayment(selectedBill.Recipient,
+			selectedBill.ToAccount, selectedFromAccount, selectedBill.Amount);
 
 
-        _transactionRepository.ProcessTransaction(transaction);
+		_transactionRepository.ProcessTransaction(transaction);
 
 
-        selectedFromAccount.Balance -= selectedBill.Amount;
-        selectedBill.Status = BillStatusEnum.Paid;
+		selectedFromAccount.Balance -= selectedBill.Amount;
+		selectedBill.Status = BillStatusEnum.Paid;
 
-        _billRepository.Update(selectedBill);
-        _accountRepository.Update(selectedFromAccount);
-    }
+		_billRepository.Update(selectedBill);
+		_accountRepository.Update(selectedFromAccount);
+	}
 }
