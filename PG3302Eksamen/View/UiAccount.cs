@@ -62,12 +62,7 @@ public class UiAccount {
 			$"{(account.WithdrawLimit > 0 ? $"and savings account has a yearly withdraw limit at {account.WithdrawLimit}" : "")}",
 			"green");
 	}
-
-
-	public void Calculate(decimal amount, Account selectedFromAccount,
-		Account selectedToAccount) {
-		_transferController.Execute(amount, selectedFromAccount, selectedToAccount);
-	}
+	
 
 	public void OverViewOfAccounts(Account? selectedAccount, Ui ui) {
 		var accountList = ui.UiPerson.GetAllAccounts();
@@ -121,4 +116,9 @@ public class UiAccount {
 
 		AnsiConsole.Render(table);
 	}
+
+	  public void Calculate(decimal amount, Account selectedFromAccount,
+        Account selectedToAccount) {
+        _transferController.Execute(amount, selectedFromAccount, selectedToAccount);
+    }
 }

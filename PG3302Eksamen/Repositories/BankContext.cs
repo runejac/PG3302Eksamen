@@ -17,12 +17,12 @@ public class BankContext : DbContext {
 		dbContextOptions) {
 	}
 
-	public DbSet<Transaction> Transactions { get; set; } = null!;
-	public DbSet<Account> Accounts { get; set; } = null!;
+    public DbSet<Transaction> Transactions { get; set; } = null!;
 
-	public DbSet<Bill> Bills { get; set; } = null!;
-	public DbSet<Person> Persons { get; set; } = null!;
-	private string DbPath { get; }
+    public DbSet<Account> Accounts { get; set; } = null!;
+    public DbSet<Bill> Bills { get; set; } = null!;
+    public DbSet<Person> Persons { get; set; } = null!;
+    private string DbPath { get; }
 
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder) {
@@ -52,17 +52,26 @@ public class BankContext : DbContext {
 			.HasColumnName("WithdrawLimit");
 
 
-		// TODO: Unique constraint violation, maybe we need to add acc as ID.. not entity :(
+        modelBuilder.Entity<Transaction>()
+            .HasIndex(e => new { e.ToAccount })
+            .IsUnique(false);
 
-		modelBuilder.Entity<Transaction>()
-			.HasOne(p => p.FromAccount);
-		modelBuilder.Entity<Transaction>()
-			.HasOne(p => p.ToAccount);
+        modelBuilder.Entity<Transaction>()
+            .HasIndex(e => new { e.FromAccount })
+            .IsUnique(false);
+        
 
+        modelBuilder.Entity<Bill>()
+            .HasIndex(e => new { e.ToAccount })
+            .IsUnique(false);
+        
+        
 
-		modelBuilder.Entity<Person>()
-			.HasIndex(e => new { e.SocialSecurityNumber })
-			.IsUnique();
+        modelBuilder.Entity<Person>()
+            .HasIndex(e => new { e.SocialSecurityNumber })
+            .IsUnique();
+
+		
 
 		modelBuilder.Entity<Person>()
 			.HasIndex(e => new { e.Id })

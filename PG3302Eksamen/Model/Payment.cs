@@ -9,10 +9,10 @@ public class Payment : Transaction {
 
     public new int Id { get; set; }
 
-    public Transaction CreatePayment(Account toAccount, Account fromAccount, decimal amount) {
+    public Transaction CreatePayment(int toAccount, Account fromAccount, decimal amount) {
         return new Payment {
             ToAccount = toAccount,
-            FromAccount = fromAccount,
+            FromAccount = fromAccount.Id,
             Amount = amount
         };
     }

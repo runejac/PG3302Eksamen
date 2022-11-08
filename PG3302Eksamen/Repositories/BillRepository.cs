@@ -50,14 +50,15 @@ public sealed class BillRepository : IBillRepository, IDisposable {
 		GC.SuppressFinalize(this);
 	}
 
+
+    public IEnumerable<Bill> GetSortedByOwner(int id) {
+        return _context.Bills.Where(e => e.OwnerId == id);
+    }
 	public void Update(Bill entity) {
 		_context.Update(entity);
 		_context.SaveChanges();
 	}
-
-	public IEnumerable<Bill> GetSortedByOwner(int id) {
-		return _context.Bills.Where(e => e.OwnerId == id);
-	}
+	
 
 	private void Dispose(bool disposing) {
 		if (!_disposed) {

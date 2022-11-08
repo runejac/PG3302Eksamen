@@ -27,18 +27,14 @@ public class PersonController {
 		return 0;
 	}
 
-	public List<Bill> GetAllBills() {
-		return _billRepository.GetSortedByOwner(_person.Id).ToList();
+	public List<Bill> GetAllBills(Person person) {
+		return _billRepository.GetSortedByOwner(person.Id).ToList();
 	}
 
 	public List<Bill> GetAllUnpaidBills() {
 		return _billRepository.GetSortedByStatus(BillStatusEnum.Notpaid).ToList();
 	}
-
-	public void BillGenerator() {
-		_billRepository.Insert(_billController.GenerateBills(_person));
-	}
-
+	
 	public void CreatePerson(string address, string firstName, string lastName,
 		string password,
 		string phoneNumber,
@@ -57,8 +53,6 @@ public class PersonController {
 			.ToList()
 			.FirstOrDefault(person =>
 				person.SocialSecurityNumber.Equals(_person.SocialSecurityNumber));
-
-
 		if (match is not null && _personRepository.GetAll().ToList().Count >= 1) {
 			return true;
 		}
@@ -67,6 +61,13 @@ public class PersonController {
 		BillGenerator();
 		return false;
 	}
+
+	public void BillGenerator() {
+        var adminAccount = _accountRepository.GetById(1); //Hardcoded admin account for bill payment
+
+        _billRepository.Insert(_billController.GenerateBills(_person, adminAccount));
+    
+}
 
 	public void AddAccount(Account account) {
 		_personRepository.AddNewAccount(account);

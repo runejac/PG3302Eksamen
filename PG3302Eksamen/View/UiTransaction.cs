@@ -34,7 +34,7 @@ public class UiTransaction {
 
 					uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
 
-					var billsToPay = bill.UnpaidBills(ui.UiPerson.GetAllBills());
+					var billsToPay = bill.UnpaidBills(ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson()));
 
 					selectedBill =
 						PromptUtil.PromptSelectForBills("Which bill do you want to pay?",

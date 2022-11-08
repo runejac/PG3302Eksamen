@@ -18,14 +18,14 @@ public class UiPerson {
 		return _personController.GetAllAccounts();
 	}
 
-	public IEnumerable<Bill> GetAllBills() {
-		return _personController.GetAllBills();
+	public IEnumerable<Bill> GetAllBills(Person person) {
+		return _personController.GetAllBills(person);
 	}
 
 	public List<Bill> GetAllUnpaidBills() {
 		return _personController.GetAllUnpaidBills();
 	}
-
+	
 
 	public Person LogIn() {
 		var ssnEntered = PromptUtil.PromptQuestion("Enter your social security number: ",

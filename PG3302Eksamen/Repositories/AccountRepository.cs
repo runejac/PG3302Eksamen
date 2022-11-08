@@ -31,15 +31,16 @@ public sealed class AccountRepository : IAccountRepository, IDisposable {
 		_context.SaveChanges();
 	}
 
-	public void Update(Account entity) {
-		_context.Update(entity);
-		_context.SaveChanges();
-	}
+    public void Update(Account entity) {
+        _context.Update(entity);
+        _context.SaveChanges();
+    }
 
-	public List<string> GetAllAccountNumbers() {
-		var response = GetAll();
-		return response.Select(accounts => accounts.AccountNumber).ToList();
-	}
+    public List<string> GetAllAccountNumbers() {
+        var response = GetAll();
+        return response.Select(accounts => accounts.AccountNumber).ToList();
+    }
+    
 
 	public IOrderedEnumerable<Account> GetSortedByBalance() {
 		return GetAll().OrderByDescending(acc => acc.Balance);

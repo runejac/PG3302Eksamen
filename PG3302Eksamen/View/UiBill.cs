@@ -7,26 +7,20 @@ namespace PG3302Eksamen.View;
 
 public class UiBill {
 	private readonly List<string> _billOptions = new();
-	private readonly TransferController _transferController = new();
-	private Bill _bill;
-	private IEnumerable<Bill> _bills;
-
-	public void SelectBillToPay(string billToPayAccountNumber) {
-		_bill = _bills.Single(bill => bill.AccountNumber == billToPayAccountNumber);
-	}
-
+	private readonly BillController _billController = new();
+	
 	public IEnumerable<Bill> UnpaidBills(IEnumerable<Bill> unpaidBills) {
-		return _bills = unpaidBills.Where(bill => bill.Status == BillStatusEnum.Notpaid);
+		return  unpaidBills.Where(bill => bill.Status == BillStatusEnum.Notpaid);
 	}
 
 
 	public void Calculate(Account selectedFromAccount, Bill selectedBill) {
-		_transferController.ExecuteBillPayment(selectedFromAccount, selectedBill);
+		_billController.ExecuteBillPayment(selectedFromAccount, selectedBill);
 	}
 
 	public void OverViewOfBills(Ui ui) {
 		ui.ClearConsole();
-		var allBills = ui.UiPerson.GetAllBills();
+		var allBills = ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson());
 
 		var tableResult = new Table()
 			.Title("[deeppink2]Overview of your bills[/]")
@@ -41,7 +35,7 @@ public class UiBill {
 			tableResult.AddRow(
 				"[grey]" + $"{bill.DueDate}" + "[/]",
 				"[grey]" + $"{bill.Recipient}" + "[/]",
-				"[grey]" + $"{bill.AccountNumber}" + "[/]",
+				"[grey]" + $"{bill.ToAccount}" + "[/]",
 				"[grey]" + $"{bill.MessageField}" + "[/]",
 				"[grey]" + $"{bill.Status}" + "[/]",
 				"[grey]" + $"{bill.Amount} ,-" + "[/]"
