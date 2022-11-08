@@ -7,12 +7,10 @@ namespace PG3302Eksamen.View;
 
 public class Ui {
 	private readonly UiAccount _uiAccount = new();
-
 	private readonly UiBill _uiBill = new();
-
 	private Person _person;
 
-	private UiPerson _uiPerson;
+	public UiPerson UiPerson { set; get; }
 
 
 	public void ClearConsole() {
@@ -24,16 +22,6 @@ public class Ui {
 		Console.WriteLine(message);
 	}
 
-	public void MessageSameLine(string message, ConsoleColor color) {
-		Console.ForegroundColor = color;
-		Console.Write(message);
-	}
-
-
-	public void InvalidInputMessage(string? customMessage) {
-		Message(customMessage ?? "Invalid input, try again.", ConsoleColor.DarkRed);
-	}
-
 	public void WelcomeMessage() {
 		var selectedChoice = PromptUtil.PromptSelect(
 			"[cyan]Welcome to Bank Kristiania![/]",
@@ -41,16 +29,16 @@ public class Ui {
 		);
 		switch (selectedChoice) {
 			case "Register":
-				_uiPerson = new UiPerson();
-				_uiPerson.CreatePerson();
-				_person = _uiPerson.GetPerson();
+				UiPerson = new UiPerson();
+				UiPerson.CreatePerson();
+				_person = UiPerson.GetPerson();
 				ClearConsole();
 				MainMenuAfterAuthorized();
 				break;
 			case "Login":
-				_uiPerson = new UiPerson();
+				UiPerson = new UiPerson();
 				try {
-					_person = _uiPerson.LogIn();
+					_person = UiPerson.LogIn();
 					ClearConsole();
 					MainMenuAfterAuthorized();
 				}
@@ -58,7 +46,7 @@ public class Ui {
 					Message("Wrong credentials, try again or register.",
 						ConsoleColor.Red);
 					Thread.Sleep(3000);
-					_uiPerson = null;
+					UiPerson = null;
 					ClearConsole();
 					WelcomeMessage();
 				}
@@ -72,62 +60,10 @@ public class Ui {
 	}
 
 	// TODO: Move to UiAccount
-	private void OverViewOfAccounts(Account? selectedAccount) {
-		var accountList = _uiPerson.GetAllAccounts();
-		Table table = new();
-
-		if (selectedAccount != null) {
-			table = new Table()
-				.Border(TableBorder.MinimalHeavyHead)
-				.BorderColor(Color.Green)
-				.AddColumns("[white]Account name[/]", "[white]Account number[/]",
-					"[white]Balance[/]",
-					"[white]Interest rate[/]", "[white]Withdrawal limit[/]");
-
-
-			table.AddRow(
-				"[grey]" + $"{selectedAccount.Name}" + "[/]",
-				"[grey]" + $"{selectedAccount.AccountNumber}" + "[/]",
-				"[grey]" + $"{selectedAccount.Balance} kr" + "[/]",
-				"[grey]" + $"{selectedAccount.Interest}" + "[/]",
-				"[grey]" + $"{WithdrawLimit(selectedAccount)}" + "[/]"
-			);
-		}
-		else {
-			table = new Table()
-				.Border(TableBorder.MinimalHeavyHead)
-				.BorderColor(Color.Green)
-				.AddColumns("[white]Account name[/]", "[white]Account number[/]",
-					"[white]Balance[/]",
-					"[white]Interest rate[/]", "[white]Withdrawal limit[/]");
-
-			foreach (var account in accountList) {
-				table.AddRow(
-					"[grey]" + $"{account.Name}" + "[/]",
-					"[grey]" + $"{account.AccountNumber}" + "[/]",
-					"[grey]" + $"{account.Balance} kr" + "[/]",
-					"[grey]" + $"{account.Interest}" + "[/]",
-					"[grey]" + $"{WithdrawLimit(account)}" + "[/]"
-				);
-			}
-		}
-
-
-		// Current account will never have withdraw limit?
-		dynamic WithdrawLimit(Account account) {
-			if (account.GetAccountType() == "current account") {
-				return "Unlimited";
-			}
-
-			return account.WithdrawLimit;
-		}
-
-		AnsiConsole.Render(table);
-	}
 
 	private void OverViewOfBills() {
 		ClearConsole();
-		var allBills = _uiPerson.GetAllBills();
+		var allBills = UiPerson.GetAllBills();
 
 		var tableResult = new Table()
 			.Title("[deeppink2]Overview of your bills[/]")
@@ -197,7 +133,7 @@ public class Ui {
 				break;
 			case "Display all accounts":
 				ClearConsole();
-				OverViewOfAccounts(null);
+				_uiAccount.OverViewOfAccounts(null, this);
 				GoBackToMainMenu();
 				break;
 			case "Display all bills":
@@ -205,12 +141,12 @@ public class Ui {
 				break;
 			case "Display user details":
 				ClearConsole();
-				_uiPerson!.UserAccountDetails();
+				UiPerson!.UserAccountDetails();
 				GoBackToMainMenu();
 				break;
 			case "[red]Log out[/]":
 				Message(
-					$"Good bye {_person?.FirstName}, hope to see you soon!",
+					$"You are now logged out, {_person?.FirstName}.",
 					ConsoleColor.Blue);
 				Thread.Sleep(3000);
 				ClearConsole();
@@ -221,7 +157,7 @@ public class Ui {
 	}
 
 	private void TransactionMenu() {
-		var personAccounts = _uiPerson.GetAllAccounts().ToList();
+		var personAccounts = UiPerson.GetAllAccounts().ToList();
 		Account selectedFromAccount;
 		Bill selectedBill;
 
@@ -245,9 +181,9 @@ public class Ui {
 						"Which account do you want to use?",
 						personAccounts);
 
-				OverViewOfAccounts(selectedFromAccount);
+				_uiAccount.OverViewOfAccounts(selectedFromAccount, this);
 
-				var billsToPay = _uiBill.UnpaidBills(_uiPerson.GetAllBills());
+				var billsToPay = _uiBill.UnpaidBills(UiPerson.GetAllBills());
 
 				selectedBill =
 					PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
@@ -274,30 +210,40 @@ public class Ui {
 			case "Transfer between own accounts":
 				ClearConsole();
 
+				// need at least 2 accounts to answer between own accounts
+				if (personAccounts.Count >= 2) {
+					selectedFromAccount =
+						PromptUtil.PromptSelectForAccounts("Transfer from account",
+							personAccounts);
 
-				selectedFromAccount =
-					PromptUtil.PromptSelectForAccounts("Transfer from account",
-						personAccounts);
+					_uiAccount.OverViewOfAccounts(selectedFromAccount, this);
 
-				OverViewOfAccounts(selectedFromAccount);
+					var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
+						"Not enough balance", selectedFromAccount);
 
-				var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
-					"Not enough balance", selectedFromAccount);
+					if (amount.Equals(0)) {
+						ClearConsole();
+						MainMenuAfterAuthorized();
+					}
 
-				if (amount.Equals(0)) {
-					ClearConsole();
+					var listOfAvailableAccountsTo = personAccounts.Where(account =>
+						!account.Equals(selectedFromAccount));
+
+					var selectedToAccount =
+						PromptUtil.PromptSelectForAccounts("Transfer to account",
+							listOfAvailableAccountsTo);
+
+					_uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
+					TransactionMenu();
+				}
+				else {
+					Message(
+						"You need at least 2 accounts to transfer money between your own accounts. Create account(s).",
+						ConsoleColor.Red);
 					MainMenuAfterAuthorized();
 				}
 
-				var listOfAvailableAccountsTo = personAccounts.Where(account =>
-					!account.Equals(selectedFromAccount));
 
-				var selectedToAccount =
-					PromptUtil.PromptSelectForAccounts("Transfer to account",
-						listOfAvailableAccountsTo);
-
-				_uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
-				TransactionMenu();
 				break;
 			case "[red]Back[/]":
 				ClearConsole();

@@ -2,6 +2,7 @@ using PG3302Eksamen.Controller;
 using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Utils;
+using Spectre.Console;
 
 namespace PG3302Eksamen.View;
 
@@ -63,32 +64,61 @@ public class UiAccount {
 	}
 
 
-	// TODO: Cross-controller calls should be avoided?
-	private void OverViewOfAccounts() {
-		//  var printAccountDetails = Person.GetAllAccounts();
-
-		/*var tableResult = new Table()
-		    .Border(TableBorder.Square)
-		    .BorderColor(Color.Green)
-		    .AddColumns("[white]Account name[/]", "[white]Account number[/]",
-		        "[white]Balance[/]",
-		        "[white]Interest rate[/]", "[white]Withdrawal limit[/]");
-
-		foreach (var account in printAccountDetails)
-		    tableResult.AddRow(
-		        "[grey]" + $"{account.Name}" + "[/]",
-		        "[grey]" + $"{account.AccountNumber}" + "[/]",
-		        "[grey]" + $"{account.Balance} kr" + "[/]",
-		        "[grey]" + $"{account.Interest}" + "[/]",
-		        "[grey]" + $"{account.WithdrawLimit}" + "[/]"
-		    );
-
-		AnsiConsole.Render(tableResult);*/
-	}
-
-
 	public void Calculate(decimal amount, Account selectedFromAccount,
 		Account selectedToAccount) {
 		_transferController.Execute(amount, selectedFromAccount, selectedToAccount);
+	}
+
+	public void OverViewOfAccounts(Account? selectedAccount, Ui ui) {
+		var accountList = ui.UiPerson.GetAllAccounts();
+		Table table = new();
+
+		if (selectedAccount != null) {
+			table = new Table()
+				.Border(TableBorder.MinimalHeavyHead)
+				.BorderColor(Color.Green)
+				.AddColumns("[white]Account name[/]", "[white]Account number[/]",
+					"[white]Balance[/]",
+					"[white]Interest rate[/]", "[white]Withdrawal limit[/]");
+
+
+			table.AddRow(
+				"[grey]" + $"{selectedAccount.Name}" + "[/]",
+				"[grey]" + $"{selectedAccount.AccountNumber}" + "[/]",
+				"[grey]" + $"{selectedAccount.Balance} kr" + "[/]",
+				"[grey]" + $"{selectedAccount.Interest}" + "[/]",
+				"[grey]" + $"{WithdrawLimit(selectedAccount)}" + "[/]"
+			);
+		}
+		else {
+			table = new Table()
+				.Border(TableBorder.MinimalHeavyHead)
+				.BorderColor(Color.Green)
+				.AddColumns("[white]Account name[/]", "[white]Account number[/]",
+					"[white]Balance[/]",
+					"[white]Interest rate[/]", "[white]Withdrawal limit[/]");
+
+			foreach (var account in accountList) {
+				table.AddRow(
+					"[grey]" + $"{account.Name}" + "[/]",
+					"[grey]" + $"{account.AccountNumber}" + "[/]",
+					"[grey]" + $"{account.Balance} kr" + "[/]",
+					"[grey]" + $"{account.Interest}" + "[/]",
+					"[grey]" + $"{WithdrawLimit(account)}" + "[/]"
+				);
+			}
+		}
+
+
+		// Current account will never have withdraw limit?
+		dynamic WithdrawLimit(Account account) {
+			if (account.GetAccountType() == "current account") {
+				return "Unlimited";
+			}
+
+			return account.WithdrawLimit;
+		}
+
+		AnsiConsole.Render(table);
 	}
 }
