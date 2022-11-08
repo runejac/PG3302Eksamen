@@ -221,6 +221,7 @@ public class Ui {
 					var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
 						"Not enough balance", selectedFromAccount);
 
+					
 					if (amount.Equals(0)) {
 						ClearConsole();
 						MainMenuAfterAuthorized();
