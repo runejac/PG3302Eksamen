@@ -60,7 +60,7 @@ public static class PromptUtil {
 		var inputFromUser = AnsiConsole.Prompt(
 			new TextPrompt<string>(question)
 				.Validate(input
-					=> input.Any(char.IsDigit)
+					=> input.All(char.IsDigit)
 						? ValidationResult.Success()
 						: ValidationResult.Error("[red]" + error + "[/]"))
 		);
