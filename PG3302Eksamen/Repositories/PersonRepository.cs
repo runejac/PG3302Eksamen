@@ -56,7 +56,7 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
         _context.SaveChanges();
     }
 
-    public Person? GetBySocialSecNumber(string ssn) {
+    public Person GetBySocialSecNumber(string ssn) {
         return _context.Persons.FirstOrDefault(person => person.SocialSecurityNumber == ssn);
     }
 

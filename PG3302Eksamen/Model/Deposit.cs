@@ -8,7 +8,7 @@ public class Deposit : Transaction {
     public new int Id { get; set; }
 
 
-    public Deposit CreateDeposit(Account toAccount, Account fromAccount, decimal amount) {
+    public Transaction CreateDeposit(Account toAccount, Account fromAccount, decimal amount) {
         return new Deposit {
             ToAccount = toAccount,
             FromAccount = fromAccount,
