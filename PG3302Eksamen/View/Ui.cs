@@ -176,33 +176,42 @@ public class Ui {
 			case "Make a payment":
 				ClearConsole();
 
-				selectedFromAccount =
-					PromptUtil.PromptSelectForAccounts(
-						"Which account do you want to use?",
-						personAccounts);
+				// person needs at least 1 account to pay a bill
+				if (personAccounts.Count > 0) {
+					selectedFromAccount =
+						PromptUtil.PromptSelectForAccounts(
+							"Which account do you want to use?",
+							personAccounts);
 
-				_uiAccount.OverViewOfAccounts(selectedFromAccount, this);
+					_uiAccount.OverViewOfAccounts(selectedFromAccount, this);
 
-				var billsToPay = _uiBill.UnpaidBills(UiPerson.GetAllBills());
+					var billsToPay = _uiBill.UnpaidBills(UiPerson.GetAllBills());
 
-				selectedBill =
-					PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
-						billsToPay);
+					selectedBill =
+						PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
+							billsToPay);
 
-				// TODO sjekke at selectedBill.Amount ikke er større enn selectedFromAccount.Amount
+					// TODO sjekke at selectedBill.Amount ikke er større enn selectedFromAccount.Amount
 
-				if (selectedBill.Amount <= selectedFromAccount.Balance) {
-					_uiBill.Calculate(selectedFromAccount, selectedBill);
-					Message(
-						$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
-						ConsoleColor.Green);
+					if (selectedBill.Amount <= selectedFromAccount.Balance) {
+						_uiBill.Calculate(selectedFromAccount, selectedBill);
+						Message(
+							$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
+							ConsoleColor.Green);
 
-					TransactionMenu();
+						TransactionMenu();
+					}
+					else {
+						Message("Not enough money in account to make the payment.",
+							ConsoleColor.Red);
+						TransactionMenu();
+					}
 				}
 				else {
-					Message("Not enough money in account to make the payment.",
+					Message(
+						"You need at least 1 account to pay a bill. Create an account.",
 						ConsoleColor.Red);
-					TransactionMenu();
+					MainMenuAfterAuthorized();
 				}
 
 
@@ -210,7 +219,7 @@ public class Ui {
 			case "Transfer between own accounts":
 				ClearConsole();
 
-				// need at least 2 accounts to answer between own accounts
+				// person needs at least 2 accounts to transfer between own accounts
 				if (personAccounts.Count >= 2) {
 					selectedFromAccount =
 						PromptUtil.PromptSelectForAccounts("Transfer from account",
@@ -221,7 +230,7 @@ public class Ui {
 					var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
 						"Not enough balance", selectedFromAccount);
 
-					
+
 					if (amount.Equals(0)) {
 						ClearConsole();
 						MainMenuAfterAuthorized();
