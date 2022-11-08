@@ -11,14 +11,8 @@ public class Ui {
 
 	public UiPerson UiPerson { set; get; }
 
-
 	public void ClearConsole() {
 		Console.Clear();
-	}
-
-	private void Message(string message, ConsoleColor color) {
-		Console.ForegroundColor = color;
-		Console.WriteLine(message);
 	}
 
 	public void WelcomeMessage() {
@@ -42,8 +36,9 @@ public class Ui {
 					MainMenuAfterAuthorized();
 				}
 				catch (Exception e) {
-					Message("Wrong credentials, try again or register.",
-						ConsoleColor.Red);
+					PromptUtil.PromptAssertion(
+						"Wrong credentials, try again or register.",
+						"red");
 					Thread.Sleep(3000);
 					UiPerson = null;
 					ClearConsole();
@@ -52,12 +47,12 @@ public class Ui {
 
 				break;
 			case "[red]Exit[/]":
-				Message("Good bye, hope to see you soon!", ConsoleColor.Blue);
+				PromptUtil.PromptAssertion("Good bye, hope to see you soon!", "blue");
 				Environment.Exit(0);
 				break;
 		}
 	}
-	
+
 
 	public void GoBackToMainMenu() {
 		var selectedChoice = PromptUtil.PromptSelect("",
@@ -74,9 +69,9 @@ public class Ui {
 	}
 
 	public void MainMenuAfterAuthorized() {
-		Message(
+		PromptUtil.PromptAssertion(
 			$"Greetings {_person?.FirstName}, welcome to the Bank of Kristiania where your needs meets our competence!",
-			ConsoleColor.Green);
+			"green");
 		var selectedChoice = PromptUtil.PromptSelect("MAIN MENU",
 			new[] {
 				"Create an account",
@@ -113,9 +108,9 @@ public class Ui {
 				GoBackToMainMenu();
 				break;
 			case "[red]Log out[/]":
-				Message(
+				PromptUtil.PromptAssertion(
 					$"You are now logged out, {_person?.FirstName}.",
-					ConsoleColor.Blue);
+					"blue");
 				Thread.Sleep(3000);
 				ClearConsole();
 				WelcomeMessage();
