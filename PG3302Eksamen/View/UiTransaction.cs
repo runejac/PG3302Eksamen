@@ -1,10 +1,43 @@
-﻿using PG3302Eksamen.Model;
-using PG3302Eksamen.Model.AccountModel;
+﻿using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Utils;
+using Spectre.Console;
 
 namespace PG3302Eksamen.View;
 
 public class UiTransaction {
+
+
+	// TODO did not make it in time to show transactions, but stored properly in DB
+	/*public void OverViewOfTransactions(Ui ui) {
+		ui.ClearConsole();
+		var allBills = ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson());
+
+		var tableResult = new Table()
+			.Title("[deeppink2]Overview of your bills[/]")
+			.Border(TableBorder.MinimalHeavyHead)
+			.BorderColor(Color.Green)
+			.AddColumns("[white]Due date[/]", "[white]Recipient[/]",
+				"[white]Account number[/]",
+				"[white]KID/message[/]",
+				"[white]Status[/]", "[white]Amount[/]");
+
+		foreach (var bill in allBills) {
+			tableResult.AddRow(
+				"[grey]" + $"{bill.DueDate}" + "[/]",
+				"[grey]" + $"{bill.Recipient}" + "[/]",
+				"[grey]" + $"{bill.ToAccount}" + "[/]",
+				"[grey]" + $"{bill.MessageField}" + "[/]",
+				"[grey]" + $"{bill.Status}" + "[/]",
+				"[grey]" + $"{bill.Amount} ,-" + "[/]"
+			);
+		}
+
+		AnsiConsole.Render(tableResult);
+
+		ui.GoBackToMainMenu();
+	}*/
+	
+	
 	public void TransactionMenu(Ui ui, UiAccount uiAccount, UiBill bill) {
 		var personAccounts = ui.UiPerson.GetAllAccounts().ToList();
 
@@ -55,10 +88,12 @@ public class UiTransaction {
 				break;
 		}
 	}
-	
-	
-	private void TransferToOwnAccounts(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
-		var selectedFromAccount = PromptUtil.PromptSelectForAccounts("Transfer from account",
+
+
+	private void TransferToOwnAccounts(Ui ui, UiAccount uiAccount, UiBill bill,
+		List<Account> personAccounts) {
+		var selectedFromAccount = PromptUtil.PromptSelectForAccounts(
+			"Transfer from account",
 			personAccounts);
 
 		uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
@@ -80,10 +115,16 @@ public class UiTransaction {
 				listOfAvailableAccountsTo);
 
 		uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
+		PromptUtil.PromptAssertion(
+			$"Successfully transferred {amount} kr from {selectedFromAccount.Name} to {selectedToAccount.Name}",
+			"green");
+
 		TransactionMenu(ui, uiAccount, bill);
 	}
-	
-	private void MakePayment(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
+
+
+	private void MakePayment(Ui ui, UiAccount uiAccount, UiBill bill,
+		List<Account> personAccounts) {
 		if (personAccounts.Count > 0) {
 			var selectedFromAccount =
 				PromptUtil.PromptSelectForAccounts(

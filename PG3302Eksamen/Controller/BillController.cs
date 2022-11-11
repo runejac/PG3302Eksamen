@@ -10,7 +10,6 @@ public class BillController {
 	private readonly Bill _bill = new();
 	private readonly BillRepository _billRepository = new(new BankContext());
 	private readonly Payment _payment = new();
-	private Person _person = new();
 
 	private readonly TransactionRepository
 		_transactionRepository = new(new BankContext());
@@ -60,7 +59,6 @@ public class BillController {
 
 
 	public Bill GenerateBills(Person person, Account account) {
-		_person = person;
 		return _bill.CreateBill(
 			account,
 			UseRandomRecipient(),
@@ -83,13 +81,15 @@ public class BillController {
 		selectedFromAccount.Balance -= selectedBill.Amount;
 		selectedBill.Status = BillStatusEnum.Paid;
 
-		_billRepository.Update(selectedBill);
+		var billRepository = new BillRepository(new BankContext());
+
+		billRepository.Update(selectedBill);
 		_accountRepository.Update(selectedFromAccount);
 	}
-	
-	public void BillGenerator() {
+
+	public void BillGenerator(Person person) {
 		var adminAccount = _accountRepository.GetById(1);
 
-		_billRepository.Insert(GenerateBills(_person, adminAccount));
+		_billRepository.Insert(GenerateBills(person, adminAccount));
 	}
 }
