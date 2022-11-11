@@ -44,64 +44,131 @@ activate Database
 alt Correct SocialSecNum
 Controller <-- Database : Return approval
 Controller -> UI : Access approved
+
 else Wrong SocialSecNum
 Controller <-- Database : Return denial
-deactivate Database
-deactivate Repository
 UI <-- Controller : Access denied message
-deactivate Controller
 User <-- UI : User log-in failed
 
-alt Correct password
-activate Database
-activate Repository
-Controller <-- Database : Return approval
-activate Controller
-UI <-- Controller : Access approved message
-User <-- UI : User log-in success
-else Wrong password
+alt Wrong password
 Controller <-- Database : Return denial
-deactivate Database
-deactivate Repository
 UI <-- Controller : Access denied message
-deactivate Controller
 User <-- UI : User log-in failed
-end
-end
-end
 
+else Correct password
+Controller <-- Database : Return approval
+deactivate Repository
+deactivate Database
+UI <-- Controller : Access approved message
+deactivate Controller
+User <-- UI : User log-in success
 
-User -> UI : BC menu
-
-group Receive account information
-UI -> Database : Get account information
-Database --> UI: Return account information
-end
-
-group Receive transactions
-UI -> Database : Get transactions 
-Database --> UI: Return transactions 
-end
-
-group Receive balance on all accounts
-UI -> Database : Get balance decimal
-Database --> UI: Return balance decimal
-end
+group MainMenu
 
 group Payment
 User -> UI : Add payment credentials
-UI -> Controller : Set bill object
-Controller -> Repository : Generate bill object
-Repository -> Database : Add bill object to database
+UI -> Controller : Choose bill object
+activate Controller
+Controller -> Repository : Get bill object
+activate Repository
+Repository -> Database : Update bill object to database
+activate Database
+Database --> Repository : Bill status = Paid
+deactivate Database
+Repository --> Controller : Bill status = Paid
+deactivate Repository
+Controller --> UI : Bill status = Paid
+deactivate Controller
 end
 
 group CreateAccount
-User -> UI : Add account credentials
-UI -> Controller : Set account object
-Controller -> Repository : Generate Account object
-Repository -> Database : Add account object to database
+User -> UI : Choose account type
+User -> UI : Choose account name
+
+alt SavingsAccount
+UI -> Controller : SavingsAccountFactory.Initialize
+activate Controller
+Controller -> Repository : Insert SavingsAccount
+activate Repository
+Repository -> Database : Add SavingsAccount to database
+activate Database
+Database --> Repository : SavingsAccount added
+deactivate Database
+Repository --> Controller : SavingsAccount added
+deactivate Repository
+Controller --> UI : SavingsAccount added
+deactivate Controller
 end
 
+alt CurrentAccount
+UI -> Controller : CurrentAccountFactory.Initialize
+activate Controller
+Controller -> Repository : Insert CurrentAccount
+activate Repository
+Repository -> Database : Add CurrentAccount to database
+activate Database
+Database --> Repository : CurrentAccount added
+deactivate Database
+Repository --> Controller : CurrentAccount added
+deactivate Repository
+Controller --> UI : CurrentAccount added
+deactivate Controller
+end
+end
+
+group Display accounts
+User -> UI : Display accounts
+UI -> Database : Get account information
+activate Database
+activate Repository
+activate Controller
+Database --> UI: Return account information
+deactivate Controller
+deactivate Repository
+deactivate Database
+end
+
+group Display transactions
+User -> UI : Display transactions
+UI -> Database : Get transactions 
+activate Database
+activate Repository
+activate Controller
+Database --> UI: Return transactions 
+deactivate Controller
+deactivate Repository
+deactivate Database
+end
+
+group Display bills
+User -> UI : Display bills
+UI -> Database : Get bills
+activate Database
+activate Repository
+activate Controller
+Database --> UI: Return bills
+deactivate Controller
+deactivate Repository
+deactivate Database
+end
+
+group Display user details
+User -> UI : Display user details
+UI -> Database : Get user details
+activate Database
+activate Repository
+activate Controller
+Database --> UI: Return user details
+deactivate Controller
+deactivate Repository
+deactivate Database
+end
+
+
+end
+end
+end
+end
 end
 
 
