@@ -6,79 +6,83 @@ using PG3302Eksamen.Utils;
 namespace PG3302Eksamen.Controller;
 
 public class BillController {
-    private readonly AccountController _ac = new();
-    private readonly AccountRepository _accountRepository = new(new BankContext());
-    private readonly Bill _bill = new();
-    private readonly BillRepository _billRepository = new(new BankContext());
-    private readonly Payment _payment = new();
-    private readonly TransactionRepository _transactionRepository = new(new BankContext());
-    private List<string> _billRecipients;
+	private readonly AccountController _ac = new();
+	private readonly AccountRepository _accountRepository = new(new BankContext());
+	private readonly Bill _bill = new();
+	private readonly BillRepository _billRepository = new(new BankContext());
+	private readonly Payment _payment = new();
+
+	private readonly TransactionRepository
+		_transactionRepository = new(new BankContext());
+
+	private List<string> _billRecipients;
 
 
-    private void AddBillRecipients() {
-        _billRecipients = new List<string> {
-            "Rent to Jack Sparrow",
-            "PayPal",
-            "Amazon.com",
-            "Netflix AS",
-            "Foodora AS",
-            "Electricity AS",
-            "Spotify account",
-            "Kondomeriet AS",
-            "Mamma"
-        };
-    }
+	private void AddBillRecipients() {
+		_billRecipients = new List<string> {
+			"Rent to Jack Sparrow",
+			"PayPal",
+			"Amazon.com",
+			"Netflix AS",
+			"Foodora AS",
+			"Electricity AS",
+			"Spotify account",
+			"Kondomeriet AS",
+			"Mamma"
+		};
+	}
 
-    private string UseRandomRecipient() {
-        AddBillRecipients();
-        var random = new Random();
-        var i = 0;
-        var next = random.Next(_billRecipients.Count);
+	private string UseRandomRecipient() {
+		AddBillRecipients();
+		var random = new Random();
+		var i = 0;
+		var next = random.Next(_billRecipients.Count);
 
-        foreach (var recipient in _billRecipients) {
-            if (i == next) {
-                return recipient;
-            }
+		foreach (var recipient in _billRecipients) {
+			if (i == next) {
+				return recipient;
+			}
 
-            i++;
-        }
+			i++;
+		}
 
-        return "";
-    }
+		return "";
+	}
 
-    private static string GenerateRandomKidNumber() {
-        var random = new Random();
-        var numbers = random.NextInt64(0000000000, 9999999999);
-        var accountNumberGenerated = numbers.ToString();
+	private static string GenerateRandomKidNumber() {
+		var random = new Random();
+		var numbers = random.NextInt64(0000000000, 9999999999);
+		var accountNumberGenerated = numbers.ToString();
 
-        // make an KID number / message
-        return "7777" + accountNumberGenerated;
-    }
-
-
-    public Bill GenerateBills(Person person, Account account) {
-        return _bill.CreateBill(
-            account,
-            UseRandomRecipient(),
-            GenerateRandomKidNumber(),
-            AmountGeneratorUtil.GenerateAmount(50, 700),
-            BillStatusEnum.Notpaid,
-            DateTime.Today.AddDays(14),
-            person.Id);
-    }
+		// make an KID number / message
+		return "7777" + accountNumberGenerated;
+	}
 
 
-    public void ExecuteBillPayment(Account selectedFromAccount, Bill selectedBill) {
-        var transaction = _payment.CreatePayment(selectedBill.ToAccount, selectedFromAccount, selectedBill.Amount);
+	public Bill GenerateBills(Person person, Account account) {
+		return _bill.CreateBill(
+			account,
+			UseRandomRecipient(),
+			GenerateRandomKidNumber(),
+			AmountGeneratorUtil.GenerateAmount(50, 700),
+			BillStatusEnum.Notpaid,
+			DateTime.Today.AddDays(14),
+			person.Id);
+	}
 
 
-        _transactionRepository.ProcessTransaction(transaction);
+	public void ExecuteBillPayment(Account selectedFromAccount, Bill selectedBill) {
+		var transaction = _payment.CreatePayment(selectedBill.Recipient,
+			selectedBill.ToAccount, selectedFromAccount, selectedBill.Amount);
 
 
-        selectedFromAccount.Balance -= selectedBill.Amount;
-        selectedBill.Status = BillStatusEnum.Paid;
+		_transactionRepository.ProcessTransaction(transaction);
 
-        _billRepository.Update(selectedBill);
-        _accountRepository.Update(selectedFromAccount);
-    }
+
+		selectedFromAccount.Balance -= selectedBill.Amount;
+		selectedBill.Status = BillStatusEnum.Paid;
+
+		_billRepository.Update(selectedBill);
+		_accountRepository.Update(selectedFromAccount);
+	}
 }

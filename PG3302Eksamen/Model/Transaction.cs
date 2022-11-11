@@ -4,7 +4,9 @@ public abstract class Transaction {
     public int Id { get; set; }
     public decimal Amount { get; set; }
 
-    public int FromAccount { get; set; }
+	public int FromAccount { get; set; }
 
-    public int ToAccount { get; set; }
+	public int ToAccount { get; set; }
+
+	public string Recipient { get; set; }
 }

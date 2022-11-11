@@ -45,15 +45,15 @@ public class UiPerson {
         var passwordChecker = true;
 
 
-        var address =
-            PromptUtil.PromptQuestion("Address: ", "Invalid address entered");
-        var firstName =
-            PromptUtil.PromptQuestion("First name: ", "Invalid first name entered");
-        var lastName =
-            PromptUtil.PromptQuestion("Last name: ", "Invalid last name entered");
-        var phoneNumber =
-            PromptUtil.PromptPhoneNr("Phone number: ", "Invalid phone number entered");
-        var email = PromptUtil.PromptEmail("Email: ", "Invalid email entered");
+		var address =
+			PromptUtil.PromptQuestion("Address: ", "Invalid address entered");
+		var firstName =
+			PromptUtil.PromptQuestion("First name: ", "Invalid first name entered");
+		var lastName =
+			PromptUtil.PromptQuestion("Last name: ", "Invalid last name entered");
+		var phoneNumber =
+			PromptUtil.PromptPhoneNr("Phone number: ", "Invalid phone number entered (need 8 digits)");
+		var email = PromptUtil.PromptEmail("Email: ", "Invalid email entered (need @)");
 
         var password = "";
         var hashedPassword = "";

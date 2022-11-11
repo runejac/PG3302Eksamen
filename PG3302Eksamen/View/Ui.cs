@@ -37,7 +37,7 @@ public class Ui {
                 }
                 catch (Exception e) {
                     PromptUtil.PromptAssertion(
-                        "Wrong credentials, try again or register.",
+                        "An error has occured or wrong credentials, try again or register.",
                         "red");
                     Thread.Sleep(3000);
                     UiPerson = null;

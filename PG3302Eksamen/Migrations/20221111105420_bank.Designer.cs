@@ -11,8 +11,8 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Migrations
 {
     [DbContext(typeof(BankContext))]
-    [Migration("20221108155614_new1")]
-    partial class new1
+    [Migration("20221111105420_bank")]
+    partial class bank
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,6 +146,10 @@ namespace PG3302Eksamen.Migrations
                     b.Property<int>("FromAccount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ToAccount")
                         .HasColumnType("INTEGER");
 
@@ -208,9 +212,6 @@ namespace PG3302Eksamen.Migrations
             modelBuilder.Entity("PG3302Eksamen.Model.Payment", b =>
                 {
                     b.HasBaseType("PG3302Eksamen.Model.Transaction");
-
-                    b.Property<int>("Receipt")
-                        .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("Payment");
                 });

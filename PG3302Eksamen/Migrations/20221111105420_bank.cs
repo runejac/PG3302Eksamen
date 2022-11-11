@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG3302Eksamen.Migrations
 {
-    public partial class @new : Migration
+    public partial class bank : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,8 +76,8 @@ namespace PG3302Eksamen.Migrations
                     Amount = table.Column<decimal>(type: "TEXT", nullable: false),
                     FromAccount = table.Column<int>(type: "INTEGER", nullable: false),
                     ToAccount = table.Column<int>(type: "INTEGER", nullable: false),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Receipt = table.Column<int>(type: "INTEGER", nullable: true)
+                    Recipient = table.Column<string>(type: "TEXT", nullable: false),
+                    Type = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

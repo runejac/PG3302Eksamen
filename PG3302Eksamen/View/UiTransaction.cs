@@ -1,113 +1,133 @@
-﻿using PG3302Eksamen.Model.AccountModel;
+﻿using PG3302Eksamen.Model;
+using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Utils;
 
 namespace PG3302Eksamen.View;
 
 public class UiTransaction {
-    public void TransactionMenu(Ui ui, UiAccount uiAccount, UiBill bill) {
-        var personAccounts = ui.UiPerson.GetAllAccounts().ToList();
+	public void TransactionMenu(Ui ui, UiAccount uiAccount, UiBill bill) {
+		var personAccounts = ui.UiPerson.GetAllAccounts().ToList();
 
-        PromptUtil.PromptAssertion(
-            "Do you wish to make a payment or transfer between your own accounts?",
-            "green");
+		PromptUtil.PromptAssertion(
+			"Do you wish to make a payment or transfer between your own accounts?",
+			"green");
 
-        var selectedChoice = PromptUtil.PromptSelect("Transaction",
-            new[] {
-                "Make a payment",
-                "Transfer between own accounts",
-                "[red]Back[/]"
-            }
-        );
+		var selectedChoice = PromptUtil.PromptSelect("Transaction",
+			new[] {
+				"Make a payment",
+				"Transfer between own accounts",
+				"[red]Back[/]"
+			}
+		);
 
-        switch (selectedChoice) {
-            // person needs at least 2 accounts to transfer between own accounts
-            case "Make a payment":
-                ui.ClearConsole();
-                if (personAccounts.Count > 0) {
-                    MakePayment(ui, uiAccount, bill, personAccounts);
-                }
-                else {
-                    PromptUtil.PromptAssertion(
-                        "You need at least 1 account to pay a bill. Create an account.",
-                        "red");
-                    ui.MainMenuAfterAuthorized();
-                }
+		switch (selectedChoice) {
+			// person needs at least 2 accounts to transfer between own accounts
+			case "Make a payment":
+				ui.ClearConsole();
+				if (personAccounts.Count > 0) {
+					MakePayment(ui, uiAccount, bill, personAccounts);
+				}
+				else {
+					PromptUtil.PromptAssertion(
+						"You need at least 1 account to pay a bill. Create an account.",
+						"red");
+					ui.MainMenuAfterAuthorized();
+				}
 
-                break;
-            case "Transfer between own accounts":
-                ui.ClearConsole();
-                if (personAccounts.Count >= 2) {
-                    TransferToOwnAccounts(ui, uiAccount, bill, personAccounts);
-                }
-                else {
-                    PromptUtil.PromptAssertion(
-                        "You need at least 2 accounts to transfer money between your own accounts. Create account(s).",
-                        "red");
-                    ui.MainMenuAfterAuthorized();
-                }
+				break;
+			case "Transfer between own accounts":
+				ui.ClearConsole();
+				if (personAccounts.Count >= 2) {
+					TransferToOwnAccounts(ui, uiAccount, bill, personAccounts);
+				}
+				else {
+					PromptUtil.PromptAssertion(
+						"You need at least 2 accounts to transfer money between your own accounts. Create account(s).",
+						"red");
+					ui.MainMenuAfterAuthorized();
+				}
 
-                break;
-            case "[red]Back[/]":
-                ui.ClearConsole();
-                ui.MainMenuAfterAuthorized();
+				break;
+			case "[red]Back[/]":
+				ui.ClearConsole();
+				ui.MainMenuAfterAuthorized();
 
-                break;
-        }
-    }
+				break;
+		}
+	}
+	
+	
+	private void TransferToOwnAccounts(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
+		var selectedFromAccount = PromptUtil.PromptSelectForAccounts("Transfer from account",
+			personAccounts);
 
-    private void TransferToOwnAccounts(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
-        var selectedFromAccount = PromptUtil.PromptSelectForAccounts("Transfer from account",
-            personAccounts);
+		uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
 
-        uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
-
-        var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
-            "Not enough balance", selectedFromAccount);
-
-
-        if (amount.Equals(0)) {
-            ui.ClearConsole();
-            ui.MainMenuAfterAuthorized();
-        }
-
-        var listOfAvailableAccountsTo = personAccounts.Where(account =>
-            !account.Equals(selectedFromAccount));
-
-        var selectedToAccount =
-            PromptUtil.PromptSelectForAccounts("Transfer to account",
-                listOfAvailableAccountsTo);
-
-        uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
-        TransactionMenu(ui, uiAccount, bill);
-    }
+		var amount = PromptUtil.PromptAmountInput("Transfer amount: ",
+			"Not enough balance", selectedFromAccount);
 
 
-    private void MakePayment(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
-        var selectedFromAccount =
-            PromptUtil.PromptSelectForAccounts(
-                "Which account do you want to use?",
-                personAccounts);
+		if (amount.Equals(0)) {
+			ui.ClearConsole();
+			ui.MainMenuAfterAuthorized();
+		}
 
-        uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
+		var listOfAvailableAccountsTo = personAccounts.Where(account =>
+			!account.Equals(selectedFromAccount));
 
-        var billsToPay = bill.UnpaidBills(ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson()));
+		var selectedToAccount =
+			PromptUtil.PromptSelectForAccounts("Transfer to account",
+				listOfAvailableAccountsTo);
 
-        var selectedBill = PromptUtil.PromptSelectForBills("Which bill do you want to pay?",
-            billsToPay);
+		uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
+		TransactionMenu(ui, uiAccount, bill);
+	}
+	
+	private void MakePayment(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
+		if (personAccounts.Count > 0) {
+			var selectedFromAccount =
+				PromptUtil.PromptSelectForAccounts(
+					"Which account do you want to use?",
+					personAccounts);
 
-        if (selectedBill.Amount <= selectedFromAccount.Balance) {
-            bill.Calculate(selectedFromAccount, selectedBill);
-            PromptUtil.PromptAssertion(
-                $"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
-                "green");
+			uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
 
-            TransactionMenu(ui, uiAccount, bill);
-        }
-        else {
-            PromptUtil.PromptAssertion(
-                "Not enough money in account to make the payment.",
-                "red");
-            TransactionMenu(ui, uiAccount, bill);
-        }
-    }
+			var billsToPay =
+				bill.UnpaidBills(
+					ui.UiPerson.GetAllBills(ui.UiPerson.GetPerson()));
+
+			if (billsToPay.Any()) {
+				var selectedBill =
+					PromptUtil.PromptSelectForBills(
+						"Which bill do you want to pay?",
+						billsToPay);
+
+				if (selectedBill.Amount <= selectedFromAccount.Balance) {
+					bill.Calculate(selectedFromAccount, selectedBill);
+					PromptUtil.PromptAssertion(
+						$"Successfully paid to {selectedBill.Recipient} with the amount of {selectedBill.Amount} kr",
+						"green");
+
+					TransactionMenu(ui, uiAccount, bill);
+				}
+				else {
+					PromptUtil.PromptAssertion(
+						"Not enough money in account to make the payment.",
+						"red");
+					TransactionMenu(ui, uiAccount, bill);
+				}
+			}
+			else {
+				PromptUtil.PromptAssertion(
+					"No bills found, up-to-date on payments!", "green");
+				ui.MainMenuAfterAuthorized();
+			}
+		}
+		else {
+			PromptUtil.PromptAssertion(
+				"You need at least 1 account to pay a bill. Create an account.",
+				"red");
+			ui.MainMenuAfterAuthorized();
+		}
+	}
 }

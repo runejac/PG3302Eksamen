@@ -144,6 +144,10 @@ namespace PG3302Eksamen.Migrations
                     b.Property<int>("FromAccount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("ToAccount")
                         .HasColumnType("INTEGER");
 
@@ -206,9 +210,6 @@ namespace PG3302Eksamen.Migrations
             modelBuilder.Entity("PG3302Eksamen.Model.Payment", b =>
                 {
                     b.HasBaseType("PG3302Eksamen.Model.Transaction");
-
-                    b.Property<int>("Receipt")
-                        .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("Payment");
                 });

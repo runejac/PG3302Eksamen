@@ -56,19 +56,20 @@ public class PersonController {
         if (match is not null && _personRepository.GetAll().ToList().Count >= 1) {
             return true;
         }
+        
+		_personRepository.Insert(_person);
+		BillGenerator();
+		return false;
+	}
 
-        _personRepository.Insert(_person);
-        BillGenerator();
-        return false;
-    }
-
-    public void BillGenerator() {
+	public void BillGenerator() {
         var adminAccount = _accountRepository.GetById(1); //Hardcoded admin account for bill payment
 
         _billRepository.Insert(_billController.GenerateBills(_person, adminAccount));
-    }
+    
+}
 
-    public void AddAccount(Account account) {
-        _personRepository.AddNewAccount(account);
-    }
+	public void AddAccount(Account account) {
+		_personRepository.AddNewAccount(account);
+	}
 }

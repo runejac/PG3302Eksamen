@@ -60,11 +60,10 @@ public class BankContext : DbContext {
             .HasIndex(e => new { e.FromAccount })
             .IsUnique(false);
 
-
         modelBuilder.Entity<Bill>()
             .HasIndex(e => new { e.ToAccount })
             .IsUnique(false);
-
+        
 
         modelBuilder.Entity<Person>()
             .HasIndex(e => new { e.SocialSecurityNumber })

@@ -4,18 +4,18 @@ using PG3302Eksamen.Model;
 namespace PG3302Eksamen.Repositories;
 
 public sealed class TransactionRepository : ITransactionRepository, IDisposable {
-    private readonly BankContext _context;
-    private bool _disposed;
-
-    public TransactionRepository(BankContext context) {
-        _context = context;
-    }
-
-
     public void Dispose() {
         _context.Dispose();
     }
 
+    private readonly BankContext _context;
+    private bool _disposed;
+
+
+	public TransactionRepository(BankContext context) {
+		_context = context;
+	}
+    
 
     public Transaction GetById(int id) {
         return _context.Transactions.Find(id) ?? throw new InvalidOperationException();
