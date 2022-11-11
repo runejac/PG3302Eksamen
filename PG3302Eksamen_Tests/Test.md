@@ -2,8 +2,9 @@
 
 - [x] Create person
 - [x] Delete person
-- [ ] Update persons adress
+- [x] Update persons adress
 - [ ] Paying bill
 - [ ] Transactions ( Multiple methods )
 - [x] Create account as a person identifier
-- [ ] More account methods
+- [x] More account methods
+- [ ] Utils tests

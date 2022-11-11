@@ -27,4 +27,8 @@ public class Bill {
             OwnerId = ownerId
         };
     }
+
+    public Bill CreateBill(string accountAccountNumber) {
+        throw new NotImplementedException();
+    }
 }
