@@ -47,7 +47,7 @@ public class UiBill {
         ui.GoBackToMainMenu();
     }
 
-    public void GenerateBillUi() {
-        _billController.BillGenerator();
+    public void GenerateBillUi(Person person) {
+        _billController.BillGenerator(person);
     }
 }

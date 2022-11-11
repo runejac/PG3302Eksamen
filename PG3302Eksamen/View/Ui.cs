@@ -36,7 +36,6 @@ public class Ui {
                     MainMenuAfterAuthorized();
                 }
                 catch (Exception e) {
-                    Console.WriteLine(e);
                     PromptUtil.PromptAssertion(
                         "An error has occured or wrong credentials, try again or register.",
                         "red");
@@ -111,7 +110,7 @@ public class Ui {
                 break;
             case "Generate a dummy bill":
                 ClearConsole();
-                _uiBill.GenerateBillUi();
+                _uiBill.GenerateBillUi(UiPerson.GetPerson());
                 PromptUtil.PromptAssertion("Successfully generated a dummy bill that you can pay.", "green");
                 Thread.Sleep(2000);
                 MainMenuAfterAuthorized();
