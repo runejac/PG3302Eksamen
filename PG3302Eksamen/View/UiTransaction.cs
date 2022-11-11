@@ -1,5 +1,4 @@
-﻿using PG3302Eksamen.Model;
-using PG3302Eksamen.Model.AccountModel;
+﻿using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Utils;
 
 namespace PG3302Eksamen.View;
@@ -55,10 +54,12 @@ public class UiTransaction {
 				break;
 		}
 	}
-	
-	
-	private void TransferToOwnAccounts(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
-		var selectedFromAccount = PromptUtil.PromptSelectForAccounts("Transfer from account",
+
+
+	private void TransferToOwnAccounts(Ui ui, UiAccount uiAccount, UiBill bill,
+		List<Account> personAccounts) {
+		var selectedFromAccount = PromptUtil.PromptSelectForAccounts(
+			"Transfer from account",
 			personAccounts);
 
 		uiAccount.OverViewOfAccounts(selectedFromAccount, ui);
@@ -80,10 +81,16 @@ public class UiTransaction {
 				listOfAvailableAccountsTo);
 
 		uiAccount.Calculate(amount, selectedFromAccount, selectedToAccount);
+		PromptUtil.PromptAssertion(
+			$"Successfully transferred {amount} kr from {selectedFromAccount.Name} to {selectedToAccount.Name}",
+			"green");
+
 		TransactionMenu(ui, uiAccount, bill);
 	}
-	
-	private void MakePayment(Ui ui, UiAccount uiAccount, UiBill bill, List<Account> personAccounts) {
+
+
+	private void MakePayment(Ui ui, UiAccount uiAccount, UiBill bill,
+		List<Account> personAccounts) {
 		if (personAccounts.Count > 0) {
 			var selectedFromAccount =
 				PromptUtil.PromptSelectForAccounts(
