@@ -2,50 +2,74 @@
 
 actor User 
 participant UI
-participant BusinessLogic
-participant DataAccess
+participant Controller
+participant Repository
 database Database
 
-group BankManager
+group Program
 group RegisterPerson
-User -> UI : Insert SocialSecNum
-User -> UI : Insert password
 User -> UI : Create user
-UI -> BusinessLogic : Get user information
-BusinessLogic -> DataAccess : Validate user information
-
+activate UI
+UI -> Controller : Get user information
+activate Controller
+Controller -> Repository : Validate user information
+activate Repository
+activate Database
 
 alt SocialSecNum does not exist
-DataAccess -> Database : Verify and add new user 
-BusinessLogic <-- Database : SocialSecNum approved
-UI <-- BusinessLogic : Create user result message
+Repository -> Database : Verify and add new user 
+Controller <-- Database : SocialSecNum approved
+UI <-- Controller : Create user result message
 User <-- UI : New user success
 else SocialSecNum does exist
-DataAccess -> Database : Deny new user
-BusinessLogic <-- Database  : SocialSecNum already exist, not approved
-UI <-- BusinessLogic : Create user result message
+Repository -> Database : Deny new user
+Controller <-- Database  : SocialSecNum already exist, not approved
+deactivate Database
+deactivate Repository
+UI <-- Controller : Create user result message
+deactivate Controller
 User <-- UI : New user failed
 end
 end
 
 group Log-In
 User -> UI : Log in
-UI -> BusinessLogic : Commit user information
-BusinessLogic -> DataAccess : Authorize
-DataAccess -> Database : Validate and approve
+UI -> Controller : Commit user information
+activate Controller
+Controller -> Repository : Authorize
+activate Repository
+Repository -> Database : Validate and approve
+activate Database
+
+alt Correct SocialSecNum
+Controller <-- Database : Return approval
+Controller -> UI : Access approved
+else Wrong SocialSecNum
+Controller <-- Database : Return denial
+deactivate Database
+deactivate Repository
+UI <-- Controller : Access denied message
+deactivate Controller
+User <-- UI : User log-in failed
+
 alt Correct password
-BusinessLogic <-- Database : Return approval
-UI <-- BusinessLogic : Access approved message
+activate Database
+activate Repository
+Controller <-- Database : Return approval
+activate Controller
+UI <-- Controller : Access approved message
 User <-- UI : User log-in success
 else Wrong password
-BusinessLogic <-- Database : Return denial
-UI <-- BusinessLogic : Access denied message
+Controller <-- Database : Return denial
+deactivate Database
+deactivate Repository
+UI <-- Controller : Access denied message
+deactivate Controller
 User <-- UI : User log-in failed
 end
 end
 end
 
-group BankCommunicator
 
 User -> UI : BC menu
 
@@ -66,19 +90,19 @@ end
 
 group Payment
 User -> UI : Add payment credentials
-UI -> BusinessLogic : Set bill object
-BusinessLogic -> DataAccess : Generate bill object
-DataAccess -> Database : Add bill object to database
+UI -> Controller : Set bill object
+Controller -> Repository : Generate bill object
+Repository -> Database : Add bill object to database
 end
 
 group CreateAccount
 User -> UI : Add account credentials
-UI -> BusinessLogic : Set account object
-BusinessLogic -> DataAccess : Generate Account object
-DataAccess -> Database : Add account object to database
+UI -> Controller : Set account object
+Controller -> Repository : Generate Account object
+Repository -> Database : Add account object to database
 end
 
-
 end
+
 
 @enduml
