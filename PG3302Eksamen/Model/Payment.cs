@@ -3,9 +3,6 @@ using PG3302Eksamen.Model.AccountModel;
 namespace PG3302Eksamen.Model;
 
 public class Payment : Transaction {
-	public new decimal Amount { get; set; }
-
-	public new int Id { get; set; }
 
 	public Transaction CreatePayment(string selectedBillRecipient, int toAccount,
 		Account fromAccount, decimal amount) {

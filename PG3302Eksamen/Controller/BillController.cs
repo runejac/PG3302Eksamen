@@ -81,10 +81,12 @@ public class BillController {
 		selectedFromAccount.Balance -= selectedBill.Amount;
 		selectedBill.Status = BillStatusEnum.Paid;
 
-		_billRepository.Update(selectedBill);
+		var billRepository = new BillRepository(new BankContext());
+
+		billRepository.Update(selectedBill);
 		_accountRepository.Update(selectedFromAccount);
 	}
-	
+
 	public void BillGenerator(Person person) {
 		var adminAccount = _accountRepository.GetById(1);
 
