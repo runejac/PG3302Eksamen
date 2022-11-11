@@ -6,14 +6,20 @@ using PG3302Eksamen.Repositories;
 namespace PG3302Eksamen.Controller;
 
 public class TransferController : ITransaction {
-    private readonly AccountRepository _accountRepository = new(new BankContext());
+    private BankContext _context;
+    private readonly AccountRepository _accountRepository;
 
-    private readonly TransactionRepository
-        _transactionRepository = new(new BankContext());
+    private readonly TransactionRepository _transactionRepository;
 
     private readonly Transfer _transfer = new();
 
     private Transaction _transaction;
+
+    public TransferController(BankContext context) {
+        _context = context;
+        _accountRepository = new AccountRepository(_context);
+        _transactionRepository = new TransactionRepository(_context);
+    }
 
 
     public void Pay() {

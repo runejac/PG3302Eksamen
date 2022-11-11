@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PG3302Eksamen.Controller;
 using PG3302Eksamen.Model.AccountModel;
 using PG3302Eksamen.Repositories;
 
@@ -52,19 +53,17 @@ public class AccountHandlerTest {
 	}
 
 	[Test]
-	public void UpdateAccountBalance() {
+	public void TransferBetweenAccountsTest() {
 		AccountRepository accountRepository = new(_context);
-
+		AccountController controller = new();
+		TransferController transferController = new(_context);
 		var savingsAccount =
 			new SavingsAccountFactory().InitializeAccount("Sparekonto", 1, "12345678912");
-
-		accountRepository.Insert(savingsAccount);
-
-
-		// TODO må bruke en annen updateBalance som kommer senere
-		//accountRepository.UpdateBalance(accountRepository.GetById(1).Id, 2000);
-
-		Assert.That(savingsAccount.Balance, Is.EqualTo(2000));
+		var currentAccount = new CurrentAccountFactory().InitializeAccount("Brukskonto", 1, "123123324453");
+		 accountRepository.Insert(savingsAccount);
+		accountRepository.Update(savingsAccount);
+		transferController.Execute(500, savingsAccount, currentAccount );
+		Assert.That(accountRepository.GetById(2).Balance, Is.EqualTo(1500));
 	}
 
 	[Theory]

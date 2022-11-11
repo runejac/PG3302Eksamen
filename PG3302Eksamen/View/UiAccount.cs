@@ -1,6 +1,7 @@
 using PG3302Eksamen.Controller;
 using PG3302Eksamen.Model;
 using PG3302Eksamen.Model.AccountModel;
+using PG3302Eksamen.Repositories;
 using PG3302Eksamen.Utils;
 using Spectre.Console;
 
@@ -8,7 +9,7 @@ namespace PG3302Eksamen.View;
 
 public class UiAccount {
     private readonly AccountController _accountController = new();
-    private readonly TransferController _transferController = new();
+    private readonly TransferController _transferController = new(new BankContext());
     private Person _person;
     private Ui _ui;
 
