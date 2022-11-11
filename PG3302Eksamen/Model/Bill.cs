@@ -14,11 +14,11 @@ public class Bill {
     public int ToAccount { get; set; }
 
 
-    public Bill CreateBill(Account fromAccount, string recipient, string messageField,
+    public Bill CreateBill(Account toAccount, string recipient, string messageField,
         decimal amount,
         BillStatusEnum status, DateTime dueDate, int ownerId) {
         return new Bill {
-            ToAccount = fromAccount.Id,
+            ToAccount = toAccount.Id,
             Recipient = recipient,
             MessageField = messageField,
             Amount = amount,

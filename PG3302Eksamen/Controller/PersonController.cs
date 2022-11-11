@@ -58,16 +58,9 @@ public class PersonController {
         }
         
 		_personRepository.Insert(_person);
-		BillGenerator();
-		return false;
+        return false;
 	}
-
-	public void BillGenerator() {
-        var adminAccount = _accountRepository.GetById(1); //Hardcoded admin account for bill payment
-
-        _billRepository.Insert(_billController.GenerateBills(_person, adminAccount));
     
-}
 
 	public void AddAccount(Account account) {
 		_personRepository.AddNewAccount(account);

@@ -9,6 +9,7 @@ namespace PG3302Eksamen.View;
 
 public class UiPerson {
     private readonly PersonController _personController = new();
+    private readonly BillController _billController = new();
 
     public Person GetPerson() {
         return _personController.GetPerson();
@@ -31,7 +32,6 @@ public class UiPerson {
         var person = _personController.Authenticate(ssnEntered, passwordEntered);
 
         if (person != null) {
-            _personController.BillGenerator();
             return person;
         }
 

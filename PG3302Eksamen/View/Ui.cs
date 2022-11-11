@@ -36,6 +36,7 @@ public class Ui {
                     MainMenuAfterAuthorized();
                 }
                 catch (Exception e) {
+                    Console.WriteLine(e);
                     PromptUtil.PromptAssertion(
                         "An error has occured or wrong credentials, try again or register.",
                         "red");
@@ -79,6 +80,7 @@ public class Ui {
                 "Display all bills",
                 "Display all accounts",
                 "Display user details",
+                "Generate a dummy bill",
                 "[red]Log out[/]"
             }
         );
@@ -106,6 +108,13 @@ public class Ui {
                 ClearConsole();
                 UiPerson!.PersonAccountDetails();
                 GoBackToMainMenu();
+                break;
+            case "Generate a dummy bill":
+                ClearConsole();
+                _uiBill.GenerateBillUi();
+                PromptUtil.PromptAssertion("Successfully generated a dummy bill that you can pay.", "green");
+                Thread.Sleep(2000);
+                MainMenuAfterAuthorized();
                 break;
             case "[red]Log out[/]":
                 PromptUtil.PromptAssertion(

@@ -6,11 +6,11 @@ using PG3302Eksamen.Utils;
 namespace PG3302Eksamen.Controller;
 
 public class BillController {
-	private readonly AccountController _ac = new();
 	private readonly AccountRepository _accountRepository = new(new BankContext());
 	private readonly Bill _bill = new();
 	private readonly BillRepository _billRepository = new(new BankContext());
 	private readonly Payment _payment = new();
+	private Person _person = new();
 
 	private readonly TransactionRepository
 		_transactionRepository = new(new BankContext());
@@ -60,6 +60,7 @@ public class BillController {
 
 
 	public Bill GenerateBills(Person person, Account account) {
+		_person = person;
 		return _bill.CreateBill(
 			account,
 			UseRandomRecipient(),
@@ -84,5 +85,11 @@ public class BillController {
 
 		_billRepository.Update(selectedBill);
 		_accountRepository.Update(selectedFromAccount);
+	}
+	
+	public void BillGenerator() {
+		var adminAccount = _accountRepository.GetById(1);
+
+		_billRepository.Insert(GenerateBills(_person, adminAccount));
 	}
 }

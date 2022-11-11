@@ -7,7 +7,7 @@ namespace PG3302Eksamen.View;
 
 public class UiBill {
     private readonly BillController _billController = new();
-    private readonly List<string> _billOptions = new();
+    
 
     public IEnumerable<Bill> UnpaidBills(IEnumerable<Bill> unpaidBills) {
         return unpaidBills.Where(bill => bill.Status == BillStatusEnum.Notpaid);
@@ -45,5 +45,9 @@ public class UiBill {
         AnsiConsole.Render(tableResult);
 
         ui.GoBackToMainMenu();
+    }
+
+    public void GenerateBillUi() {
+        _billController.BillGenerator();
     }
 }

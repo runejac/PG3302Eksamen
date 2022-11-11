@@ -119,6 +119,8 @@ end
 group Display accounts
 User -> UI : Display accounts
 UI -> Database : Get account information
+/'For å vise loop, det loopes også i de andre display metodene.'/
+loop _accountRepository.GetSortedByOwner(_person.Id).ToList()
 activate Database
 activate Repository
 activate Controller
