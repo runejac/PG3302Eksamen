@@ -1,6 +1,3 @@
-// Concrete Products provide various implementations of the Product
-// interface.
-
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PG3302Eksamen.Model.AccountModel;
