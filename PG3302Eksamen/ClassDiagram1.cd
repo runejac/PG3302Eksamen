@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical">
+  <Class Name="PG3302Eksamen.Controller.AccountController">
+    <Position X="25.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAAAAQAQAAAAAAFAAAAgAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Controller\AccountController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_account" />
+      <Field Name="_person" />
+      <Field Name="_accountRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.Controller.BankManager" BaseTypeListCollapsed="true">
+    <Position X="30" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAI=</HashCode>
+      <FileName>Controller\BankManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Controller.BillController">
+    <Position X="19.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAEYAAAIgAAgACAAAAAAAACAAAAAAAQE=</HashCode>
+      <FileName>Controller\BillController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_bill" />
+      <Field Name="_accountRepository" />
+      <Field Name="_billRepository" />
+      <Field Name="_payment" />
+      <Field Name="_transactionRepository" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.Controller.DepositController" BaseTypeListCollapsed="true">
+    <Position X="34.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAgAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Controller\DepositController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Controller.PersonController">
+    <Position X="28" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAQAYAAAAACBIAAAAAIAAAAGACAACAAAg=</HashCode>
+      <FileName>Controller\PersonController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_accountRepository" />
+      <Field Name="_billRepository" />
+      <Field Name="_person" />
+      <Field Name="_personRepository" />
+      <Field Name="_billController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.Controller.TransferController" BaseTypeListCollapsed="true">
+    <Position X="30.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAABgQAAAAgAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Controller\TransferController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_accountRepository" />
+      <Field Name="_context" />
+      <Field Name="_transaction" />
+      <Field Name="_transactionRepository" />
+      <Field Name="_transfer" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Migrations.@new" Collapsed="true">
+    <Position X="15.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
+      <FileName>Migrations\20221111132131_new.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.AccountModel.Account">
+    <Position X="14.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAIAAAAACABAAgAASQAAAgBAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\AccountModel\Account.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="PG3302Eksamen.Model.AccountModel.AccountFactory">
+    <Position X="9.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\AccountModel\AccountFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.AccountModel.CurrentAccount">
+    <Position X="15.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\AccountModel\CurrentAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.AccountModel.CurrentAccountFactory">
+    <Position X="10.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\AccountModel\CurrentAccountFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.AccountModel.SavingAccount">
+    <Position X="13" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\AccountModel\SavingsAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.AccountModel.SavingsAccountFactory">
+    <Position X="8" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\AccountModel\SavingsAccountFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.Bill">
+    <Position X="17.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAMAAAAgCAAAAAAAACABAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Model\Bill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.Deposit" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Model\Deposit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.Payment" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Payment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.Person">
+    <Position X="25.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAACAAABAAAAAAQAAAAAAAAACCAAAAAACAAAg=</HashCode>
+      <FileName>Model\Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.Transaction" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAAAAAAgAAAAAAAAACAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Model\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Model.Transfer" Collapsed="true">
+    <Position X="8.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Transfer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Repositories.AccountRepository" BaseTypeListCollapsed="true">
+    <Position X="20" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAMAAAKAEVAAQAAAABAAAAAAAAAAAAgAIAAAAAIA=</HashCode>
+      <FileName>Repositories\AccountRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Repositories.BankContext">
+    <Position X="23.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAQAAAAAAAAAABAAAEIAAAACAAAAAAAEAAAA=</HashCode>
+      <FileName>Repositories\BankContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Repositories.BillRepository" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAACEEBAAAAAAgBAAAAAAAAAQAAgAIAAAAAIA=</HashCode>
+      <FileName>Repositories\BillRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Repositories.PersonRepository" BaseTypeListCollapsed="true">
+    <Position X="27" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAEhAAAAAAIBAAAAAAAAAAAAoQAAAAAgIA=</HashCode>
+      <FileName>Repositories\PersonRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Repositories.TransactionRepository" BaseTypeListCollapsed="true">
+    <Position X="25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAEBAAAEAAIBAEAAAAAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Repositories\TransactionRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_context" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="PG3302Eksamen.Utils.AmountGeneratorUtil" Collapsed="true">
+    <Position X="20.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\AmountGeneratorUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Utils.PromptUtil">
+    <Position X="30.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAABAAAAAARAAEAAAAAABABAgAAAIAAAAAAAA=</HashCode>
+      <FileName>Utils\PromptUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Utils.TrimUtil">
+    <Position X="32.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utils\TrimUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.View.Ui">
+    <Position X="28.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACEAAEAAAAAAAAIAAAABQAAAABAAAgEAAAAAAAAAA=</HashCode>
+      <FileName>View\Ui.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_person" />
+      <Field Name="_uiAccount" />
+      <Field Name="_uiBill" />
+      <Field Name="_uiTransaction" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.View.UiAccount">
+    <Position X="25.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAIQAEAAAAAABAAhAAACAAAAAAAAAAAAAgQAA=</HashCode>
+      <FileName>View\UiAccount.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_accountController" />
+      <Field Name="_person" />
+      <Field Name="_transferController" />
+      <Field Name="_ui" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.View.UiBill">
+    <Position X="19.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAgCAAAAAAAEAAAAAAACA=</HashCode>
+      <FileName>View\UiBill.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_billController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.View.UiPerson">
+    <Position X="23" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAIAIAAAAAAAAAAAAAIBAAAEAAAACAAAg=</HashCode>
+      <FileName>View\UiPerson.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_billController" />
+      <Field Name="_personController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PG3302Eksamen.View.UiTransaction">
+    <Position X="32.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAGAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>View\UiTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PG3302Eksamen.Program">
+    <Position X="22.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="PG3302Eksamen.Interfaces.IAccount">
+    <Position X="15.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAccount.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.IAccountRepository" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAAAIAAUAAQAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Interfaces\IAccountRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.IBillRepository" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IBillRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.IPersonRepository">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAIQAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IPersonRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.IRepository&lt;TEntity&gt;" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAABAAAAAAAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Interfaces\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.ITransaction">
+    <Position X="32.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITransaction.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.ITransactionRepository" Collapsed="true">
+    <Position X="15" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAIAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITransactionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PG3302Eksamen.Interfaces.IUnitOfWork">
+    <Position X="40.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AICAAAAAAAAAAAIAAAAABAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Interfaces\IUnitOfWork.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="A_Team.Core.Controller.IBankManager">
+    <Position X="28.25" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Interfaces\IBankManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="PG3302Eksamen.Model.BillStatusEnum">
+    <Position X="34.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAAAAQACAAAAAA=</HashCode>
+      <FileName>Model\BillStatusEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
