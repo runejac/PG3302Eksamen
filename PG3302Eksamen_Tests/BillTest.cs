@@ -12,13 +12,10 @@ public class BillTest {
     [SetUp]
     public void CreateContextForInMemory() {
         var option = new DbContextOptionsBuilder<BankContext>().UseInMemoryDatabase("test_db").Options;
-
-
         _context = new BankContext(option);
         _context.Database.EnsureDeleted();
         _context.Database.EnsureCreated();
     }
-
     protected virtual void Dispose(bool disposing) {
         if (!_disposedValue) {
             if (disposing) {
@@ -26,11 +23,10 @@ public class BillTest {
             _disposedValue = true;
         }
     }
-
     public void Dispose() {
         Dispose(true);
     }
-
+    // a test that simulates if a bill is paid
     [Test]
     public void UpdateBillStatusToPaidTest() {
         Bill bill = new();
@@ -56,6 +52,7 @@ public class BillTest {
         
     }
     
+    // a test that simulates that sorts out bills based on correct owner
     [Test]
     public void GetSortedByOwnerTest() {
         Bill bill = new();
