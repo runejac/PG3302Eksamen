@@ -79,7 +79,6 @@ public class Ui {
 				"Display all bills",
 				"Display all accounts",
 				"Display user details",
-				/*"Display transactions",*/
 				"Generate a dummy bill",
 				"[red]Log out[/]"
 			}

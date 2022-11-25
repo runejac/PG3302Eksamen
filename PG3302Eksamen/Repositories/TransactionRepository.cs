@@ -34,14 +34,6 @@ public sealed class TransactionRepository : ITransactionRepository, IDisposable 
 		throw new NotImplementedException();
 	}
 
-
-	// public List<Transaction> GetRecentTransactions(int days) {
-	//   var now = DateTime.Now;
-	//  return new List<Transaction>(_context.Transactions.Where(
-	//    e => e.Date > now - TimeSpan.FromDays(days)
-	//  ));
-	// }
-
 	public List<Transaction> GetRecentTransactions(int days) {
 		throw new NotImplementedException();
 	}

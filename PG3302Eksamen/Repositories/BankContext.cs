@@ -73,8 +73,7 @@ public class BankContext : DbContext {
 			.HasIndex(e => new { e.Id })
 			.IsUnique();
 	}
-
-	// few adjustments for tests
+	
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 		optionsBuilder.EnableSensitiveDataLogging();
 		if (!optionsBuilder.IsConfigured) {

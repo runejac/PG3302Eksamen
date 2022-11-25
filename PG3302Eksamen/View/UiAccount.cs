@@ -105,8 +105,7 @@ public class UiAccount {
             }
         }
 
-
-        // Current account will never have withdraw limit?
+        
         dynamic WithdrawLimit(Account account) {
             if (account.GetAccountType() == "current account") {
                 return "Unlimited";
@@ -114,7 +113,6 @@ public class UiAccount {
 
             return account.WithdrawLimit;
         }
-
         AnsiConsole.Render(table);
     }
 

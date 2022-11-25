@@ -99,8 +99,7 @@ public static class PromptUtil {
 
         return 0;
     }
-
-    // TODO: Does not seem to interpolate correctly :(
+    
     public static void PromptAssertion(string assertion, string color) {
         AnsiConsole.MarkupLineInterpolated($"[{color}]{assertion}[/]");
     }
