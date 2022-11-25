@@ -8,3 +8,8 @@ Nettbank(style: .consoleApp)
 ```
 dotnet ef database update
 ```
+#### Deretter kan enten programmet kjøres via IDE eller via .exe fil.
+
+#### .exe fil lokasjon:
+````
+/runable/win-x64/PG3302Eksamen.exe
