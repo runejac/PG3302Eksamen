@@ -21,9 +21,7 @@ public sealed class PersonRepository : IPersonRepository, IDisposable {
     public Person GetById(int id) {
         return _context.Persons.Find(id)!;
     }
-
-    // TODO usikker på om disse skal være toList() eller ikke, de konverteres ofte til det når vi bruker det
-    // todo får se senere!
+    
     public IEnumerable<Person> GetAll() {
         return _context.Persons.AsQueryable() ?? throw new InvalidOperationException();
     }

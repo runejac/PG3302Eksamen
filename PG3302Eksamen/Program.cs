@@ -7,6 +7,10 @@ namespace PG3302Eksamen;
 
 internal static class Program {
     private static void Main(string[] args) {
+        
+        
+        // admin user gets created at the start because bill needs an account, and an account need a person
+        
         var personRepository = new PersonRepository(new BankContext());
         var accountRepository = new AccountRepository(new BankContext());
         var exist = personRepository.CheckIfExists(1);
