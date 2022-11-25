@@ -7,8 +7,7 @@ namespace PG3302Eksamen_Tests;
 
 public class AccountHandlerTest {
 	private BankContext _context = new();
-	private bool disposedValue; // To detect redundant calls
-
+	private bool _disposedValue; // To detect redundant calls
 
 	[SetUp]
 	public void CreateContextForInMemory() {
@@ -21,11 +20,11 @@ public class AccountHandlerTest {
 	}
 
 	protected virtual void Dispose(bool disposing) {
-		if (!disposedValue) {
+		if (!_disposedValue) {
 			if (disposing) {
 			}
 
-			disposedValue = true;
+			_disposedValue = true;
 		}
 	}
 
@@ -33,10 +32,9 @@ public class AccountHandlerTest {
 		Dispose(true);
 	}
 
-	public void Setup() {
-	}
 
 
+// A test that simlutates a change on a account name
 	[Test]
 	public void ChangeAccountNameTest() {
 		AccountRepository accountRepository = new(_context);
@@ -52,6 +50,7 @@ public class AccountHandlerTest {
 		Assert.That(expectedAccountNumber, Is.EqualTo("Brukerkonto"));
 	}
 
+	// a test that simulates a transfer between two different accounts
 	[Test]
 	public void TransferBetweenAccountsTest() {
 		AccountRepository accountRepository = new(_context);
@@ -65,7 +64,7 @@ public class AccountHandlerTest {
 		transferController.Execute(500, savingsAccount, currentAccount );
 		Assert.That(accountRepository.GetById(2).Balance, Is.EqualTo(1500));
 	}
-
+	// a test that simulates retrieving all your account numbers
 	[Theory]
 	public void GetAllAccountNumbers() {
 		AccountRepository accountRepository = new(_context);
@@ -87,22 +86,5 @@ public class AccountHandlerTest {
 		CollectionAssert.AreEquivalent(accountRepository.GetAllAccountNumbers(), actual);
 	}
 
-	//Assert.That(accountRepository.GetAllAccountNumbers(), Has.Count.EqualTo(2));
-
-	//(accountRepository.GetAllAccountNumbers().Get);
-
-	/*Assert.Multiple((() =>
-	    {
-	        Assert.That(savingsAccount.AccountNumber, Is.EqualTo("123456789121"));
-	        Assert.That(currentAccount.AccountNumber, Is.EqualTo("123456789011"));
-	    }));*/
-	/*
-	[Test]
-
-	public void CreateAccountTest() {
-	    var currentAccount = new CurrentAccountFactory().InitializeAccount("Felleskonto", 1, "12345678912");
-	    
-	    _context.SaveChanges();
-	    Assert.That(currentAccount.Owne);
-	}*/
+	
 }

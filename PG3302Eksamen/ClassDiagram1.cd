@@ -7,9 +7,9 @@
       <FileName>Controller\AccountController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Field Name="_accountRepository" />
       <Field Name="_account" />
       <Field Name="_person" />
-      <Field Name="_accountRepository" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PG3302Eksamen.Controller.BankManager" BaseTypeListCollapsed="true">
@@ -27,8 +27,8 @@
       <FileName>Controller\BillController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_bill" />
       <Field Name="_accountRepository" />
+      <Field Name="_bill" />
       <Field Name="_billRepository" />
       <Field Name="_payment" />
       <Field Name="_transactionRepository" />
@@ -50,10 +50,10 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_accountRepository" />
-      <Field Name="_billRepository" />
-      <Field Name="_person" />
-      <Field Name="_personRepository" />
       <Field Name="_billController" />
+      <Field Name="_billRepository" />
+      <Field Name="_personRepository" />
+      <Field Name="_person" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PG3302Eksamen.Controller.TransferController" BaseTypeListCollapsed="true">
@@ -63,20 +63,13 @@
       <FileName>Controller\TransferController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_accountRepository" />
       <Field Name="_context" />
-      <Field Name="_transaction" />
+      <Field Name="_accountRepository" />
       <Field Name="_transactionRepository" />
       <Field Name="_transfer" />
+      <Field Name="_transaction" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="PG3302Eksamen.Migrations.@new" Collapsed="true">
-    <Position X="15.75" Y="4" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAI=</HashCode>
-      <FileName>Migrations\20221111132131_new.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="PG3302Eksamen.Model.AccountModel.Account">
     <Position X="14.25" Y="6.5" Width="1.5" />
@@ -242,10 +235,10 @@
       <FileName>View\Ui.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_person" />
       <Field Name="_uiAccount" />
       <Field Name="_uiBill" />
       <Field Name="_uiTransaction" />
+      <Field Name="_person" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PG3302Eksamen.View.UiAccount">
@@ -256,8 +249,8 @@
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_accountController" />
-      <Field Name="_person" />
       <Field Name="_transferController" />
+      <Field Name="_person" />
       <Field Name="_ui" />
     </ShowAsAssociation>
   </Class>
@@ -278,8 +271,8 @@
       <FileName>View\UiPerson.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="_billController" />
       <Field Name="_personController" />
+      <Field Name="_billController" />
     </ShowAsAssociation>
   </Class>
   <Class Name="PG3302Eksamen.View.UiTransaction">
