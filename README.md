@@ -10,6 +10,6 @@ dotnet ef database update
 ```
 #### Deretter kan enten programmet kjøres via IDE eller via .exe fil.
 
-#### .exe fil lokasjon:
+#### .exe fil lokasjon (men ligger også ved i levering som vedlegg3exe.zip)
 ````
 /runable/win-x64/PG3302Eksamen.exe
