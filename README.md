@@ -4,8 +4,9 @@ Nettbank(style: .consoleApp)
 </h1>
 
 
-#### For å kjøre programmet, må tabellene som er i migration oppdateres
+#### For å kjøre programmet, må tabellene som er i migration mappen oppdateres
 ```
+cd PG3302Eksamen
 dotnet ef database update
 ```
 #### Deretter kan enten programmet kjøres via IDE eller via .exe fil.
